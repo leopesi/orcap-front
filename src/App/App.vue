@@ -3,13 +3,16 @@
 		<Header :logged="this.logged" />
 		<div class="body">
 			<Menu :logged="this.logged" />
-			<router-view></router-view>
+			<router-view class="views"></router-view>
 		</div>
 		<Footer :logged="this.logged" />
 	</div>
 </template>
 
 <script>
+
+	import Methods from '../helpers/methods'
+
 	import Header from '../views/components/Header/Header'
 	import Footer from '../views/components/Footer/Footer'
 	import Menu from '../views/components/Menu/Menu'
@@ -32,9 +35,7 @@
 		},
 		mounted() {
 			this.logged = localStorage.token ? true : false
-			if (!this.logged && this.$router.history.current.path != '/') {
-				this.$router.push('/')
-			}
+			if (!this.logged) Methods.openPage(this, '')
 		},
 	}
 </script>

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+	import Methods from '../../../helpers/methods'
 	import messages from './messages'
 	import './style.css'
 
@@ -21,7 +22,7 @@
 			logout() {
 				delete localStorage.token
 				delete localStorage.userType
-				this.$router.push('/')
+				Methods.openPage(this, '')
 			}
 		}
 	}

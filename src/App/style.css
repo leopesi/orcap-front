@@ -32,8 +32,6 @@ body {
 	grid-area: Body;
 }
 
-#app .body div {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
+#app .views {
+	padding: 48px;
 }

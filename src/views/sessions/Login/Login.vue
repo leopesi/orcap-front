@@ -20,8 +20,8 @@
 </template>
 
 <script>
-
-	import axios from 'axios'
+	import Sessions from '../../../controllers/sessions'
+	import Methods from '../../../helpers/methods'
 	import messages from './messages'
 	import './style.css'
 
@@ -31,22 +31,19 @@
 		data() {
 			return {
 				mail: '',
-				password: ''
+				password: '',
 			}
 		},
 		methods: {
 			login() {
-				axios.get('/login?mail='+this.mail+'&password='+this.password)
-				.then(response => {
-					if (response && response.data && response.data.token) {
-						localStorage.token = response.data.token
-						localStorage.userType = response.data.type
-						this.$router.push('/home')
+				Sessions.login(this.mail, this.password, (result) => {
+					if (result) {
+						Methods.openPage(this, 'home')
 					} else {
 						alert('Login inválido')
 					}
 				})
-			}
-		}
+			},
+		},
 	}
 </script>
