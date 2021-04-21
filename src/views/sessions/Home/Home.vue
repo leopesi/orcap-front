@@ -7,8 +7,8 @@
 <script>
 	export default {
 		name: 'Login',
-    mounted() {
-      if (!localStorage.token) this.$router.push('/')
-    }
+		mounted() {
+			
+		},
 	}
 </script>

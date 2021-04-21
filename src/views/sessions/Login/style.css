@@ -1,4 +1,8 @@
 
-.form {
+.login .form {
 	min-width: 250px;
+	width: 400px;
+	display: flex;
+	flex-direction: column;
+	align-self: center;
 }

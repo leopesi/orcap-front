@@ -1,5 +1,5 @@
 <template>
-	<div class="hello">
+	<div class="login">
 		<h1>LOGIN</h1>
 		<div class="form">
 			<form>
@@ -40,6 +40,7 @@
 				.then(response => {
 					if (response && response.data && response.data.token) {
 						localStorage.token = response.data.token
+						localStorage.userType = response.data.type
 						this.$router.push('/home')
 					} else {
 						alert('Login inválido')
