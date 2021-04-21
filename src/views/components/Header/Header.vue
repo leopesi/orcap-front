@@ -20,9 +20,7 @@
 		},
 		methods: {
 			logout() {
-				delete localStorage.token
-				delete localStorage.userType
-				Methods.openPage(this, '')
+				Methods.logout(this)
 			}
 		}
 	}

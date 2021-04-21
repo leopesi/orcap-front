@@ -8,18 +8,19 @@ import axios from 'axios'
 Vue.config.productionTip = false
 
 const router = new Router({
-  routes
+	routes,
 })
 
 Vue.use(VueI18n)
 const i18n = new VueI18n({
-  locale: 'pt-br'
+	locale: 'pt-br',
 })
 
 axios.defaults.baseURL = 'http://localhost:3333'
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token
 
 new Vue({
-  router,
-  i18n,
-  render: h => h(App),
+	router,
+	i18n,
+	render: (h) => h(App),
 }).$mount('#app')
