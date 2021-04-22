@@ -3,6 +3,9 @@ export default {
 	'pt-br': {
 		title: 'Cadastro de Usuários',
 		id: 'Id',
-		name: 'Nome'
+		name: 'Nome',
+		phone: 'Telefone',
+		mail: 'Email',
+		password: 'Senha'
 	}
 }

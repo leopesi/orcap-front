@@ -1,20 +1,43 @@
 <template>
 	<div class="home">
-		<Form>
+		<Form @save="saveItem">
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.form.id">
 				<div class="col">
 					<div class="form-control">
 						<label>{{ $t('id') }}</label>
-						<input v-model="form.id" type="text" />
+						<input v-model="form.id" type="text" disabled />
+					</div>
+				</div>
+				<div class="col"></div>
+			</div>
+			<div class="row" v-if="!this.form.id">
+				<div class="col">
+					<div class="form-control">
+						<label>{{ $t('mail') }}</label>
+						<input v-model="form.mail" type="text" />
 					</div>
 				</div>
 				<div class="col">
 					<div class="form-control">
+						<label>{{ $t('password') }}</label>
+						<input v-model="form.password" type="text" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="form-control">
 						<label>{{ $t('name') }}</label>
 						<input v-model="form.name" type="text" />
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-control">
+						<label>{{ $t('phone') }}</label>
+						<input v-model="form.phone" type="text" />
 					</div>
 				</div>
 			</div>
@@ -35,7 +58,7 @@
 		data() {
 			return {
 				form: {
-					id: 0,
+					id: null,
 					name: '',
 				},
 			}
@@ -45,10 +68,23 @@
 		},
 		methods: {
 			loadItem() {
-				console.log(this.id)
 				Users.getUser(this.id, (result) => {
-					this.form = result.data
+					this.form = {
+						id: result.data.id,
+						name: result.data.name,
+					}
 				})
+			},
+			saveItem() {
+				if (this.form.id) {
+					Users.updateUser(this.form, (result) => {
+						console.log(result)
+					})
+				} else {
+					Users.insertUser(this.form, (result) => {
+						console.log(result)
+					})
+				}
 			},
 		},
 	}
