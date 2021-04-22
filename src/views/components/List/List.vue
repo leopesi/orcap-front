@@ -10,7 +10,11 @@
 				</tr>
 			</thead>
 			<tbody slot="body">
-				<tr v-for="(item, i) in this.itens" :key="i">
+				<tr
+					v-for="(item, i) in this.itens"
+					:key="i"
+					@click="buttonEdit(item.id)"
+				>
 					<td v-for="(col, c) in cols" :key="c">
 						{{ item[col] }}
 					</td>
@@ -20,7 +24,7 @@
 			</tbody>
 		</table>
 		<div class="list-buttons">
-			<button>Novo</button>
+			<button @click="buttonNew">Novo</button>
 		</div>
 	</div>
 </template>
@@ -33,6 +37,13 @@
 		props: { cols: Array, itens: Array },
 		i18n: { messages },
 		mounted() {},
-		methods: {},
+		methods: {
+			buttonNew() {
+				this.$emit('new', 0)
+			},
+			buttonEdit(id) {
+				this.$emit('edit', id)
+			},
+		},
 	}
 </script>

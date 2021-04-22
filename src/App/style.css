@@ -36,3 +36,16 @@ body {
 	padding: 48px;
 	width: 100%;
 }
+
+#app .row {
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+}
+
+#app .col {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	padding: 16px;
+}

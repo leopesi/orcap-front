@@ -1,24 +1,19 @@
 <template>
 	<div class="list">
-		<table>
-			<tr>
-				<td>
-					<slot name="header"/>
-				</td>
-			</tr>
-		</table>
+		<h1><slot name="title" /></h1>
+		<form class="form">
+			<slot name="default" />
+		</form>
 	</div>
 </template>
 
 <script>
-	
 	import messages from './messages'
 	import './style.css'
 	export default {
 		name: 'List',
 		i18n: { messages },
 		mounted() {},
-		methods: {
-		},
+		methods: {},
 	}
 </script>
