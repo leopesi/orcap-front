@@ -48,11 +48,17 @@
 				</div>
 			</div>
 		</Form>
+		<Alert
+			:title="this.alert.title"
+			:message="this.alert.message"
+			@close="alert = {}"
+		/>
 	</div>
 </template>
 
 <script>
 	import Form from '../../components/Form/Form'
+	import Alert from '../../components/Alert/Alert'
 	import Users from '../../../controllers/users'
 
 	import messages from './messages'
@@ -60,13 +66,14 @@
 		name: 'UserForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form },
+		components: { Form, Alert },
 		data() {
 			return {
 				form: {
 					id: null,
 					name: '',
 				},
+				alert: {},
 			}
 		},
 		mounted() {
@@ -86,7 +93,10 @@
 			saveItem() {
 				if (this.form.id) {
 					Users.updateUser(this.form, (result) => {
-						console.log(result)
+						this.alert = {
+							title: 'Salvar Usuário',
+							message: result.status,
+						}
 					})
 				} else {
 					Users.insertUser(this.form, (result) => {
