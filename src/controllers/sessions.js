@@ -16,4 +16,49 @@ export default {
 				}
 			})
 	},
+
+	sessions(callback) {
+		axios.get('/sessions')
+		.then(response => {
+			console.log(response)
+			if (response && response.data) {
+				callback(response.data)
+			} else {
+				callback({})
+			}
+		})
+	},
+
+	getSession(id, callback) {
+		axios.get('/sessions/' + id)
+		.then(response => {
+			if (response && response.data) {
+				callback(response.data)
+			} else {
+				callback({})
+			}
+		})
+	},
+
+	insertSession(data, callback) {
+		axios.post('/sessions/', data)
+		.then(response => {
+			if (response && response.data) {
+				callback(response.data)
+			} else {
+				callback({})
+			}
+		})
+	},
+
+	updateSession(data, callback) {
+		axios.put('/sessions/' + data.id, data)
+		.then(response => {
+			if (response && response.data) {
+				callback(response.data)
+			} else {
+				callback({})
+			}
+		})
+	}
 }

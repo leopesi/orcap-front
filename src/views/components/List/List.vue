@@ -4,7 +4,16 @@
 		<table slot="table" cellpadding="0" cellspacing="0">
 			<thead>
 				<tr>
-					<th v-for="(col, i) in this.cols" :key="i">{{ col }}</th>
+					<th v-for="(col, i) in this.cols" :key="i">
+						<div v-if="typeof col === 'string'">{{ col }}</div>
+						<div v-if="typeof col === 'object'">
+							<div v-for="(rels, j) in col" :key="j">
+								<div v-for="(itemcol, k) in rels" :key="k">
+									{{ itemcol }}
+								</div>
+							</div>
+						</div>
+					</th>
 					<th>{{ $t('edit') }}</th>
 					<th>{{ $t('delete') }}</th>
 				</tr>
@@ -16,7 +25,14 @@
 					@click="buttonEdit(item.id)"
 				>
 					<td v-for="(col, c) in cols" :key="c">
-						{{ item[col] }}
+						<div v-if="typeof col === 'string'">{{ item[col] }}</div>
+						<div v-if="typeof col === 'object'">
+							<div v-for="(rels, j) in col" :key="j">
+								<div v-for="(itemcol, k) in rels" :key="k">
+									{{ item[j] ? item[j][itemcol] : '' }}
+								</div>
+							</div>
+						</div>
 					</td>
 					<td>{{ $t('edit') }}</td>
 					<td>{{ $t('delete') }}</td>

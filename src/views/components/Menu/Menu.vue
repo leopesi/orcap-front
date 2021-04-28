@@ -3,6 +3,9 @@
 		<div class="link" @click="open('home')">
 			{{ $t('home') }}
 		</div>
+		<div class="link" @click="open('sessions')">
+			{{ $t('sessions') }}
+		</div>
 		<div class="link" @click="open('users')">
 			{{ $t('users') }}
 		</div>

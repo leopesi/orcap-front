@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<List :cols="this.cols" :itens="this.itens" @new="newUser" @edit="editUser">
+		<List :cols="this.cols" :itens="this.itens" @new="newSession" @edit="editSession">
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
@@ -11,16 +11,16 @@
 <script>
 	import Methods from '../../../helpers/methods'
 	import List from '../../components/List/List'
-	import Users from '../../../controllers/users'
+	import Sessions from '../../../controllers/sessions'
 
 	import messages from './messages'
 	export default {
-		name: 'UserList',
+		name: 'SessionList',
 		i18n: { messages },
 		components: { List },
 		data() {
 			return {
-				cols: ['id', 'name', 'phone', { sessions: ['mail']}],
+				cols: ['id', 'mail'],
 				itens: [],
 			}
 		},
@@ -29,15 +29,15 @@
 		},
 		methods: {
 			loadItens() {
-				Users.users((result) => {
+				Sessions.sessions((result) => {
 					this.itens = result.data
 				})
 			},
-			newUser() {
-				Methods.openPage(this, 'users/0')
+			newSession() {
+				Methods.openPage(this, 'sessions/0')
 			},
-			editUser(id) {
-				Methods.openPage(this, 'users/' + id)
+			editSession(id) {
+				Methods.openPage(this, 'sessions/' + id)
 			},
 		},
 	}
