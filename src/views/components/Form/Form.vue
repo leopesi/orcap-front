@@ -1,12 +1,16 @@
 <template>
 	<div class="list">
-		<h1><slot name="title" /></h1>
-		<form class="form">
-			<slot name="default" />
-			<div class="form-buttons">
-				<button @click="saveForm">{{ $t('save') }}</button>
+		<div class="card">
+			<div class="card-header">
+				<slot name="title" />
 			</div>
-		</form>
+			<form class="card-body">
+				<slot name="default" />
+			</form>
+			<div class="card-footer">
+				<button type="button" class="btn btn-primary" @click="saveForm">{{ $t('save') }}</button>
+			</div>
+		</div>
 	</div>
 </template>
 

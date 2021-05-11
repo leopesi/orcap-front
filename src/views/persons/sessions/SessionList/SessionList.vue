@@ -9,9 +9,9 @@
 </template>
 
 <script>
-	import Methods from '../../../helpers/methods'
-	import List from '../../components/List/List'
-	import Sessions from '../../../controllers/sessions'
+	import Methods from '../../../../helpers/methods'
+	import List from '../../../components/List/List'
+	import Sessions from '../../../../controllers/persons/sessions'
 
 	import messages from './messages'
 	export default {

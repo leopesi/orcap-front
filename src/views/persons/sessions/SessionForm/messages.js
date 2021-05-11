@@ -3,8 +3,8 @@ export default {
 	'pt-br': {
 		title: 'Cadastro de Sessão',
 		id: 'Id',
-		name: 'Nome',
-		phone: 'Telefone',
+		last_login: 'Último acesso',
+		active: 'Ativo',
 		mail: 'Email',
 		password: 'Senha'
 	}

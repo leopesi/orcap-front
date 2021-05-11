@@ -1,65 +1,61 @@
 <template>
 	<div class="home">
-		<Form @save="saveItem">
+		<Form @save="save">
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
 			<div class="row" v-if="this.form.id">
-				<div class="col">
-					<div class="form-control">
-						<label>{{ $t('id') }}</label>
-						<input v-model="form.id" type="text" disabled />
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="id">{{ $t('id') }}</label>
+						<input v-model="form.id" type="text" class="form-control" id="id" disabled />
 					</div>
 				</div>
-				<div class="col">
-					<div class="form-control">
-						<label>{{ $t('mail') }}</label>
-						<input v-model="form.mail" type="text" disabled />
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="mail">{{ $t('mail') }}</label>
+						<input v-model="form.mail" type="text" class="form-control" id="mail" />
 					</div>
 				</div>
 				<div class="col"></div>
 			</div>
 			<div class="row" v-if="!this.form.id">
 				<div class="col">
-					<div class="form-control">
-						<label>{{ $t('mail') }}</label>
-						<input v-model="form.mail" type="text" />
+					<div class="form-group">
+						<label for="mail">{{ $t('mail') }}</label>
+						<input v-model="form.mail" type="text" class="form-control" id="mail" />
 					</div>
 				</div>
 				<div class="col">
-					<div class="form-control">
+					<div class="form-group">
 						<label>{{ $t('password') }}</label>
-						<input v-model="form.password" type="text" />
+						<input v-model="form.password" type="text" class="form-control" id="mail" />
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
-					<div class="form-control">
-						<label>{{ $t('name') }}</label>
-						<input v-model="form.name" type="text" />
+					<div class="form-group">
+						<label for="name">{{ $t('name') }}</label>
+						<input v-model="form.name" type="text" class="form-control" id="name" />
 					</div>
 				</div>
 				<div class="col">
-					<div class="form-control">
-						<label>{{ $t('phone') }}</label>
-						<input v-model="form.phone" type="text" />
+					<div class="form-group">
+						<label for="phone">{{ $t('phone') }}</label>
+						<input v-model="form.phone" type="text" class="form-control" id="phone" />
 					</div>
 				</div>
 			</div>
 		</Form>
-		<Alert
-			:title="this.alert.title"
-			:message="this.alert.message"
-			@close="alert = {}"
-		/>
+		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
-	import Form from '../../components/Form/Form'
-	import Alert from '../../components/Alert/Alert'
-	import Users from '../../../controllers/users'
+	import Form from '../../../components/Form/Form'
+	import Alert from '../../../components/Alert/Alert'
+	import Users from '../../../../controllers/persons/users'
 
 	import messages from './messages'
 	export default {
@@ -77,10 +73,10 @@
 			}
 		},
 		mounted() {
-			this.loadItem()
+			this.load()
 		},
 		methods: {
-			loadItem() {
+			load() {
 				Users.getUser(this.id, (result) => {
 					this.form = {
 						id: result.data.id,
@@ -90,7 +86,7 @@
 					}
 				})
 			},
-			saveItem() {
+			save() {
 				if (this.form.id) {
 					Users.updateUser(this.form, (result) => {
 						this.alert = {

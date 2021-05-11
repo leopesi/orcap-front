@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<List :cols="this.cols" :itens="this.itens" @new="newUser" @edit="editUser">
+		<List :cols="this.cols" :itens="this.itens" @new="create" @edit="edit">
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
@@ -9,9 +9,9 @@
 </template>
 
 <script>
-	import Methods from '../../../helpers/methods'
-	import List from '../../components/List/List'
-	import Users from '../../../controllers/users'
+	import Methods from '../../../../helpers/methods'
+	import List from '../../../components/List/List'
+	import Users from '../../../../controllers/persons/users'
 
 	import messages from './messages'
 	export default {
@@ -25,18 +25,18 @@
 			}
 		},
 		mounted() {
-			this.loadItens()
+			this.load()
 		},
 		methods: {
-			loadItens() {
+			load() {
 				Users.users((result) => {
 					this.itens = result.data
 				})
 			},
-			newUser() {
+			create() {
 				Methods.openPage(this, 'users/0')
 			},
-			editUser(id) {
+			edit(id) {
 				Methods.openPage(this, 'users/' + id)
 			},
 		},
