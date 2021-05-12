@@ -1,6 +1,6 @@
 
 export default {
 	'pt-br': {
-		close: 'Sair'
+		title: 'Lista de Lojistas'
 	}
 }
