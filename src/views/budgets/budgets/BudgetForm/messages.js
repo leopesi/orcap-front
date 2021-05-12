@@ -6,20 +6,24 @@ export default {
 		client: 'Cliente',
 		date: 'Data',
 
+		loading: 'Reacanculando',
+
 		dimensions: 'Dimensões da piscina',
+		
 		length: 'Comprimento',
 		width: 'Largura',
-		m2facial: 'M2 Facial',
 		initial_depth: 'Profundidade Inicial',
 		final_depth: 'Profundidade Final',
-		average_depth: 'Profundidade Média',
 		sidewalk_width: 'Largura da Calçada',
+		// CALCULADOS
+		average_depth: 'Profundidade Média',
 		sidewalk_area: 'Área da calçada',
+		m2_facial: 'M2 Facial',
 		perimeter: 'Perimetro',
-		m2wall: 'M2 da Parede',
-		m2total: 'M2 Total',
-		m3total: 'M3 Total',
-		m3real: 'M3 real',
+		m2_wall: 'M2 da Parede',
+		m2_total: 'M2 Total',
+		m3_total: 'M3 Total',
+		m3_real: 'M3 real',
 
 	},
 }
