@@ -15,13 +15,13 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group mb-3">
-						<label for="client">Options</label>
+						<label for="client">{{ $t('client') }}</label>
 						<div class="input-group mb-3">
 							<select class="custom-select" id="client" v-model="form.client">
-								<option selected>Choose...</option>
-								<option value="1">One</option>
-								<option value="2">Two</option>
-								<option value="3">Three</option>
+								<option selected>{{ $t('choose') }}</option>
+								<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
+									{{ client.name }}
+								</option>
 							</select>
 							<div class="input-group-append">
 								<label class="input-group-text" for="client">{{ $t('new_client') }}</label>
@@ -44,7 +44,12 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<Dimensions :form="this.form"/>
+					<Dimensions :form="this.form" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 pt-4">
+					<Filters :form="this.form" />
 				</div>
 			</div>
 		</Form>
@@ -53,17 +58,19 @@
 </template>
 
 <script>
+	// import Budgets from '../../../../controllers/budgets/dimensions'
+	import Clients from '../../../../controllers/persons/clients'
+
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
-	import Logists from '../../../../controllers/persons/logists'
-
 	import Dimensions from '../Dimenions/Dimension'
+	import Filters from '../Filters/Filters'
 	import messages from './messages'
 	export default {
-		name: 'LogistForm',
+		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Dimensions },
+		components: { Form, Alert, Dimensions, Filters },
 		data() {
 			return {
 				form: {
@@ -79,6 +86,7 @@
 					perimeter: null,
 					pool_area: null,
 				},
+				clients: [],
 				alert: {},
 			}
 		},
@@ -87,28 +95,31 @@
 		},
 		methods: {
 			load() {
-				Logists.getLogist(this.id, (result) => {
-					this.form = {
-						id: result.data.id,
-						mail: result.data.sessions ? result.data.sessions.mail : '',
-						name: result.data.name,
-						phone: result.data.phone,
-					}
+				Clients.clients((result) => {
+					this.clients = result.data
 				})
+				// Logists.getLogist(this.id, (result) => {
+				// 	this.form = {
+				// 		id: result.data.id,
+				// 		mail: result.data.sessions ? result.data.sessions.mail : '',
+				// 		name: result.data.name,
+				// 		phone: result.data.phone,
+				// 	}
+				// })
 			},
 			save() {
-				if (this.form.id) {
-					Logists.updateLogist(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Usuário',
-							message: result.status,
-						}
-					})
-				} else {
-					Logists.insertLogist(this.form, (result) => {
-						console.log(result)
-					})
-				}
+				// if (this.form.id) {
+				// 	Logists.updateLogist(this.form, (result) => {
+				// 		this.alert = {
+				// 			title: 'Salvar Usuário',
+				// 			message: result.status,
+				// 		}
+				// 	})
+				// } else {
+				// 	Logists.insertLogist(this.form, (result) => {
+				// 		console.log(result)
+				// 	})
+				// }
 			},
 		},
 	}

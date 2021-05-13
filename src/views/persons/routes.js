@@ -13,6 +13,9 @@ import UserForm from './users/UserForm/UserForm'
 import LogistForm from './logists/LogistForm/LogistForm'
 import LogistList from './logists/LogistList/LogistList'
 
+import ClientForm from './clients/ClientForm/ClientForm'
+import ClientList from './clients/ClientList/ClientList'
+
 Vue.use(Router)
 
 export default [
@@ -24,4 +27,6 @@ export default [
 	{ path: '/users/:id', component: UserForm, props: true },
 	{ path: '/logists', component: LogistList },
 	{ path: '/logists/:id', component: LogistForm, props: true },
+	{ path: '/clients', component: ClientList },
+	{ path: '/clients/:id', component: ClientForm, props: true },
 ]

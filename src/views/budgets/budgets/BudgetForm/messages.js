@@ -6,6 +6,7 @@ export default {
 		client: 'Cliente',
 		date: 'Data',
 
+		choose: 'Escolha',
 		loading: 'Reacanculando',
 
 		dimensions: 'Dimensões da piscina',
@@ -25,5 +26,6 @@ export default {
 		m3_total: 'M3 Total',
 		m3_real: 'M3 real',
 
+		filters: 'Filtros'
 	},
 }
