@@ -2,8 +2,8 @@ import axios from 'axios'
 
 export default {
 
-	getFiltersByDimension(data, callback) {
-		axios.post('/filters-by-dimension', data)
+	getEnginesByDimension(data, callback) {
+		axios.post('/engines-by-dimension', data)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -13,8 +13,8 @@ export default {
 		})
 	},
 
-	filters(callback) {
-		axios.get('/filters')
+	engines(callback) {
+		axios.get('/engines')
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -24,8 +24,8 @@ export default {
 		})
 	},
 
-	getFilter(id, callback) {
-		axios.get('/filters/' + id)
+	getEngine(id, callback) {
+		axios.get('/engines/' + id)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -35,8 +35,8 @@ export default {
 		})
 	},
 
-	insertFilter(data, callback) {
-		axios.post('/filters/', data)
+	insertEngine(data, callback) {
+		axios.post('/engines/', data)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -46,8 +46,8 @@ export default {
 		})
 	},
 
-	updateFilter(data, callback) {
-		axios.put('/filters/' + data.id, data)
+	updateEngine(data, callback) {
+		axios.put('/engines/' + data.id, data)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)

@@ -52,6 +52,11 @@
 					<Filters :form="this.form" />
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-sm-12 pt-4">
+					<Engines :form="this.form" />
+				</div>
+			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
@@ -64,13 +69,16 @@
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Dimensions from '../Dimenions/Dimension'
-	import Filters from '../Filters/Filters'
+	import Filters from '../Equipments/Filters'
+	import Engines from '../Equipments/Engines'
+
 	import messages from './messages'
+	
 	export default {
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Dimensions, Filters },
+		components: { Form, Alert, Dimensions, Filters, Engines },
 		data() {
 			return {
 				form: {

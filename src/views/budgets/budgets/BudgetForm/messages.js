@@ -26,6 +26,13 @@ export default {
 		m3_total: 'M3 Total',
 		m3_real: 'M3 real',
 
-		filters: 'Filtros'
+		filters: 'Filtros',
+		filter: 'Filtro',
+		
+		engines: 'Motores',
+		engine: 'Motor',
+		description: 'Descrição',
+		cash_price: 'Preço a vista',
+		forward_price: 'Preço a prazo',
 	},
 }
