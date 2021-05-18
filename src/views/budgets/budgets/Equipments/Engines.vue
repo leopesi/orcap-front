@@ -62,7 +62,7 @@
 		},
 		methods: {
 			load() {
-				Engines.getEnginesByDimension(this.form, (result) => {
+				Engines.getEnginesByDimension(this.form.dimension, (result) => {
 					this.engines = {}
 					for (const i in result.data) {
 						this.engines[result.data[i].id] = result.data[i]

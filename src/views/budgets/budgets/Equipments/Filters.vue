@@ -1,5 +1,5 @@
 <template>
-	<div class="card" v-if="this.form">
+	<div class="card">
 		<div class="card-header">
 			{{ $t('filters') }}
 		</div>
@@ -62,7 +62,7 @@
 		},
 		methods: {
 			load() {
-				Filters.getFiltersByDimension(this.form, (result) => {
+				Filters.getFiltersByDimension(this.form.dimension, (result) => {
 					this.filters = {}
 					for (const i in result.data) {
 						this.filters[result.data[i].id] = result.data[i]

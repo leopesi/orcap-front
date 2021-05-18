@@ -14,14 +14,14 @@
 							v-model="form.length"
 							type="number"
 							step="0.01"
-							@keyup="calculate"
+							@change="calculate"
 						/>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="width">{{ $t('width') }}</label>
-						<input class="form-control" id="width" v-model="form.width" type="number" step="0.01" @keyup="calculate" />
+						<input class="form-control" id="width" v-model="form.width" type="number" step="0.01" @change="calculate" />
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -41,7 +41,7 @@
 							v-model="form.initial_depth"
 							type="number"
 							step="0.01"
-							@keyup="calculate"
+							@change="calculate"
 						/>
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 							v-model="form.final_depth"
 							type="number"
 							step="0.01"
-							@keyup="calculate"
+							@change="calculate"
 						/>
 					</div>
 				</div>
@@ -75,7 +75,7 @@
 							v-model="form.sidewalk_width"
 							type="number"
 							step="0.01"
-							@keyup="calculate"
+							@change="calculate"
 						/>
 					</div>
 				</div>
@@ -141,36 +141,42 @@
 		methods: {
 			calculate() {
 				if (this.interval) clearInterval(this.interval)
-				this.form.perimeter = this.$t('loading')
-				this.form.average_depth = this.$t('loading')
-				this.form.sidewalk_area = this.$t('loading')
-				this.form.m2_facial = this.$t('loading')
-				this.form.m2_wall = this.$t('loading')
-				this.form.m2_total = this.$t('loading')
-				this.form.m3_total = this.$t('loading')
-				this.form.m3_real = this.$t('loading')
-				this.interval = setInterval(() => {
-					Dimensions.calculate(this.form, (result) => {
-						this.form.perimeter = parseFloat(result.dimension.perimeter).toFixed(2)
-						this.form.average_depth = parseFloat(result.dimension.average_depth).toFixed(2)
-						this.form.sidewalk_area = parseFloat(result.dimension.sidewalk_area).toFixed(2)
-						this.form.m2_facial = parseFloat(result.dimension.m2_facial).toFixed(2)
-						this.form.m2_wall = parseFloat(result.dimension.m2_wall).toFixed(2)
-						this.form.m2_total = parseFloat(result.dimension.m2_total).toFixed(2)
-						this.form.m3_total = parseFloat(result.dimension.m3_total).toFixed(2)
-						this.form.m3_real = parseFloat(result.dimension.m3_real).toFixed(2)
+				if (this.form) {
+					this.form.perimeter = this.$t('loading')
+					this.form.average_depth = this.$t('loading')
+					this.form.sidewalk_area = this.$t('loading')
+					this.form.m2_facial = this.$t('loading')
+					this.form.m2_wall = this.$t('loading')
+					this.form.m2_total = this.$t('loading')
+					this.form.m3_total = this.$t('loading')
+					this.form.m3_real = this.$t('loading')
+					this.interval = setInterval(() => {
+						this.$emit('change')
+						Dimensions.calculate(this.form, (result) => {
+							if (result.dimension) {
+								this.form.perimeter = parseFloat(result.dimension.perimeter).toFixed(2)
+								this.form.average_depth = parseFloat(result.dimension.average_depth).toFixed(2)
+								this.form.sidewalk_area = parseFloat(result.dimension.sidewalk_area).toFixed(2)
+								this.form.m2_facial = parseFloat(result.dimension.m2_facial).toFixed(2)
+								this.form.m2_wall = parseFloat(result.dimension.m2_wall).toFixed(2)
+								this.form.m2_total = parseFloat(result.dimension.m2_total).toFixed(2)
+								this.form.m3_total = parseFloat(result.dimension.m3_total).toFixed(2)
+								this.form.m3_real = parseFloat(result.dimension.m3_real).toFixed(2)
 
-						this.form.perimeter = !isNaN(this.form.perimeter) ? this.form.perimeter : 0
-						this.form.average_depth = !isNaN(this.form.average_depth) ? this.average_depth.perimeter : 0
-						this.form.sidewalk_area = !isNaN(this.form.sidewalk_area) ? this.form.sidewalk_area : 0
-						this.form.m2_facial = !isNaN(this.form.m2_facial) ? this.form.m2_facial : 0
-						this.form.m2_wall = !isNaN(this.form.m2_wall) ? this.form.m2_wall : 0
-						this.form.m2_total = !isNaN(this.form.m2_total) ? this.form.m2_total : 0
-						this.form.m3_total = !isNaN(this.form.m3_total) ? this.form.m3_total : 0
-						this.form.m3_real = !isNaN(this.form.m3_real) ? this.form.m3_real : 0
-					})
-					clearInterval(this.interval)
-				}, 1000)
+								this.form.perimeter = !isNaN(this.form.perimeter) ? this.form.perimeter : 0
+								this.form.average_depth = !isNaN(this.form.average_depth) ? this.form.average_depth : 0
+								this.form.sidewalk_area = !isNaN(this.form.sidewalk_area) ? this.form.sidewalk_area : 0
+								this.form.m2_facial = !isNaN(this.form.m2_facial) ? this.form.m2_facial : 0
+								this.form.m2_wall = !isNaN(this.form.m2_wall) ? this.form.m2_wall : 0
+								this.form.m2_total = !isNaN(this.form.m2_total) ? this.form.m2_total : 0
+								this.form.m3_total = !isNaN(this.form.m3_total) ? this.form.m3_total : 0
+								this.form.m3_real = !isNaN(this.form.m3_real) ? this.form.m3_real : 0
+								this.$emit('changed')
+							}
+						})
+						clearInterval(this.interval)
+					}, 1000)
+				}
 			},
 		},
 	}

@@ -44,17 +44,17 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<Dimensions :form="this.form" />
+					<Dimensions :form="this.form" @change="showEquipments = false" @changed="changedDimension" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<Filters :form="this.form" />
+					<Filters :form="this.form" v-if="this.showEquipments" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<Engines :form="this.form" />
+					<Engines :form="this.form" v-if="this.showEquipments" />
 				</div>
 			</div>
 		</Form>
@@ -73,7 +73,7 @@
 	import Engines from '../Equipments/Engines'
 
 	import messages from './messages'
-	
+
 	export default {
 		name: 'BudgetForm',
 		props: { id: String },
@@ -96,6 +96,7 @@
 				},
 				clients: [],
 				alert: {},
+				showEquipments: false,
 			}
 		},
 		mounted() {
@@ -106,28 +107,20 @@
 				Clients.clients((result) => {
 					this.clients = result.data
 				})
-				// Logists.getLogist(this.id, (result) => {
-				// 	this.form = {
-				// 		id: result.data.id,
-				// 		mail: result.data.sessions ? result.data.sessions.mail : '',
-				// 		name: result.data.name,
-				// 		phone: result.data.phone,
-				// 	}
-				// })
 			},
-			save() {
-				// if (this.form.id) {
-				// 	Logists.updateLogist(this.form, (result) => {
-				// 		this.alert = {
-				// 			title: 'Salvar Usuário',
-				// 			message: result.status,
-				// 		}
-				// 	})
-				// } else {
-				// 	Logists.insertLogist(this.form, (result) => {
-				// 		console.log(result)
-				// 	})
-				// }
+			save() {},
+			changedDimension() {
+				this.form.dimension = {
+					width: this.form.width,
+					length: this.form.length,
+					initial_depth: this.form.initial_depth,
+					final_depth: this.form.final_depth,
+					sidewalk_width: this.form.sidewalk_width,
+				}
+				this.showEquipments = false
+				setTimeout(() => {
+					this.showEquipments = true
+				}, 1)
 			},
 		},
 	}
