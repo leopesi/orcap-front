@@ -1,17 +1,17 @@
 <template>
 	<div class="card">
 		<div class="card-header">
-			{{ $t('filters') }}
+			{{ $t('blankets') }}
 		</div>
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="form-group">
-						<label for="filter">{{ $t('filter') }}</label>
-						<select class="custom-select" id="filter" v-model="form.filter" @change="change">
+						<label for="blanket">{{ $t('blanket') }}</label>
+						<select class="custom-select" id="blanket" v-model="form.blanket" @change="change">
 							<option selected>{{ $t('choose') }}</option>
-							<option :value="filter.id" v-for="(filter, i) in this.filters" :key="i">
-								{{ filter.equipments.name }}
+							<option :value="blanket.id" v-for="(blanket, i) in this.blankets" :key="i">
+								{{ blanket.equipments.name }}
 							</option>
 						</select>
 					</div>
@@ -48,12 +48,12 @@
 	import messages from '../BudgetForm/messages'
 
 	export default {
-		name: 'Filters',
+		name: 'Blankets',
 		props: { form: Object },
 		i18n: { messages },
 		data() {
 			return {
-				filters: [],
+				blankets: [],
 				description: '',
 				cash_price: 0,
 				forward_price: 0,
@@ -64,23 +64,23 @@
 		},
 		methods: {
 			load() {
-				Equipments.getFiltersByDimension(this.form.dimension, (result) => {
-					this.filters = {}
+				Equipments.getBlanketsByDimension(this.form.dimension, (result) => {
+					this.blankets = {}
 					for (const i in result.data) {
-						this.filters[result.data[i].id] = result.data[i]
+						this.blankets[result.data[i].id] = result.data[i]
 					}
 					this.change()
 				})
 			},
 			change() {
-				if (this.filters[this.form.filter]) {
-					this.description = this.filters[this.form.filter].equipments.description
-					this.cash_price = this.filters[this.form.filter].equipments.cash_price
-					this.forward_price = this.filters[this.form.filter].equipments.forward_price
+				if (this.blankets[this.form.blanket]) {
+					this.description = this.blankets[this.form.blanket].equipments.description
+					this.cash_price = this.blankets[this.form.blanket].equipments.cash_price
+					this.forward_price = this.blankets[this.form.blanket].equipments.forward_price
 					if (!this.form.equipments) this.form.equipments = {}
-					this.form.equipments['filter'] = {
-						cash_price: this.filters[this.form.filter].equipments.cash_price,
-						forward_price: this.filters[this.form.filter].equipments.forward_price,
+					this.form.equipments['blanket'] = {
+						cash_price: this.blankets[this.form.blanket].equipments.cash_price,
+						forward_price: this.blankets[this.form.blanket].equipments.forward_price,
 					}
 					this.$emit('changed')
 				}

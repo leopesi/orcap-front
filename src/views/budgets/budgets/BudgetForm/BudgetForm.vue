@@ -48,13 +48,27 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-12 pt-4">
+				<div class="col-sm-6 pt-4">
 					<Filters :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
+				</div>
+				<div class="col-sm-6 pt-4">
+					<Engines :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-12 pt-4">
-					<Engines :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
+				<div class="col-sm-6 pt-4">
+					<Lids :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
+				</div>
+				<div class="col-sm-6 pt-4">
+					<Blankets :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6 pt-4">
+					<Profiles :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
+				</div>
+				<div class="col-sm-6 pt-4">
+					<Vinyls :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
 				</div>
 			</div>
 			<div class="row">
@@ -74,7 +88,13 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="forward_price">{{ $t('forward_price') }}</label>
-										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
+										<input
+											class="form-control"
+											id="forward_price"
+											type="text"
+											:value="this.form.forward_price"
+											disabled
+										/>
 									</div>
 								</div>
 							</div>
@@ -96,6 +116,10 @@
 	import Dimensions from '../Dimenions/Dimension'
 	import Filters from '../Equipments/Filters'
 	import Engines from '../Equipments/Engines'
+	import Lids from '../Equipments/Lids'
+	import Blankets from '../Equipments/Blankets'
+	import Profiles from '../Equipments/Profiles'
+	import Vinyls from '../Equipments/Vinyls'
 
 	import messages from './messages'
 
@@ -103,7 +127,7 @@
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Dimensions, Filters, Engines },
+		components: { Form, Alert, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls },
 		data() {
 			return {
 				form: {

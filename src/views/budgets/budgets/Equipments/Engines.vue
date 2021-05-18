@@ -5,7 +5,7 @@
 		</div>
 		<div class="card-body">
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-12">
 					<div class="form-group">
 						<label for="engine">{{ $t('engine') }}</label>
 						<select class="custom-select" id="engine" v-model="form.engine" @change="change">
@@ -16,7 +16,9 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-sm-6">
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
 					<div class="form-group">
 						<label for="description">{{ $t('description') }}</label>
 						<input class="form-control" id="description" type="text" :value="this.description" disabled />
@@ -42,7 +44,7 @@
 </template>
 
 <script>
-	import Engines from '../../../../controllers/equipments/engines'
+	import Equipments from '../../../../controllers/budgets/equipments'
 	import messages from '../BudgetForm/messages'
 
 	export default {
@@ -62,7 +64,7 @@
 		},
 		methods: {
 			load() {
-				Engines.getEnginesByDimension(this.form.dimension, (result) => {
+				Equipments.getEnginesByDimension(this.form.dimension, (result) => {
 					this.engines = {}
 					for (const i in result.data) {
 						this.engines[result.data[i].id] = result.data[i]

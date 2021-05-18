@@ -31,6 +31,19 @@ export default {
 		
 		engines: 'Motores',
 		engine: 'Motor',
+
+		lids: 'Tampas de Casa de Máquina',
+		lid: 'Tampas de Casa de Máquina',
+
+		blankets: 'Mantas',
+		blanket: 'Manta',
+
+		profiles: 'Perfis',
+		profile: 'Perfil',
+
+		vinyls: 'Vinis',
+		vinyl: 'Vinil',
+
 		description: 'Descrição',
 		cash_price: 'Preço a vista',
 		forward_price: 'Preço a prazo',

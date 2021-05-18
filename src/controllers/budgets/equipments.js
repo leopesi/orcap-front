@@ -13,8 +13,8 @@ export default {
 		})
 	},
 
-	filters(callback) {
-		axios.get('/filters')
+	getEnginesByDimension(data, callback) {
+		axios.post('/engines-by-dimension', data)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -24,8 +24,8 @@ export default {
 		})
 	},
 
-	getFilter(id, callback) {
-		axios.get('/filters/' + id)
+	getLidsByFilter(data, callback) {
+		axios.post('/lids-by-filter', data)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -35,8 +35,8 @@ export default {
 		})
 	},
 
-	insertFilter(data, callback) {
-		axios.post('/filters/', data)
+	getBlanketsByDimension(data, callback) {
+		axios.post('/blankets-by-dimension', data)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -46,8 +46,8 @@ export default {
 		})
 	},
 
-	updateFilter(data, callback) {
-		axios.put('/filters/' + data.id, data)
+	getProfilesByDimension(data, callback) {
+		axios.post('/profiles-by-dimension', data)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -55,6 +55,17 @@ export default {
 				callback({})
 			}
 		})
-	}
+	},
+
+	getVinylsByDimension(data, callback) {
+		axios.post('/vinyls-by-dimension', data)
+		.then(response => {
+			if (response && response.data) {
+				callback(response.data)
+			} else {
+				callback({})
+			}
+		})
+	},
 
 }
