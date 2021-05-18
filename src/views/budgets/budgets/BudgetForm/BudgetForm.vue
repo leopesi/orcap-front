@@ -49,12 +49,37 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<Filters :form="this.form" v-if="this.showEquipments" />
+					<Filters :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<Engines :form="this.form" v-if="this.showEquipments" />
+					<Engines :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 pt-4">
+					<div class="card" v-if="this.form">
+						<div class="card-header">
+							{{ $t('totals') }}
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="cash_price">{{ $t('cash_price') }}</label>
+										<input class="form-control" id="cash_price" type="text" :value="this.form.cash_price" disabled />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="forward_price">{{ $t('forward_price') }}</label>
+										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</Form>
@@ -121,6 +146,14 @@
 				setTimeout(() => {
 					this.showEquipments = true
 				}, 1)
+			},
+			changedValues() {
+				this.form.cash_price = 0
+				this.form.forward_price = 0
+				for (const i in this.form.equipments) {
+					this.form.cash_price += parseFloat(this.form.equipments[i].cash_price)
+					this.form.forward_price += parseFloat(this.form.equipments[i].forward_price)
+				}
 			},
 		},
 	}

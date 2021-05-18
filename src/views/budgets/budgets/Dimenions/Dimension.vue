@@ -14,14 +14,14 @@
 							v-model="form.length"
 							type="number"
 							step="0.01"
-							@change="calculate"
+							@keyup="calculate"
 						/>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="width">{{ $t('width') }}</label>
-						<input class="form-control" id="width" v-model="form.width" type="number" step="0.01" @change="calculate" />
+						<input class="form-control" id="width" v-model="form.width" type="number" step="0.01" @keyup="calculate" />
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -41,7 +41,7 @@
 							v-model="form.initial_depth"
 							type="number"
 							step="0.01"
-							@change="calculate"
+							@keyup="calculate"
 						/>
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 							v-model="form.final_depth"
 							type="number"
 							step="0.01"
-							@change="calculate"
+							@keyup="calculate"
 						/>
 					</div>
 				</div>
@@ -75,7 +75,7 @@
 							v-model="form.sidewalk_width"
 							type="number"
 							step="0.01"
-							@change="calculate"
+							@keyup="calculate"
 						/>
 					</div>
 				</div>

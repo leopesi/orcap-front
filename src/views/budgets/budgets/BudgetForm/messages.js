@@ -34,5 +34,7 @@ export default {
 		description: 'Descrição',
 		cash_price: 'Preço a vista',
 		forward_price: 'Preço a prazo',
+
+		totals: 'Totais',
 	},
 }

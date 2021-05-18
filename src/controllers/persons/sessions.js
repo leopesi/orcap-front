@@ -20,7 +20,6 @@ export default {
 	sessions(callback) {
 		axios.get('/sessions')
 		.then(response => {
-			console.log(response)
 			if (response && response.data) {
 				callback(response.data)
 			} else {

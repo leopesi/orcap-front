@@ -75,6 +75,12 @@
 					this.description = this.engines[this.form.engine].equipments.description
 					this.cash_price = this.engines[this.form.engine].equipments.cash_price
 					this.forward_price = this.engines[this.form.engine].equipments.forward_price
+					if (!this.form.equipments) this.form.equipments = {}
+					this.form.equipments['engine'] = {
+						cash_price: this.engines[this.form.engine].equipments.cash_price,
+						forward_price: this.engines[this.form.engine].equipments.forward_price,
+					}
+					this.$emit('changed')
 				}
 			},
 		},

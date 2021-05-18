@@ -3,7 +3,6 @@ import axios from 'axios'
 export default {
 
 	logists(callback) {
-		console.log('logista')
 		axios.get('/logists')
 		.then(response => {
 			if (response && response.data) {
