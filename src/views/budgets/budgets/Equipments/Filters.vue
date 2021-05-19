@@ -11,7 +11,7 @@
 						<select class="custom-select" id="filter" v-model="form.filter" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="filter.id" v-for="(filter, i) in this.filters" :key="i">
-								{{ filter.equipments.name }}
+								{{ filter.equipments.name }} / {{ filter.brands.name }}
 							</option>
 						</select>
 					</div>

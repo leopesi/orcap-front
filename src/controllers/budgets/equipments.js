@@ -6,6 +6,7 @@ export default {
 		axios.post('/filters-by-dimension', data)
 		.then(response => {
 			if (response && response.data) {
+				console.log(response.data)
 				callback(response.data)
 			} else {
 				callback({})
@@ -24,8 +25,8 @@ export default {
 		})
 	},
 
-	getLidsByFilter(data, callback) {
-		axios.post('/lids-by-filter', data)
+	getLidsByFilters(data, callback) {
+		axios.post('/lids-by-filters', data)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
