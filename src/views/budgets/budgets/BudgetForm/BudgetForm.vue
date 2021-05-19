@@ -48,26 +48,22 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-6 pt-4">
+				<div class="col-sm-12 pt-4">
 					<Filters :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
 				</div>
-				<div class="col-sm-6 pt-4">
+				<div class="col-sm-12 pt-4">
 					<Engines :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6 pt-4">
+				<div class="col-sm-12 pt-4">
 					<Lids :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
 				</div>
-				<div class="col-sm-6 pt-4">
+				<div class="col-sm-12 pt-4">
 					<Blankets :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6 pt-4">
+				<div class="col-sm-12 pt-4">
 					<Profiles :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
 				</div>
-				<div class="col-sm-6 pt-4">
+				<div class="col-sm-12 pt-4">
 					<Vinyls :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
 				</div>
 			</div>

@@ -39,6 +39,20 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="cash_price">{{ $t('cash_price') }} {{ $t('total') }}</label>
+						<input class="form-control" id="cash_price" type="text" :value="this.cash_price_total" disabled />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="forward_price">{{ $t('forward_price') }} {{ $t('total') }}</label>
+						<input class="form-control" id="forward_price" type="text" :value="this.forward_price_total" disabled />
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -57,6 +71,8 @@
 				description: '',
 				cash_price: 0,
 				forward_price: 0,
+				cash_price_total: 0,
+				forward_price_total: 0,
 			}
 		},
 		mounted() {
@@ -77,10 +93,12 @@
 					this.description = this.vinyls[this.form.vinyl].equipments.description
 					this.cash_price = this.vinyls[this.form.vinyl].equipments.cash_price
 					this.forward_price = this.vinyls[this.form.vinyl].equipments.forward_price
+					this.cash_price_total = this.vinyls[this.form.vinyl].equipments.cash_price * this.form.m2_total
+					this.forward_price_total = this.vinyls[this.form.vinyl].equipments.forward_price * this.form.m2_total
 					if (!this.form.equipments) this.form.equipments = {}
 					this.form.equipments['vinyl'] = {
-						cash_price: this.vinyls[this.form.vinyl].equipments.cash_price,
-						forward_price: this.vinyls[this.form.vinyl].equipments.forward_price,
+						cash_price: this.vinyls[this.form.vinyl].equipments.cash_price * this.form.m2_total,
+						forward_price: this.vinyls[this.form.vinyl].equipments.forward_price * this.form.m2_total,
 					}
 					this.$emit('changed')
 				}

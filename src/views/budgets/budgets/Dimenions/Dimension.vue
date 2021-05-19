@@ -5,7 +5,7 @@
 		</div>
 		<div class="card-body">
 			<div class="row">
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="length">{{ $t('length') }}</label>
 						<input
@@ -18,21 +18,13 @@
 						/>
 					</div>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="width">{{ $t('width') }}</label>
 						<input class="form-control" id="width" v-model="form.width" type="number" step="0.01" @keyup="calculate" />
 					</div>
 				</div>
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="m2_facial">{{ $t('m2_facial') }}</label>
-						<input class="form-control" id="m2_facial" v-model="form.m2_facial" type="text" disabled />
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="initial_depth">{{ $t('initial_depth') }}</label>
 						<input
@@ -45,7 +37,7 @@
 						/>
 					</div>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="final_depth">{{ $t('final_depth') }}</label>
 						<input
@@ -58,15 +50,9 @@
 						/>
 					</div>
 				</div>
-				<div class="col-sm-4">
-					<div class="form-group">
-						<label for="average_depth">{{ $t('average_depth') }}</label>
-						<input class="form-control" id="average_depth" v-model="form.average_depth" type="text" disabled />
-					</div>
-				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="sidewalk_width">{{ $t('sidewalk_width') }}</label>
 						<input
@@ -79,26 +65,38 @@
 						/>
 					</div>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="sidewalk_area">{{ $t('sidewalk_area') }}</label>
 						<input class="form-control" id="sidewalk_area" v-model="form.sidewalk_area" type="text" disabled />
 					</div>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="perimeter">{{ $t('perimeter') }}</label>
 						<input class="form-control" id="perimeter" v-model="form.perimeter" type="text" disabled />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="average_depth">{{ $t('average_depth') }}</label>
+						<input class="form-control" id="average_depth" v-model="form.average_depth" type="text" disabled />
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="form-group">
+						<label for="m2_facial">{{ $t('m2_facial') }}</label>
+						<input class="form-control" id="m2_facial" v-model="form.m2_facial" type="text" disabled />
+					</div>
+				</div>
+				<!-- <div class="col-sm-3">
+					<div class="form-group">
 						<label for="m2_wall">{{ $t('m2_wall') }}</label>
 						<input class="form-control" id="m2_wall" v-model="form.m2_wall" type="text" disabled />
 					</div>
-				</div>
+				</div> -->
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="m2_total">{{ $t('m2_total') }}</label>

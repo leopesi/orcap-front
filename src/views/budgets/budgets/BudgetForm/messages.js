@@ -48,6 +48,7 @@ export default {
 		cash_price: 'Preço a vista',
 		forward_price: 'Preço a prazo',
 
+		total: 'Total',
 		totals: 'Totais',
 	},
 }
