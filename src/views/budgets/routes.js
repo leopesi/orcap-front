@@ -8,6 +8,6 @@ Vue.use(Router)
 
 export default [
 	{ path: '/budgets', component: BudgetList },
-	{ path: '/budgets/:id', component: BudgetForm, props: true },
-	{ path: '/new-budgets', component: BudgetForm },
+	{ path: '/budget/:id', component: BudgetForm, props: true },
+	{ path: '/budget', component: BudgetForm },
 ]

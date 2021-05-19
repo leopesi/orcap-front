@@ -4,6 +4,10 @@ export default {
 		id: 'Id',
 		new_client: 'Novo Cliente',
 		client: 'Cliente',
+		seller: 'Vendedor',
+		payment: 'Formas de pagamento',
+		status: 'Status',
+		type: 'Tipo',
 		date: 'Data',
 
 		choose: 'Escolha',

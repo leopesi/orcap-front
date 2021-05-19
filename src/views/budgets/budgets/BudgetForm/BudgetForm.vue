@@ -15,9 +15,9 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group mb-3">
-						<label for="client">{{ $t('client') }}</label>
+						<label for="client_id">{{ $t('client') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="client" v-model="form.client">
+							<select class="custom-select" id="client_id" v-model="form.client_id">
 								<option selected>{{ $t('choose') }}</option>
 								<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
 									{{ client.name }}
@@ -30,6 +30,62 @@
 					</div>
 				</div>
 				<div class="col-sm-6">
+					<div class="form-group mb-3">
+						<label for="seller_id">{{ $t('seller') }}</label>
+						<div class="input-group mb-3">
+							<select class="custom-select" id="seller_id" v-model="form.seller_id">
+								<option selected>{{ $t('choose') }}</option>
+								<option :value="seller.id" v-for="(seller, i) in this.sellers" :key="i">
+									{{ seller.name }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group mb-3">
+						<label for="payment_id">{{ $t('payment') }}</label>
+						<div class="input-group mb-3">
+							<select class="custom-select" id="payment_id" v-model="form.payment_id">
+								<option selected>{{ $t('choose') }}</option>
+								<option :value="payment.id" v-for="(payment, i) in this.payments" :key="i">
+									{{ payment.name }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group mb-3">
+						<label for="status_budget_id">{{ $t('status') }}</label>
+						<div class="input-group mb-3">
+							<select class="custom-select" id="status_budget_id" v-model="form.status_budget_id">
+								<option selected>{{ $t('choose') }}</option>
+								<option :value="status.id" v-for="(status, i) in this.status_budget" :key="i">
+									{{ status.name }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group mb-3">
+						<label for="type_budget_id">{{ $t('type') }}</label>
+						<div class="input-group mb-3">
+							<select class="custom-select" id="type_budget_id" v-model="form.type_budget_id">
+								<option selected>{{ $t('choose') }}</option>
+								<option :value="type.id" v-for="(type, i) in this.types_budget" :key="i">
+									{{ type.name }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="date">{{ $t('date') }}</label>
 						<input
@@ -104,7 +160,7 @@
 </template>
 
 <script>
-	// import Budgets from '../../../../controllers/budgets/dimensions'
+	import Budgets from '../../../../controllers/budgets/budgets'
 	import Clients from '../../../../controllers/persons/clients'
 
 	import Form from '../../../components/Form/Form'
@@ -128,7 +184,12 @@
 			return {
 				form: {
 					id: null,
-					client: null,
+					client_id: null,
+					logist_id: null,
+					seller_id: null,
+					format_id: null,
+					status_budget_id: null,
+					type_budget_id: null,
 					date: null,
 					length: null,
 					width: null,
@@ -140,6 +201,10 @@
 					pool_area: null,
 				},
 				clients: [],
+				sellers: [],
+				payments: [],
+				status_budget: [],
+				types_budget: [],
 				alert: {},
 				showEquipments: false,
 			}
@@ -149,11 +214,22 @@
 		},
 		methods: {
 			load() {
+				console.log(this.id)
+				if (this.id) {
+					Budgets.getBudget(this.id, (result) => {
+						console.log(result)
+						this.form = result.data
+					})
+				}
 				Clients.clients((result) => {
 					this.clients = result.data
 				})
 			},
-			save() {},
+			save() {
+				Budgets.insertBudget(this.form, (result) => {
+					console.log(result)
+				})
+			},
 			changedDimension() {
 				this.form.dimension = {
 					width: this.form.width,

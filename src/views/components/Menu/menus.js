@@ -1,6 +1,6 @@
 export default {
 	budgets: {
-		new_budgets: 'new-budgets',
+		new_budgets: 'budget',
 		list_budgets: 'budgets',
 	},
 	sessions: {
