@@ -11,6 +11,18 @@
 						<input class="form-control" id="id" v-model="form.id" type="text" disabled />
 					</div>
 				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="createdAt">{{ $t('createdAt') }}</label>
+						<input class="form-control" id="createdAt" v-model="form.createdAt" type="datetime-local" disabled />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="updatedAt">{{ $t('updatedAt') }}</label>
+						<input class="form-control" id="updatedAt" v-model="form.updatedAt" type="datetime-local" disabled />
+					</div>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
@@ -85,20 +97,6 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="date">{{ $t('date') }}</label>
-						<input
-							class="form-control"
-							id="date"
-							v-model="form.date"
-							type="date"
-							:disabled="this.form.id ? true : false"
-						/>
-					</div>
-				</div>
-			</div>
-			<div class="row">
 				<div class="col-sm-12">
 					<Dimensions :form="this.form" @change="showEquipments = false" @changed="changedDimension" />
 				</div>
@@ -161,7 +159,9 @@
 
 <script>
 	import Budgets from '../../../../controllers/budgets/budgets'
+	import Defaults from '../../../../controllers/budgets/defaults'
 	import Clients from '../../../../controllers/persons/clients'
+	import Sellers from '../../../../controllers/persons/sellers'
 
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
@@ -214,21 +214,42 @@
 		},
 		methods: {
 			load() {
-				console.log(this.id)
 				if (this.id) {
 					Budgets.getBudget(this.id, (result) => {
 						console.log(result)
 						this.form = result.data
+						this.form.createdAt = this.form.createdAt.split('.').reverse().slice(1).join('.')
+						this.form.updatedAt = this.form.updatedAt.split('.').reverse().slice(1).join('.')
 					})
 				}
+				Sellers.sellers((result) => {
+					this.sellers = result.data
+				})
 				Clients.clients((result) => {
 					this.clients = result.data
 				})
+				Defaults.statusBudgets((result) => {
+					this.status_budget = result.data
+				})
+				Defaults.typesBudgets((result) => {
+					this.types_budget = result.data
+				})
+				Defaults.payments((result) => {
+					this.payments = result.data
+				})
 			},
 			save() {
-				Budgets.insertBudget(this.form, (result) => {
-					console.log(result)
-				})
+				if (this.id) {
+					console.log(this.form)
+					Budgets.updateBudget(this.form, (result) => {
+						console.log(result)
+					})
+				} else {
+					delete this.form.id
+					Budgets.insertBudget(this.form, (result) => {
+						console.log(result)
+					})
+				}
 			},
 			changedDimension() {
 				this.form.dimension = {

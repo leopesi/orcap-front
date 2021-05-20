@@ -79,6 +79,7 @@
 					this.forward_price = this.filters[this.form.filter].equipments.forward_price
 					if (!this.form.equipments) this.form.equipments = {}
 					this.form.equipments['filter'] = {
+						id: this.filters[this.form.filter].id,
 						cash_price: this.filters[this.form.filter].equipments.cash_price,
 						forward_price: this.filters[this.form.filter].equipments.forward_price,
 					}

@@ -8,12 +8,10 @@
 				<thead class="thead-dark">
 					<tr>
 						<th v-for="(col, i) in this.cols" :key="i">
-							<div v-if="typeof col === 'string'">{{ col }}</div>
+							<div v-if="typeof col === 'string'">{{ $t(col) }}</div>
 							<div v-if="typeof col === 'object'">
 								<div v-for="(rels, j) in col" :key="j">
-									<div v-for="(itemcol, k) in rels" :key="k">
-										{{ itemcol }}
-									</div>
+									{{ $t(j) }}
 								</div>
 							</div>
 						</th>
@@ -46,13 +44,22 @@
 </template>
 
 <script>
+	import Methods from '../../../helpers/methods'
 	import messages from './messages'
 	import './style.css'
 	export default {
 		name: 'List',
-		props: { cols: Array, itens: Array },
+		props: { cols: Array, itens: Array, messages: Object },
 		i18n: { messages },
-		mounted() {},
+		beforeMount() {
+			const cols = this.cols
+			this.cols = []
+			for (const i in cols) {
+				if (cols[i] != 'id') this.cols.push(cols[i])
+			}
+			console.log(this.cols)
+			Methods.setLocaleMessage(this, messages, this.messages)
+		},
 		methods: {
 			buttonNew() {
 				this.$emit('new', 0)

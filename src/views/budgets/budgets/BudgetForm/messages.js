@@ -8,7 +8,9 @@ export default {
 		payment: 'Formas de pagamento',
 		status: 'Status',
 		type: 'Tipo',
-		date: 'Data',
+
+		updatedAt: 'Última Atualização',
+		createdAt: 'Data de Criação',
 
 		choose: 'Escolha',
 		loading: 'Reacanculando',

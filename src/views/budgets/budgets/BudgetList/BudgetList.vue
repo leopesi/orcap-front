@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<List :cols="this.cols" :itens="this.itens" @new="create" @edit="edit">
+		<List :cols="this.cols" :itens="this.itens" @new="create" :messages="this.messages" @edit="edit">
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
@@ -11,7 +11,7 @@
 <script>
 	import Methods from '../../../../helpers/methods'
 	import List from '../../../components/List/List'
-	import Logists from '../../../../controllers/persons/logists'
+	import Budgets from '../../../../controllers/budgets/budgets'
 
 	import messages from './messages'
 	export default {
@@ -20,8 +20,16 @@
 		components: { List },
 		data() {
 			return {
-				cols: ['id', 'name', 'phone', { sessions: ['mail']}],
+				cols: [
+					'id',
+					{ clients: ['name'] },
+					{ sellers: ['name'] },
+					{ payments: ['name'] },
+					{ types_budgets: ['name'] },
+					{ status_budgets: ['name'] },
+				],
 				itens: [],
+				messages
 			}
 		},
 		mounted() {
@@ -29,15 +37,15 @@
 		},
 		methods: {
 			load() {
-				Logists.logists((result) => {
+				Budgets.budgets((result) => {
 					this.itens = result.data
 				})
 			},
 			create() {
-				Methods.openPage(this, 'logists/0')
+				Methods.openPage(this, 'budget/0')
 			},
 			edit(id) {
-				Methods.openPage(this, 'logists/' + id)
+				Methods.openPage(this, 'budget/' + id)
 			},
 		},
 	}
