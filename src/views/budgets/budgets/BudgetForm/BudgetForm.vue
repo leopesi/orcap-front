@@ -158,6 +158,8 @@
 </template>
 
 <script>
+	import Methods from '../../../../helpers/methods'
+
 	import Budgets from '../../../../controllers/budgets/budgets'
 	import Defaults from '../../../../controllers/budgets/defaults'
 	import Clients from '../../../../controllers/persons/clients'
@@ -218,8 +220,16 @@
 					Budgets.getBudget(this.id, (result) => {
 						console.log(result)
 						this.form = result.data
-						this.form.createdAt = this.form.createdAt.split('.').reverse().slice(1).join('.')
-						this.form.updatedAt = this.form.updatedAt.split('.').reverse().slice(1).join('.')
+						this.form.createdAt = this.form.createdAt
+							.split('.')
+							.reverse()
+							.slice(1)
+							.join('.')
+						this.form.updatedAt = this.form.updatedAt
+							.split('.')
+							.reverse()
+							.slice(1)
+							.join('.')
 					})
 				}
 				Sellers.sellers((result) => {
@@ -248,6 +258,7 @@
 					delete this.form.id
 					Budgets.insertBudget(this.form, (result) => {
 						console.log(result)
+						Methods.openPage(this, 'budget/' + result.data.id)
 					})
 				}
 			},

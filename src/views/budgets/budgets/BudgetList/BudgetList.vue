@@ -21,7 +21,7 @@
 		data() {
 			return {
 				cols: [
-					'id',
+					// 'id',
 					{ clients: ['name'] },
 					{ sellers: ['name'] },
 					{ payments: ['name'] },
