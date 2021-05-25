@@ -12,9 +12,9 @@ export default {
 		updatedAt: 'Última Atualização',
 		createdAt: 'Data de Criação',
 
-		choose: 'Escolha',
 		loading: 'Reacanculando',
-
+		choose: 'Escolha',
+		
 		dimensions: 'Dimensões da piscina',
 		
 		length: 'Comprimento',

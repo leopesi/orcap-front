@@ -1,49 +1,19 @@
-import axios from 'axios'
+import Cruds from '../defaults/cruds'
 
 export default {
-
-	logists(callback) {
-		axios.get('/logists')
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	list(callback) {
+		Cruds.list('/logists/', (result) => callback(result))
 	},
 
-	getLogist(id, callback) {
-		axios.get('/logists/' + id)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	get(id, callback) {
+		Cruds.get('/logists/', id, (result) => callback(result))
 	},
 
-	insertLogist(data, callback) {
-		axios.post('/logists/', data)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	insert(data, callback) {
+		Cruds.insert('/logists/', data, (result) => callback(result))
 	},
 
-	updateLogist(data, callback) {
-		axios.put('/logists/' + data.id, data)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
-	}
-
+	update(data, callback) {
+		Cruds.update('/logists/', data, (result) => callback(result))
+	},
 }

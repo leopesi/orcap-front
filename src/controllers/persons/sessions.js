@@ -1,63 +1,33 @@
 import axios from 'axios'
+import Cruds from '../defaults/cruds'
 
 export default {
 	login(mail, password, callback) {
-		axios
-			.get('/login?mail=' + mail + '&password=' + password)
-			.then((response) => {
-				if (response && response.data && response.data.token) {
-					localStorage.token = response.data.token
-					localStorage.userType = response.data.type
-					axios.defaults.headers.common['Authorization'] =
-						'Bearer ' + response.data.token
-					callback(true)
-				} else {
-					callback(false)
-				}
-			})
-	},
-
-	sessions(callback) {
-		axios.get('/sessions')
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
+		axios.get('/login?mail=' + mail + '&password=' + password).then((response) => {
+			if (response && response.data && response.data.token) {
+				localStorage.token = response.data.token
+				localStorage.userType = response.data.type
+				axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
+				callback(true)
 			} else {
-				callback({})
+				callback(false)
 			}
 		})
 	},
 
-	getSession(id, callback) {
-		axios.get('/sessions/' + id)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	list(callback) {
+		Cruds.list('/sessions/', (result) => callback(result))
 	},
 
-	insertSession(data, callback) {
-		axios.post('/sessions/', data)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	get(id, callback) {
+		Cruds.get('/sessions/', id, (result) => callback(result))
 	},
 
-	updateSession(data, callback) {
-		axios.put('/sessions/' + data.id, data)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
-	}
+	insert(data, callback) {
+		Cruds.insert('/sessions/', data, (result) => callback(result))
+	},
+
+	update(data, callback) {
+		Cruds.update('/sessions/', data, (result) => callback(result))
+	},
 }

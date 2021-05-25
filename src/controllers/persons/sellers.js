@@ -1,49 +1,19 @@
-import axios from 'axios'
+import Cruds from '../defaults/cruds'
 
 export default {
-
-	sellers(callback) {
-		axios.get('/sellers')
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	list(callback) {
+		Cruds.list('/sellers/', (result) => callback(result))
 	},
 
-	getSeller(id, callback) {
-		axios.get('/sellers/' + id)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	get(id, callback) {
+		Cruds.get('/sellers/', id, (result) => callback(result))
 	},
 
-	insertSeller(data, callback) {
-		axios.post('/sellers/', data)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	insert(data, callback) {
+		Cruds.insert('/sellers/', data, (result) => callback(result))
 	},
 
-	updateSeller(data, callback) {
-		axios.put('/sellers/' + data.id, data)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
-	}
-
+	update(data, callback) {
+		Cruds.update('/sellers/', data, (result) => callback(result))
+	},
 }

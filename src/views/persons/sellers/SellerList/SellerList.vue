@@ -11,11 +11,11 @@
 <script>
 	import Methods from '../../../../helpers/methods'
 	import List from '../../../components/List/List'
-	import Clients from '../../../../controllers/persons/clients'
+	import Sellers from '../../../../controllers/persons/sellers'
 
 	import messages from './messages'
 	export default {
-		name: 'ClientList',
+		name: 'SellerList',
 		i18n: { messages },
 		components: { List },
 		data() {
@@ -29,7 +29,7 @@
 		},
 		methods: {
 			load() {
-				Clients.clients((result) => {
+				Sellers.clients((result) => {
 					this.itens = result.data
 				})
 			},

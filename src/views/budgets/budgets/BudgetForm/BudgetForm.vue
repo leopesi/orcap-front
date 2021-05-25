@@ -232,10 +232,10 @@
 							.join('.')
 					})
 				}
-				Sellers.sellers((result) => {
+				Sellers.list((result) => {
 					this.sellers = result.data
 				})
-				Clients.clients((result) => {
+				Clients.list((result) => {
 					this.clients = result.data
 				})
 				Defaults.statusBudgets((result) => {

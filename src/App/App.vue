@@ -10,19 +10,20 @@
 </template>
 
 <script>
-
 	import Methods from '../helpers/methods'
 
 	import Header from '../views/components/Header/Header'
 	import Footer from '../views/components/Footer/Footer'
 	import Menu from '../views/components/Menu/Menu'
 
+	import messages from './messages'
 	import './style.css'
 	import '../assets/css'
 
 	export default {
 		name: 'App',
 		components: { Header, Footer, Menu },
+		i18n: { messages },
 		data() {
 			return {
 				logged: false,

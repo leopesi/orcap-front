@@ -59,11 +59,11 @@
 <script>
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
-	import Clients from '../../../../controllers/persons/clients'
+	import Sellers from '../../../../controllers/persons/sellers'
 
 	import messages from './messages'
 	export default {
-		name: 'ClientForm',
+		name: 'SellerForm',
 		props: { id: String },
 		i18n: { messages },
 		components: { Form, Alert },
@@ -81,7 +81,7 @@
 		},
 		methods: {
 			load() {
-				Clients.getClient(this.id, (result) => {
+				Sellers.get(this.id, (result) => {
 					this.form = {
 						id: result.data.id,
 						mail: result.data.sessions ? result.data.sessions.mail : '',
@@ -92,14 +92,14 @@
 			},
 			save() {
 				if (this.form.id) {
-					Clients.updateClient(this.form, (result) => {
+					Sellers.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,
 						}
 					})
 				} else {
-					Clients.insertClient(this.form, (result) => {
+					Sellers.insert(this.form, (result) => {
 						console.log(result)
 					})
 				}

@@ -4,10 +4,13 @@
 			{{ $t('home') }}
 		</div>
 		<div class="menu-item" v-for="(header, i) in this.menus" :key="i">
-			<div class="menu-header" @click="changeMenu(i)">
+			<div class="menu-header" @click="changeMenu(i)" v-if="typeof header === 'object'">
 				{{ $t(i) }}
 			</div>
-			<div class="menu-body" v-if="actual == i">
+			<div class="menu-header" @click="open(i)" v-if="typeof header === 'string'">
+				{{ $t(i) }}
+			</div>
+			<div class="menu-body" v-if="actual == i && typeof header === 'object'">
 				<div class="link" @click="open(menu)" v-for="(menu, j) in header" :key="j">
 					{{ $t(j) }}
 				</div>
@@ -38,7 +41,7 @@
 			},
 			changeMenu(menu) {
 				this.actual = menu
-			}
+			},
 		},
 	}
 </script>

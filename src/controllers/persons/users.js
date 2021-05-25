@@ -1,49 +1,19 @@
-import axios from 'axios'
+import Cruds from '../defaults/cruds'
 
 export default {
-
-	users(callback) {
-		axios.get('/users')
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	list(callback) {
+		Cruds.list('/users/', (result) => callback(result))
 	},
 
-	getUser(id, callback) {
-		axios.get('/users/' + id)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	get(id, callback) {
+		Cruds.get('/users/', id, (result) => callback(result))
 	},
 
-	insertUser(data, callback) {
-		axios.post('/users/', data)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
+	insert(data, callback) {
+		Cruds.insert('/users/', data, (result) => callback(result))
 	},
 
-	updateUser(data, callback) {
-		axios.put('/users/' + data.id, data)
-		.then(response => {
-			if (response && response.data) {
-				callback(response.data)
-			} else {
-				callback({})
-			}
-		})
-	}
-
+	update(data, callback) {
+		Cruds.update('/users/', data, (result) => callback(result))
+	},
 }

@@ -81,7 +81,7 @@
 		},
 		methods: {
 			load() {
-				Clients.getClient(this.id, (result) => {
+				Clients.get(this.id, (result) => {
 					this.form = {
 						id: result.data.id,
 						mail: result.data.sessions ? result.data.sessions.mail : '',
@@ -92,14 +92,14 @@
 			},
 			save() {
 				if (this.form.id) {
-					Clients.updateClient(this.form, (result) => {
+					Clients.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,
 						}
 					})
 				} else {
-					Clients.insertClient(this.form, (result) => {
+					Clients.insert(this.form, (result) => {
 						console.log(result)
 					})
 				}
