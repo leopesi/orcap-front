@@ -1,11 +1,11 @@
 <template>
 	<div id="app">
-		<Header :logged="this.logged" />
+		<Header v-if="this.logged" />
 		<div class="body">
-			<Menu :logged="this.logged" />
+			<Menu v-if="this.logged" />
 			<router-view class="views"></router-view>
 		</div>
-		<Footer :logged="this.logged" />
+		<Footer v-if="this.logged" />
 	</div>
 </template>
 

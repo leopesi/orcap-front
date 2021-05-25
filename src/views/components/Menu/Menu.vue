@@ -1,5 +1,5 @@
 <template>
-	<div class="menu" v-if="this.logged">
+	<div class="menu" v-if="this.show">
 		<div class="menu-header" @click="open('home')">
 			{{ $t('home') }}
 		</div>
@@ -26,15 +26,17 @@
 	import './style.css'
 	export default {
 		name: 'Menu',
-		props: { logged: Boolean },
 		i18n: { messages },
 		data() {
 			return {
 				menus: Menus,
 				actual: Object.keys(Menus)[0],
+				show: localStorage.userType ? true : false,
 			}
 		},
-		mounted() {},
+		mounted() {
+			this.show = localStorage.userType ? true : false
+		},
 		methods: {
 			open(page) {
 				Methods.openPage(this, page)
