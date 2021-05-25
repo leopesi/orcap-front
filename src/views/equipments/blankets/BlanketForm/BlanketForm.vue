@@ -49,8 +49,8 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="max_capacity">{{ $t('max_capacity') }}</label>
-						<input class="form-control" id="max_capacity" v-model="form.max_capacity" type="number" />
+						<label for="m2_size">{{ $t('m2_size') }}</label>
+						<input class="form-control" id="m2_size" v-model="form.m2_size" type="number" />
 					</div>
 				</div>
 			</div>
@@ -62,9 +62,7 @@
 <script>
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
-	import Filters from '../../../../controllers/equipments/filters'
-	import Engines from '../../../../controllers/equipments/engines'
-	import Lids from '../../../../controllers/equipments/lids'
+	import Blankets from '../../../../controllers/equipments/blankets'
 	import Providers from '../../../../controllers/basics/providers'
 	import Brands from '../../../../controllers/basics/brands'
 
@@ -82,8 +80,6 @@
 				},
 				providers: [],
 				brands: [],
-				engines: [],
-				lids: [],
 				alert: {},
 			}
 		},
@@ -92,43 +88,36 @@
 		},
 		methods: {
 			load() {
-				Filters.get(this.id, (filter) => {
-					console.log(filter)
+				Blankets.get(this.id, (blanket) => {
 					this.form = {
-						id: filter.data.id,
-						name: filter.data.equipments ? filter.data.equipments.name : '',
-						provider_id: filter.data.providers.id,
-						brand_id: filter.data.brands.id,
-						engine_id: filter.data.engine_id,
-						lid_id: filter.data.lid_id,
-						max_capacity: filter.data.max_capacity,
+						id: blanket.data.id,
+						name: blanket.data.equipments ? blanket.data.equipments.name : '',
+						provider_id: blanket.data.providers.id,
+						brand_id: blanket.data.brands.id,
+						m2_size: blanket.data.m2_size,
 					}
 					Providers.list((providers) => {
 						this.providers = providers.data
 						Brands.list((brands) => {
 							this.brands = brands.data
-							Engines.list((engines) => {
-								this.engines = engines.data
-								Lids.list((lids) => {
-									this.lids = lids.data
-								})
-							})
 						})
 					})
 				})
 			},
 			save() {
 				if (this.form.id) {
-					Filters.update(this.form, (result) => {
-						console.log(result)
+					Blankets.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,
 						}
 					})
 				} else {
-					Filters.insert(this.form, (result) => {
-						console.log(result)
+					Blankets.insert(this.form, (result) => {
+						this.alert = {
+							title: 'Salvar Usuário',
+							message: result.status,
+						}
 					})
 				}
 			},

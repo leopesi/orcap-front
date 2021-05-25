@@ -7,7 +7,7 @@ export default {
 		brand: 'Marca',
 		engine: 'Motor',
 		lid: 'Tampa da casa de máquinas',
-		max_capacity: 'Capacidade Máxima',
+		m2_size: 'Tamanho m2',
 		choose: 'Escolha',
 	},
 }

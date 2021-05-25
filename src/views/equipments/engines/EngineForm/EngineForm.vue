@@ -88,16 +88,13 @@
 		},
 		methods: {
 			load() {
-				Engines.get(this.id, (filter) => {
-					console.log(filter)
+				Engines.get(this.id, (engine) => {
 					this.form = {
-						id: filter.data.id,
-						name: filter.data.equipments ? filter.data.equipments.name : '',
-						provider_id: filter.data.providers.id,
-						brand_id: filter.data.brands.id,
-						engine_id: filter.data.engine_id,
-						lid_id: filter.data.lid_id,
-						max_capacity: filter.data.max_capacity,
+						id: engine.data.id,
+						name: engine.data.equipments ? engine.data.equipments.name : '',
+						provider_id: engine.data.providers.id,
+						brand_id: engine.data.brands.id,
+						max_capacity: engine.data.max_capacity,
 					}
 					Providers.list((providers) => {
 						this.providers = providers.data
@@ -110,7 +107,6 @@
 			save() {
 				if (this.form.id) {
 					Engines.update(this.form, (result) => {
-						console.log(result)
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,
@@ -118,7 +114,10 @@
 					})
 				} else {
 					Engines.insert(this.form, (result) => {
-						console.log(result)
+						this.alert = {
+							title: 'Salvar Usuário',
+							message: result.status,
+						}
 					})
 				}
 			},

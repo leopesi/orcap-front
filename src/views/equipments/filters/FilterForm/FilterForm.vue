@@ -121,7 +121,6 @@
 		methods: {
 			load() {
 				Filters.get(this.id, (filter) => {
-					console.log(filter)
 					this.form = {
 						id: filter.data.id,
 						name: filter.data.equipments ? filter.data.equipments.name : '',
@@ -148,7 +147,6 @@
 			save() {
 				if (this.form.id) {
 					Filters.update(this.form, (result) => {
-						console.log(result)
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,
@@ -156,7 +154,10 @@
 					})
 				} else {
 					Filters.insert(this.form, (result) => {
-						console.log(result)
+						this.alert = {
+							title: 'Salvar Usuário',
+							message: result.status,
+						}
 					})
 				}
 			},

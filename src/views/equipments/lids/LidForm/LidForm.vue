@@ -46,14 +46,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="max_capacity">{{ $t('max_capacity') }}</label>
-						<input class="form-control" id="max_capacity" v-model="form.max_capacity" type="number" />
-					</div>
-				</div>
-			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
@@ -62,8 +54,6 @@
 <script>
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
-	import Filters from '../../../../controllers/equipments/filters'
-	import Engines from '../../../../controllers/equipments/engines'
 	import Lids from '../../../../controllers/equipments/lids'
 	import Providers from '../../../../controllers/basics/providers'
 	import Brands from '../../../../controllers/basics/brands'
@@ -92,43 +82,35 @@
 		},
 		methods: {
 			load() {
-				Filters.get(this.id, (filter) => {
-					console.log(filter)
+				Lids.get(this.id, (lid) => {
 					this.form = {
-						id: filter.data.id,
-						name: filter.data.equipments ? filter.data.equipments.name : '',
-						provider_id: filter.data.providers.id,
-						brand_id: filter.data.brands.id,
-						engine_id: filter.data.engine_id,
-						lid_id: filter.data.lid_id,
-						max_capacity: filter.data.max_capacity,
+						id: lid.data.id,
+						name: lid.data.equipments ? lid.data.equipments.name : '',
+						provider_id: lid.data.providers.id,
+						brand_id: lid.data.brands.id,
 					}
 					Providers.list((providers) => {
 						this.providers = providers.data
 						Brands.list((brands) => {
 							this.brands = brands.data
-							Engines.list((engines) => {
-								this.engines = engines.data
-								Lids.list((lids) => {
-									this.lids = lids.data
-								})
-							})
 						})
 					})
 				})
 			},
 			save() {
 				if (this.form.id) {
-					Filters.update(this.form, (result) => {
-						console.log(result)
+					Lids.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,
 						}
 					})
 				} else {
-					Filters.insert(this.form, (result) => {
-						console.log(result)
+					Lids.insert(this.form, (result) => {
+						this.alert = {
+							title: 'Salvar Usuário',
+							message: result.status,
+						}
 					})
 				}
 			},

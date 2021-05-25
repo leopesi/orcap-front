@@ -11,11 +11,11 @@
 <script>
 	import Methods from '../../../../helpers/methods'
 	import List from '../../../components/List/List'
-	import Filters from '../../../../controllers/equipments/filters'
+	import Blankets from '../../../../controllers/equipments/blankets'
 
 	import messages from './messages'
 	export default {
-		name: 'FilterList',
+		name: 'BlanketList',
 		i18n: { messages },
 		components: { List },
 		data() {
@@ -30,15 +30,15 @@
 		},
 		methods: {
 			load() {
-				Filters.list((result) => {
+				Blankets.list((result) => {
 					this.itens = result.data
 				})
 			},
 			create() {
-				Methods.openPage(this, 'filters/0')
+				Methods.openPage(this, 'blankets/0')
 			},
 			edit(id) {
-				Methods.openPage(this, 'filters/' + id)
+				Methods.openPage(this, 'blankets/' + id)
 			},
 		},
 	}

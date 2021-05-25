@@ -93,7 +93,10 @@
 					})
 				} else {
 					Sessions.insertSession(this.form, (result) => {
-						console.log(result)
+						this.alert = {
+							title: 'Salvar Usuário',
+							message: result.status,
+						}
 					})
 				}
 			},

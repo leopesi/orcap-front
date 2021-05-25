@@ -11,11 +11,11 @@
 <script>
 	import Methods from '../../../../helpers/methods'
 	import List from '../../../components/List/List'
-	import Filters from '../../../../controllers/equipments/filters'
+	import Vinyls from '../../../../controllers/equipments/vinyls'
 
 	import messages from './messages'
 	export default {
-		name: 'FilterList',
+		name: 'VinylList',
 		i18n: { messages },
 		components: { List },
 		data() {
@@ -30,15 +30,15 @@
 		},
 		methods: {
 			load() {
-				Filters.list((result) => {
+				Vinyls.list((result) => {
 					this.itens = result.data
 				})
 			},
 			create() {
-				Methods.openPage(this, 'filters/0')
+				Methods.openPage(this, 'vinyls/0')
 			},
 			edit(id) {
-				Methods.openPage(this, 'filters/' + id)
+				Methods.openPage(this, 'vinyls/' + id)
 			},
 		},
 	}

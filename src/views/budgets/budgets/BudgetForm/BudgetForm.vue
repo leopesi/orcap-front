@@ -218,7 +218,6 @@
 			load() {
 				if (this.id) {
 					Budgets.getBudget(this.id, (result) => {
-						console.log(result)
 						this.form = result.data
 						this.form.createdAt = this.form.createdAt
 							.split('.')
@@ -250,14 +249,15 @@
 			},
 			save() {
 				if (this.id) {
-					console.log(this.form)
 					Budgets.updateBudget(this.form, (result) => {
-						console.log(result)
+						this.alert = {
+							title: 'Salvar Usuário',
+							message: result.status,
+						}
 					})
 				} else {
 					delete this.form.id
 					Budgets.insertBudget(this.form, (result) => {
-						console.log(result)
 						Methods.openPage(this, 'budget/' + result.data.id)
 					})
 				}

@@ -57,7 +57,6 @@
 			for (const i in cols) {
 				if (cols[i] != 'id') this.cols.push(cols[i])
 			}
-			console.log(this.cols)
 			Methods.setLocaleMessage(this, messages, this.messages)
 		},
 		methods: {

@@ -49,8 +49,8 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="max_capacity">{{ $t('max_capacity') }}</label>
-						<input class="form-control" id="max_capacity" v-model="form.max_capacity" type="number" />
+						<label for="size">{{ $t('size') }}</label>
+						<input class="form-control" id="size" v-model="form.size" type="number" />
 					</div>
 				</div>
 			</div>
@@ -62,9 +62,7 @@
 <script>
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
-	import Filters from '../../../../controllers/equipments/filters'
-	import Engines from '../../../../controllers/equipments/engines'
-	import Lids from '../../../../controllers/equipments/lids'
+	import Profiles from '../../../../controllers/equipments/profiles'
 	import Providers from '../../../../controllers/basics/providers'
 	import Brands from '../../../../controllers/basics/brands'
 
@@ -82,8 +80,6 @@
 				},
 				providers: [],
 				brands: [],
-				engines: [],
-				lids: [],
 				alert: {},
 			}
 		},
@@ -92,43 +88,36 @@
 		},
 		methods: {
 			load() {
-				Filters.get(this.id, (filter) => {
-					console.log(filter)
+				Profiles.get(this.id, (profile) => {
 					this.form = {
-						id: filter.data.id,
-						name: filter.data.equipments ? filter.data.equipments.name : '',
-						provider_id: filter.data.providers.id,
-						brand_id: filter.data.brands.id,
-						engine_id: filter.data.engine_id,
-						lid_id: filter.data.lid_id,
-						max_capacity: filter.data.max_capacity,
+						id: profile.data.id,
+						name: profile.data.equipments ? profile.data.equipments.name : '',
+						provider_id: profile.data.providers.id,
+						brand_id: profile.data.brands.id,
+						size: profile.data.size,
 					}
 					Providers.list((providers) => {
 						this.providers = providers.data
 						Brands.list((brands) => {
 							this.brands = brands.data
-							Engines.list((engines) => {
-								this.engines = engines.data
-								Lids.list((lids) => {
-									this.lids = lids.data
-								})
-							})
 						})
 					})
 				})
 			},
 			save() {
 				if (this.form.id) {
-					Filters.update(this.form, (result) => {
-						console.log(result)
+					Profiles.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,
 						}
 					})
 				} else {
-					Filters.insert(this.form, (result) => {
-						console.log(result)
+					Profiles.insert(this.form, (result) => {
+						this.alert = {
+							title: 'Salvar Usuário',
+							message: result.status,
+						}
 					})
 				}
 			},

@@ -11,11 +11,11 @@
 <script>
 	import Methods from '../../../../helpers/methods'
 	import List from '../../../components/List/List'
-	import Filters from '../../../../controllers/equipments/filters'
+	import Profiles from '../../../../controllers/equipments/profiles'
 
 	import messages from './messages'
 	export default {
-		name: 'FilterList',
+		name: 'ProfileList',
 		i18n: { messages },
 		components: { List },
 		data() {
@@ -30,15 +30,15 @@
 		},
 		methods: {
 			load() {
-				Filters.list((result) => {
+				Profiles.list((result) => {
 					this.itens = result.data
 				})
 			},
 			create() {
-				Methods.openPage(this, 'filters/0')
+				Methods.openPage(this, 'profiles/0')
 			},
 			edit(id) {
-				Methods.openPage(this, 'filters/' + id)
+				Methods.openPage(this, 'profiles/' + id)
 			},
 		},
 	}
