@@ -5,7 +5,6 @@ export default {
 	login(mail, password, callback) {
 		axios.get('/login?mail=' + mail + '&password=' + password).then((response) => {
 			if (response && response.data && response.data.token) {
-				console.log(response.data)
 				localStorage.token = response.data.token
 				localStorage.userType = response.data.type
 				localStorage.userName = response.data.name

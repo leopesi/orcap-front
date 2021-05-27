@@ -32,11 +32,23 @@
 		watch: {
 			$route() {
 				this.logged = localStorage.token ? true : false
+				this.checkLogin()
 			},
 		},
 		mounted() {
+			localStorage.need_login = true
 			this.logged = localStorage.token ? true : false
-			if (!this.logged) Methods.openPage(this, '')
+			this.checkLogin()
+		},
+		methods: {
+			checkLogin() {
+				if (!this.logged) {
+					if (localStorage.need_login) {
+						console.log('checkLogin: ' + localStorage.need_login)
+						Methods.openPage(this, '')
+					}
+				}
+			},
 		},
 	}
 </script>

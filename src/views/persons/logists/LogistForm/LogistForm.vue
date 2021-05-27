@@ -1,43 +1,25 @@
 <template>
 	<div class="home">
-		<Form @save="save">
-			<div slot="title">
+		<Form @save="save" :size="'medium'">
+			<div slot="title" v-if="!this.token">
 				{{ $t('title') }}
 			</div>
-			<div class="row" v-if="this.form.id">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="id">{{ $t('id') }}</label>
-						<input class="form-control" id="id" v-model="form.id" type="text" disabled />
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="mail">{{ $t('mail') }}</label>
-						<input class="form-control" id="mail" v-model="form.mail" type="text" disabled />
-					</div>
-				</div>
-				<div class="col-sm-6"></div>
+			<div slot="title" v-if="this.token">
+				{{ $t('profile') }}
 			</div>
-			<div class="row" v-if="!this.form.id">
-				<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-12">
 					<div class="form-group">
-						<label for="mail">{{ $t('mail') }}</label>
-						<input class="form-control" id="mail" v-model="form.mail" type="text" />
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="password">{{ $t('password') }}</label>
-						<input class="form-control" id="password" v-model="form.password" type="text" />
+						<label for="name">{{ $t('name') }}</label>
+						<input class="form-control" id="name" v-model="form.name" type="text" />
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="name">{{ $t('name') }}</label>
-						<input class="form-control" id="name" v-model="form.name" type="text" />
+						<label for="document">{{ $t('document') }}</label>
+						<input class="form-control" id="document" v-model="form.document" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -47,16 +29,27 @@
 					</div>
 				</div>
 			</div>
+			<div class="row" v-if="!this.token">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="password">{{ $t('password') }}</label>
+						<input class="form-control" id="password" v-model="form.password" type="text" />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="repeat_password">{{ $t('repeat_password') }}</label>
+						<input class="form-control" id="repeat_password" v-model="form.repeat_password" type="text" />
+					</div>
+				</div>
+			</div>
 		</Form>
-		<Alert
-			:title="this.alert.title"
-			:message="this.alert.message"
-			@close="alert = {}"
-		/>
+		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
+	import Global from '../../../../helpers/global'
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Logists from '../../../../controllers/persons/logists'
@@ -73,6 +66,7 @@
 					id: null,
 					name: '',
 				},
+				token: localStorage.token,
 				alert: {},
 			}
 		},
@@ -81,25 +75,39 @@
 		},
 		methods: {
 			load() {
-				Logists.getLogist(this.id, (result) => {
-					this.form = {
-						id: result.data.id,
-						mail: result.data.sessions ? result.data.sessions.mail : '',
-						name: result.data.name,
-						phone: result.data.phone,
-					}
-				})
+				if (this.token) {
+					Logists.getByToken((result) => {
+						this.form = {
+							id: result.data.id,
+							name: result.data.name,
+							document: result.data.document,
+							phone: result.data.phone,
+						}
+						console.log(this.form)
+					})
+				} else {
+					Logists.get(this.id, (result) => {
+						this.form = {
+							id: result.data.id,
+							mail: result.data.sessions ? result.data.sessions.mail : '',
+							name: result.data.name,
+							phone: result.data.phone,
+						}
+					})
+				}
 			},
 			save() {
 				if (this.form.id) {
-					Logists.updateLogist(this.form, (result) => {
+					Logists.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,
 						}
+						localStorage.userName = result.data.name
+						Global.$emit('change-header-name', result.data.name)
 					})
 				} else {
-					Logists.insertLogist(this.form, (result) => {
+					Logists.insert(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,

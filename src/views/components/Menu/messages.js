@@ -14,7 +14,9 @@ export default {
 		profiles: 'Perfis',
 		vinyls: 'Vinil',
 
-		profile: 'Meus Dados',
+		my_data: 'Meus Dados',
+		profile: 'Perfil',
+		change_password: 'Alterar Senha',
 		config: 'Configurações',
 		logout: 'Sair',
 		sellers: 'Vendedores',

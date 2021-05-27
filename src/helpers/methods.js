@@ -1,8 +1,10 @@
 import axios from 'axios'
 
 export default {
-	openPage(view, page) {
+	openPage(view, page, need_login) {
 		if (view.$router.history.current.path != '/' + page) {
+			if (need_login == undefined || need_login == true) localStorage.need_login = true
+			else delete localStorage.need_login
 			view.$router.push('/' + page)
 		}
 	},

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+	import Global from '../../../helpers/global'
 	import Methods from '../../../helpers/methods'
 	import messages from './messages'
 	import './style.css'
@@ -26,6 +27,13 @@
 		},
 		mounted() {
 			this.show = localStorage.userType ? true : false
+			Global.$on('change-header-name', (name) => {
+				localStorage.userName = name
+				this.name = name
+			})
+		},
+		beforeDestroy() {
+			Global.$off('change-header-name')
 		},
 		methods: {
 			logout() {

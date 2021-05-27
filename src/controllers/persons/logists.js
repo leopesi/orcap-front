@@ -9,6 +9,10 @@ export default {
 		Cruds.get('/logists/', id, (result) => callback(result))
 	},
 
+	getByToken(callback) {
+		Cruds.get('/logists-by-token/', null, (result) => callback(result))
+	},
+
 	insert(data, callback) {
 		Cruds.insert('/logists/', data, (result) => callback(result))
 	},

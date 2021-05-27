@@ -31,7 +31,6 @@
 		methods: {
 			load() {
 				Filters.list((result) => {
-					console.log(result)
 					this.itens = result.data
 				})
 			},

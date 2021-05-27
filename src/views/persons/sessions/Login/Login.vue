@@ -15,7 +15,18 @@
 				</form>
 			</div>
 			<div class="card-footer">
-				<button type="button" class="btn btn-primary" @click="login">Entrar</button>
+				<div class="row">
+					<div class="col-sm-6">
+						<button type="button" class="btn btn-primary" @click="login">
+							{{ $t('signin') }}
+						</button>
+					</div>
+					<div class="col-sm-6 text-right">
+						<button type="button" class="btn btn-secondary" @click="newLogist">
+							{{ $t('signup') }}
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -45,6 +56,9 @@
 						alert('Login inválido')
 					}
 				})
+			},
+			newLogist() {
+				Methods.openPage(this, 'logists/0', false)
 			},
 		},
 	}

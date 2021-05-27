@@ -1,5 +1,8 @@
 export default {
-	profile: 'profile',
+	my_data: {
+		profile: 'logists/0',
+		change_password: 'change_password',
+	},
 	budgets: {
 		new_budgets: 'budget',
 		list_budgets: 'budgets',
