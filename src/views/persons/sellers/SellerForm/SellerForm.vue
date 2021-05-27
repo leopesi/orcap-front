@@ -93,7 +93,7 @@
 				}
 			},
 			save() {
-				if (this.id) {
+				if (this.id && this.id != 0) {
 					Sellers.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',

@@ -88,24 +88,26 @@
 		},
 		methods: {
 			load() {
-				Blankets.get(this.id, (blanket) => {
-					this.form = {
-						id: blanket.data.id,
-						name: blanket.data.equipments ? blanket.data.equipments.name : '',
-						provider_id: blanket.data.providers.id,
-						brand_id: blanket.data.brands.id,
-						m2_size: blanket.data.m2_size,
-					}
-					Providers.list((providers) => {
-						this.providers = providers.data
-						Brands.list((brands) => {
-							this.brands = brands.data
-						})
+				if (this.id && this.id != 0) {
+					Blankets.get(this.id, (blanket) => {
+						this.form = {
+							id: this.id && this.id != 0 ? this.id : null,
+							name: blanket.data.equipments ? blanket.data.equipments.name : '',
+							provider_id: blanket.data.providers.id,
+							brand_id: blanket.data.brands.id,
+							m2_size: blanket.data.m2_size,
+						}
+					})
+				}
+				Providers.list((providers) => {
+					this.providers = providers.data
+					Brands.list((brands) => {
+						this.brands = brands.data
 					})
 				})
 			},
 			save() {
-				if (this.form.id) {
+				if (this.id && this.id != 0) {
 					Blankets.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',

@@ -88,24 +88,26 @@
 		},
 		methods: {
 			load() {
-				Profiles.get(this.id, (profile) => {
-					this.form = {
-						id: profile.data.id,
-						name: profile.data.equipments ? profile.data.equipments.name : '',
-						provider_id: profile.data.providers.id,
-						brand_id: profile.data.brands.id,
-						size: profile.data.size,
-					}
-					Providers.list((providers) => {
-						this.providers = providers.data
-						Brands.list((brands) => {
-							this.brands = brands.data
-						})
+				if (this.id && this.id != 0) {
+					Profiles.get(this.id, (profile) => {
+						this.form = {
+							id: this.id && this.id != 0 ? this.id : null,
+							name: profile.data.equipments ? profile.data.equipments.name : '',
+							provider_id: profile.data.providers.id,
+							brand_id: profile.data.brands.id,
+							size: profile.data.size,
+						}
+					})
+				}
+				Providers.list((providers) => {
+					this.providers = providers.data
+					Brands.list((brands) => {
+						this.brands = brands.data
 					})
 				})
 			},
 			save() {
-				if (this.form.id) {
+				if (this.id && this.id != 0) {
 					Profiles.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',

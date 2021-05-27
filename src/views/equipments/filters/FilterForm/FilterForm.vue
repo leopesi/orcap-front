@@ -120,32 +120,34 @@
 		},
 		methods: {
 			load() {
-				Filters.get(this.id, (filter) => {
-					this.form = {
-						id: filter.data.id,
-						name: filter.data.equipments ? filter.data.equipments.name : '',
-						provider_id: filter.data.providers.id,
-						brand_id: filter.data.brands.id,
-						engine_id: filter.data.engine_id,
-						lid_id: filter.data.lid_id,
-						max_capacity: filter.data.max_capacity,
-					}
-					Providers.list((providers) => {
-						this.providers = providers.data
-						Brands.list((brands) => {
-							this.brands = brands.data
-							Engines.list((engines) => {
-								this.engines = engines.data
-								Lids.list((lids) => {
-									this.lids = lids.data
-								})
+				if (this.id && this.id != 0) {
+					Filters.get(this.id, (filter) => {
+						this.form = {
+							id: this.id && this.id != 0 ? this.id : null,
+							name: filter.data.equipments ? filter.data.equipments.name : '',
+							provider_id: filter.data.providers.id,
+							brand_id: filter.data.brands.id,
+							engine_id: filter.data.engine_id,
+							lid_id: filter.data.lid_id,
+							max_capacity: filter.data.max_capacity,
+						}
+					})
+				}
+				Providers.list((providers) => {
+					this.providers = providers.data
+					Brands.list((brands) => {
+						this.brands = brands.data
+						Engines.list((engines) => {
+							this.engines = engines.data
+							Lids.list((lids) => {
+								this.lids = lids.data
 							})
 						})
 					})
 				})
 			},
 			save() {
-				if (this.form.id) {
+				if (this.id && this.id != 0) {
 					Filters.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',

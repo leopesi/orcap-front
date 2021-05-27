@@ -94,25 +94,27 @@
 		},
 		methods: {
 			load() {
-				Vinyls.get(this.id, (vinyl) => {
-					this.form = {
-						id: vinyl.data.id,
-						name: vinyl.data.equipments ? vinyl.data.equipments.name : '',
-						provider_id: vinyl.data.providers.id,
-						brand_id: vinyl.data.brands.id,
-						m2_size: vinyl.data.m2_size,
-						thickness: vinyl.data.thickness,
-					}
-					Providers.list((providers) => {
-						this.providers = providers.data
-						Brands.list((brands) => {
-							this.brands = brands.data
-						})
+				if (this.id && this.id != 0) {
+					Vinyls.get(this.id, (vinyl) => {
+						this.form = {
+							id: this.id && this.id != 0 ? this.id : null,
+							name: vinyl.data.equipments ? vinyl.data.equipments.name : '',
+							provider_id: vinyl.data.providers.id,
+							brand_id: vinyl.data.brands.id,
+							m2_size: vinyl.data.m2_size,
+							thickness: vinyl.data.thickness,
+						}
+					})
+				}
+				Providers.list((providers) => {
+					this.providers = providers.data
+					Brands.list((brands) => {
+						this.brands = brands.data
 					})
 				})
 			},
 			save() {
-				if (this.form.id) {
+				if (this.id && this.id != 0) {
 					Vinyls.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',
