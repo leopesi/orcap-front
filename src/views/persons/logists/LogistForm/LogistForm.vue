@@ -83,7 +83,6 @@
 							document: result.data.document,
 							phone: result.data.phone,
 						}
-						console.log(this.form)
 					})
 				} else {
 					Logists.get(this.id, (result) => {

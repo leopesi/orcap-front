@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<List :cols="this.cols" :itens="this.itens" @new="create" @edit="edit">
+		<List :cols="this.cols" :itens="this.itens" @new="create" @edit="edit" :messages="this.messages">
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
@@ -15,13 +15,14 @@
 
 	import messages from './messages'
 	export default {
-		name: 'ClientList',
+		name: 'ClientsList',
 		i18n: { messages },
 		components: { List },
 		data() {
 			return {
-				cols: ['id', 'name', 'phone', { sessions: ['mail']}],
+				cols: ['name', 'phone', { sessions: ['mail']}],
 				itens: [],
+				messages
 			}
 		},
 		mounted() {
@@ -29,7 +30,7 @@
 		},
 		methods: {
 			load() {
-				Clients.clients((result) => {
+				Clients.list((result) => {
 					this.itens = result.data
 				})
 			},

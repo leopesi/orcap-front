@@ -13,31 +13,25 @@
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="mail">{{ $t('mail') }}</label>
-						<input class="form-control" id="mail" v-model="form.mail" type="text" disabled />
+						<label for="name">{{ $t('name') }}</label>
+						<input class="form-control" id="name" v-model="form.name" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-6"></div>
 			</div>
 			<div class="row" v-if="!this.form.id">
-				<div class="col-sm-6">
+				<div class="col-sm-12">
 					<div class="form-group">
-						<label for="mail">{{ $t('mail') }}</label>
-						<input class="form-control" id="mail" v-model="form.mail" type="text" />
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="password">{{ $t('password') }}</label>
-						<input class="form-control" id="password" v-model="form.password" type="text" />
+						<label for="name">{{ $t('name') }}</label>
+						<input class="form-control" id="name" v-model="form.name" type="text" />
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="name">{{ $t('name') }}</label>
-						<input class="form-control" id="name" v-model="form.name" type="text" />
+						<label for="mail">{{ $t('mail') }}</label>
+						<input class="form-control" id="mail" v-model="form.mail" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -48,11 +42,7 @@
 				</div>
 			</div>
 		</Form>
-		<Alert
-			:title="this.alert.title"
-			:message="this.alert.message"
-			@close="alert = {}"
-		/>
+		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
 </template>
 
@@ -63,7 +53,7 @@
 
 	import messages from './messages'
 	export default {
-		name: 'ClientForm',
+		name: 'ClientsForm',
 		props: { id: String },
 		i18n: { messages },
 		components: { Form, Alert },
@@ -81,17 +71,19 @@
 		},
 		methods: {
 			load() {
-				Clients.get(this.id, (result) => {
-					this.form = {
-						id: result.data.id,
-						mail: result.data.sessions ? result.data.sessions.mail : '',
-						name: result.data.name,
-						phone: result.data.phone,
-					}
-				})
+				if (this.id && this.id != 0) {
+					Clients.get(this.id, (result) => {
+						this.form = {
+							id: this.id && this.id != 0 ? this.id : null,
+							mail: result.data.sessions ? result.data.sessions.mail : '',
+							name: result.data.name,
+							phone: result.data.phone,
+						}
+					})
+				}
 			},
 			save() {
-				if (this.form.id) {
+				if (this.id && this.id != 0) {
 					Clients.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',

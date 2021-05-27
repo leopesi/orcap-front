@@ -44,7 +44,6 @@
 			checkLogin() {
 				if (!this.logged) {
 					if (localStorage.need_login) {
-						console.log('checkLogin: ' + localStorage.need_login)
 						Methods.openPage(this, '')
 					}
 				}

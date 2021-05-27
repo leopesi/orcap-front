@@ -1,7 +1,7 @@
 
 export default {
 	'pt-br': {
-		title: 'Cadastro de Clientes',
+		title: 'Cadastro de Cliente',
 		id: 'Id',
 		name: 'Nome',
 		phone: 'Telefone',

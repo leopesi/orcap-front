@@ -81,17 +81,19 @@
 		},
 		methods: {
 			load() {
-				Sellers.get(this.id, (result) => {
-					this.form = {
-						id: result.data.id,
-						mail: result.data.sessions ? result.data.sessions.mail : '',
-						name: result.data.name,
-						phone: result.data.phone,
-					}
-				})
+				if (this.id && this.id != 0) {
+					Sellers.get(this.id, (result) => {
+						this.form = {
+							id: this.id && this.id != 0 ? this.id : null,
+							mail: result.data.sessions ? result.data.sessions.mail : '',
+							name: result.data.name,
+							phone: result.data.phone,
+						}
+					})
+				}
 			},
 			save() {
-				if (this.form.id) {
+				if (this.id) {
 					Sellers.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Usuário',
@@ -100,7 +102,6 @@
 					})
 				} else {
 					Sellers.insert(this.form, (result) => {
-						console.log(result)
 						this.alert = {
 							title: 'Salvar Usuário',
 							message: result.status,

@@ -2,7 +2,7 @@ import Cruds from '../defaults/cruds'
 
 export default {
 	list(callback) {
-		Cruds.list('/sellers1/', (result) => callback(result))
+		Cruds.list('/sellers/', (result) => callback(result))
 	},
 
 	get(id, callback) {

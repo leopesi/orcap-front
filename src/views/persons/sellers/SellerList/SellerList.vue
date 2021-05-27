@@ -30,7 +30,7 @@
 		},
 		methods: {
 			load() {
-				Sellers.get((result) => {
+				Sellers.list((result) => {
 					this.itens = result.data
 				})
 			},
