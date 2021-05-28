@@ -71,6 +71,7 @@
 			}
 		},
 		mounted() {
+			this.token = localStorage.token
 			this.load()
 		},
 		methods: {
@@ -99,7 +100,7 @@
 				if (this.form.id) {
 					Logists.update(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Alteração dos Meus Dados',
 							message: result.status,
 						}
 						localStorage.userName = result.data.name
@@ -108,7 +109,7 @@
 				} else {
 					Logists.insert(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Cadastro de Logista',
 							message: result.status,
 						}
 					})

@@ -7,6 +7,10 @@ export default {
 		new_budgets: 'budget',
 		list_budgets: 'budgets',
 	},
+	registers: {
+		providers: 'providers',
+		brands: 'brands',
+	},
 	equipments: {
 		filters: 'filters',
 		engines: 'engines',

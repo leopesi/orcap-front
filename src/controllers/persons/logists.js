@@ -13,6 +13,10 @@ export default {
 		Cruds.get('/logists-by-token/', null, (result) => callback(result))
 	},
 
+	changePassword(data, callback) {
+		Cruds.post('/sessions/change-password/',data, (result) => callback(result))
+	},
+
 	insert(data, callback) {
 		Cruds.insert('/logists/', data, (result) => callback(result))
 	},

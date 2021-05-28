@@ -110,14 +110,14 @@
 				if (this.id && this.id != 0) {
 					Engines.update(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Motor',
 							message: result.status,
 						}
 					})
 				} else {
 					Engines.insert(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Motor',
 							message: result.status,
 						}
 					})

@@ -117,14 +117,14 @@
 				if (this.id && this.id != 0) {
 					Vinyls.update(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Vinil',
 							message: result.status,
 						}
 					})
 				} else {
 					Vinyls.insert(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Vinil',
 							message: result.status,
 						}
 					})

@@ -6,6 +6,10 @@ export default {
 		new_budgets: 'Novo Orçamento',
 		list_budgets: 'Lista de Orçamentos',
 		
+		registers: 'Cadastros',
+		providers: 'Fornecedores',
+		brands: 'Marcas',
+
 		equipments: 'Equipamentos',
 		filters: 'Filtros',
 		engines: 'Motores',

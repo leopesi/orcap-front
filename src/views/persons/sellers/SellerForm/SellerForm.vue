@@ -96,14 +96,14 @@
 				if (this.id && this.id != 0) {
 					Sellers.update(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Vendedor',
 							message: result.status,
 						}
 					})
 				} else {
 					Sellers.insert(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Vendedor',
 							message: result.status,
 						}
 					})

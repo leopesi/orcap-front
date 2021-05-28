@@ -86,14 +86,14 @@
 				if (this.id && this.id != 0) {
 					Clients.update(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Cliente',
 							message: result.status,
 						}
 					})
 				} else {
 					Clients.insert(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Cliente',
 							message: result.status,
 						}
 					})

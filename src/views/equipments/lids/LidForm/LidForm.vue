@@ -103,14 +103,14 @@
 				if (this.id && this.id != 0) {
 					Lids.update(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Tampa Casa de Máquina',
 							message: result.status,
 						}
 					})
 				} else {
 					Lids.insert(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Tampa Casa de Máquina',
 							message: result.status,
 						}
 					})

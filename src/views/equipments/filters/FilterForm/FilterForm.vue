@@ -150,14 +150,14 @@
 				if (this.id && this.id != 0) {
 					Filters.update(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Filtro',
 							message: result.status,
 						}
 					})
 				} else {
 					Filters.insert(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Filtro',
 							message: result.status,
 						}
 					})

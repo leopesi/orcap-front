@@ -5,6 +5,7 @@ import Home from './sessions/Home/Home'
 import Login from './sessions/Login/Login'
 
 import LogistForm from './logists/LogistForm/LogistForm'
+import ChangePassword from './logists/ChangePassword/ChangePassword'
 
 import SellerForm from './sellers/SellerForm/SellerForm'
 import SellerList from './sellers/SellerList/SellerList'
@@ -18,6 +19,7 @@ export default [
 	{ path: '/', component: Login },
 	{ path: '/home', component: Home },
 	{ path: '/logists/:id', component: LogistForm, props: true },
+	{ path: '/change_password', component: ChangePassword },
 	{ path: '/sellers', component: SellerList },
 	{ path: '/sellers/:id', component: SellerForm, props: true },
 	{ path: '/clients', component: ClientList },

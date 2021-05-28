@@ -1,10 +1,18 @@
 <template>
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+	<div
+		v-if="this.show"
+		:class="'modal fade ' + (this.show ? 'show' : '')"
+		id="modal-alert"
+		tabindex="-1"
+		aria-labelledby="modal-alert-label"
+		aria-hidden="true"
+		:style="this.show ? 'display: block;' : 'display: none;'"
+	>
+		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">{{ this.title }}</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<h5 class="modal-title" id="modal-alert-label">{{ this.title }}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -12,7 +20,7 @@
 					{{ this.message }}
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="$emit('close')">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close">
 						{{ $t('close') }}
 					</button>
 				</div>
@@ -28,6 +36,29 @@
 		name: 'Alert',
 		props: { title: String, message: String },
 		i18n: { messages },
+		data() {
+			return {
+				show: false,
+			}
+		},
 		mounted() {},
+		watch: {
+			message(to) {
+				if (to) this.show = true
+				else this.show = false
+			},
+		},
+		methods: {
+			close() {
+				this.$emit('close')
+				// this.show = false
+			},
+		},
 	}
 </script>
+
+<style scoped>
+	#modal-alert {
+		background: #00000066;
+	}
+</style>

@@ -251,7 +251,7 @@
 				if (this.id) {
 					Budgets.updateBudget(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Orçamento',
 							message: result.status,
 						}
 					})

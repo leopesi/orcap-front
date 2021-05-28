@@ -49,8 +49,8 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="size">{{ $t('size') }}</label>
-						<input class="form-control" id="size" v-model="form.size" type="number" />
+						<label for="m2_size">{{ $t('m2_size') }}</label>
+						<input class="form-control" id="m2_size" v-model="form.m2_size" type="number" />
 					</div>
 				</div>
 			</div>
@@ -62,13 +62,13 @@
 <script>
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
-	import Profiles from '../../../../controllers/equipments/profiles'
+	import Blankets from '../../../../controllers/equipments/blankets'
 	import Providers from '../../../../controllers/basics/providers'
 	import Brands from '../../../../controllers/basics/brands'
 
 	import messages from './messages'
 	export default {
-		name: 'ProfileForm',
+		name: 'BlanketForm',
 		props: { id: String },
 		i18n: { messages },
 		components: { Form, Alert },
@@ -89,13 +89,13 @@
 		methods: {
 			load() {
 				if (this.id && this.id != 0) {
-					Profiles.get(this.id, (profile) => {
+					Blankets.get(this.id, (blanket) => {
 						this.form = {
 							id: this.id && this.id != 0 ? this.id : null,
-							name: profile.data.equipments ? profile.data.equipments.name : '',
-							provider_id: profile.data.providers.id,
-							brand_id: profile.data.brands.id,
-							size: profile.data.size,
+							name: blanket.data.equipments ? blanket.data.equipments.name : '',
+							provider_id: blanket.data.providers.id,
+							brand_id: blanket.data.brands.id,
+							m2_size: blanket.data.m2_size,
 						}
 					})
 				}
@@ -108,16 +108,16 @@
 			},
 			save() {
 				if (this.id && this.id != 0) {
-					Profiles.update(this.form, (result) => {
+					Blankets.update(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Perfil',
+							title: 'Salvar Marca',
 							message: result.status,
 						}
 					})
 				} else {
-					Profiles.insert(this.form, (result) => {
+					Blankets.insert(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Perfil',
+							title: 'Salvar Marca',
 							message: result.status,
 						}
 					})

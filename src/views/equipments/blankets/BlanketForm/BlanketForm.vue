@@ -110,14 +110,14 @@
 				if (this.id && this.id != 0) {
 					Blankets.update(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Manta de Revestimento',
 							message: result.status,
 						}
 					})
 				} else {
 					Blankets.insert(this.form, (result) => {
 						this.alert = {
-							title: 'Salvar Usuário',
+							title: 'Salvar Manta de Revestimento',
 							message: result.status,
 						}
 					})
