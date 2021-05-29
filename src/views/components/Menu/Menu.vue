@@ -36,12 +36,14 @@
 		},
 		mounted() {
 			this.show = localStorage.userType ? true : false
+			this.actual = localStorage.selectedMenu
 		},
 		methods: {
 			open(page) {
 				Methods.openPage(this, page)
 			},
 			changeMenu(menu) {
+				localStorage.selectedMenu = menu
 				this.actual = menu
 			},
 		},

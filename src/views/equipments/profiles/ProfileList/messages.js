@@ -1,7 +1,7 @@
 
 export default {
 	'pt-br': {
-		title: 'Lista de Filtros',
+		title: 'Lista de Perfis',
 		id: 'ID',
 		equipments: 'Modelo',
 		providers: 'Fornecedor',

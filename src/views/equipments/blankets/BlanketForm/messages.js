@@ -1,6 +1,6 @@
 export default {
 	'pt-br': {
-		title: 'Cadastro de Filtro',
+		title: 'Cadastro de Manta de Revestimento',
 		id: 'ID',
 		name: 'Modelo',
 		provider: 'Fornecedor',

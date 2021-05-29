@@ -11,11 +11,11 @@
 <script>
 	import Methods from '../../../../helpers/methods'
 	import List from '../../../components/List/List'
-	import Brands from '../../../../controllers/basics/brands'
+	import Providers from '../../../../controllers/basics/providers'
 
 	import messages from './messages'
 	export default {
-		name: 'BrandList',
+		name: 'ProviderList',
 		i18n: { messages },
 		components: { List },
 		data() {
@@ -30,15 +30,15 @@
 		},
 		methods: {
 			load() {
-				Brands.list((result) => {
+				Providers.list((result) => {
 					this.itens = result.data
 				})
 			},
 			create() {
-				Methods.openPage(this, 'brands/0')
+				Methods.openPage(this, 'providers/0')
 			},
 			edit(id) {
-				Methods.openPage(this, 'brands/' + id)
+				Methods.openPage(this, 'providers/' + id)
 			},
 		},
 	}

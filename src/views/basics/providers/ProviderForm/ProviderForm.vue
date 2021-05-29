@@ -18,21 +18,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="provider">{{ $t('provider') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="provider" v-model="form.provider_id">
-								<option selected>{{ $t('choose') }}</option>
-								<option :value="provider.id" v-for="(provider, i) in this.providers" :key="i">
-									{{ provider.name }}
-								</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
@@ -42,11 +27,10 @@
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Providers from '../../../../controllers/basics/providers'
-	import Brands from '../../../../controllers/basics/brands'
 
 	import messages from './messages'
 	export default {
-		name: 'BrandForm',
+		name: 'ProviderForm',
 		props: { id: String },
 		i18n: { messages },
 		components: { Form, Alert },
@@ -66,12 +50,11 @@
 		methods: {
 			load() {
 				if (this.id && this.id != 0) {
-					Brands.get(this.id, (brand) => {
+					Providers.get(this.id, (provider) => {
+						console.log(provider)
 						this.form = {
 							id: this.id && this.id != 0 ? this.id : null,
-							name: brand.data.name,
-							provider_id: brand.data.providers.id,
-							m2_size: brand.data.m2_size,
+							name: provider.data.name
 						}
 					})
 				}
@@ -81,14 +64,14 @@
 			},
 			save() {
 				if (this.id && this.id != 0) {
-					Brands.update(this.form, (result) => {
+					Providers.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Marca',
 							message: result.status,
 						}
 					})
 				} else {
-					Brands.insert(this.form, (result) => {
+					Providers.insert(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Marca',
 							message: result.status,

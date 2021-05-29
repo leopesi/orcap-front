@@ -1,9 +1,8 @@
 export default {
 	'pt-br': {
-		title: 'Cadastro de Marca',
+		title: 'Cadastro de Fornecedor',
 		id: 'ID',
 		name: 'Nome',
-		provider: 'Fornecedor',
 		choose: 'Escolha',
 	},
 }

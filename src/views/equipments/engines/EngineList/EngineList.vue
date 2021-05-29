@@ -31,6 +31,7 @@
 		methods: {
 			load() {
 				Engines.list((result) => {
+					console.log(result)
 					this.itens = result.data
 				})
 			},

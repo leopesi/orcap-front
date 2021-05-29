@@ -1,9 +1,8 @@
 
 export default {
 	'pt-br': {
-		title: 'Lista de Marcas',
+		title: 'Lista de Fornecedor',
 		id: 'ID',
 		name: 'Nome',
-		providers: 'Fornecedor',
 	}
 }
