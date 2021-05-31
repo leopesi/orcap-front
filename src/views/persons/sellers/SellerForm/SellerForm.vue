@@ -106,6 +106,9 @@
 							title: 'Salvar Vendedor',
 							message: result.status,
 						}
+						this.id = result.data.id
+						this.form.id = result.data.id
+						window.location.hash = 'sellers/' + result.data.id
 					})
 				}
 			},

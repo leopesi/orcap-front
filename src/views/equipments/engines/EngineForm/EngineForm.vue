@@ -120,6 +120,9 @@
 							title: 'Salvar Motor',
 							message: result.status,
 						}
+						this.id = result.data.id
+						this.form.id = result.data.id
+						window.location.hash = 'engines/' + result.data.id
 					})
 				}
 			},

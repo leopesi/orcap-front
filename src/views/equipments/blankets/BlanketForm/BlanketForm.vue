@@ -120,6 +120,9 @@
 							title: 'Salvar Manta de Revestimento',
 							message: result.status,
 						}
+						this.id = result.data.id
+						this.form.id = result.data.id
+						window.location.hash = 'blankets/' + result.data.id
 					})
 				}
 			},

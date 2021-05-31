@@ -113,6 +113,9 @@
 							title: 'Salvar Tampa Casa de Máquina',
 							message: result.status,
 						}
+						this.id = result.data.id
+						this.form.id = result.data.id
+						window.location.hash = 'lids/' + result.data.id
 					})
 				}
 			},

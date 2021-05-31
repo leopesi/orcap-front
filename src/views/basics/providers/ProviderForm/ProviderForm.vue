@@ -76,6 +76,9 @@
 							title: 'Salvar Marca',
 							message: result.status,
 						}
+						this.id = result.data.id
+						this.form.id = result.data.id
+						window.location.hash = 'providers/' + result.data.id
 					})
 				}
 			},

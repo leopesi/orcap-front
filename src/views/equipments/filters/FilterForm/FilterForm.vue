@@ -160,6 +160,9 @@
 							title: 'Salvar Filtro',
 							message: result.status,
 						}
+						this.id = result.data.id
+						this.form.id = result.data.id
+						window.location.hash = 'filters/' + result.data.id
 					})
 				}
 			},
