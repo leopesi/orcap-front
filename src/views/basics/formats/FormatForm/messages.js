@@ -1,6 +1,6 @@
 export default {
 	'pt-br': {
-		title: 'Cadastro de Formas de Pagamentos',
+		title: 'Cadastro de Formatos Padrões',
 		id: 'ID',
 		name: 'Nome',
 		
