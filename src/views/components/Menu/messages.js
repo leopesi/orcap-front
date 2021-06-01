@@ -9,6 +9,8 @@ export default {
 		registers: 'Cadastros',
 		providers: 'Fornecedores',
 		brands: 'Marcas',
+		payments: 'Formas de Pagamento',
+		formats: 'Formatos Padrões',
 
 		equipments: 'Equipamentos',
 		filters: 'Filtros',

@@ -10,6 +10,8 @@ export default {
 	registers: {
 		providers: 'providers',
 		brands: 'brands',
+		payments: 'payments',
+		formats: 'formats',
 	},
 	equipments: {
 		filters: 'filters',
