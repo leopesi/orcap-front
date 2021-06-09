@@ -49,6 +49,34 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
+						<label for="cost">{{ $t('cost') }}</label>
+						<input class="form-control" id="cost" v-model="form.cost" type="number" />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="profit_margin">{{ $t('profit_margin') }}</label>
+						<input class="form-control" id="profit_margin" v-model="form.profit_margin" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="cash_price">{{ $t('cash_price') }}</label>
+						<input class="form-control" id="cash_price" v-model="form.cash_price" type="number" />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="forward_price">{{ $t('forward_price') }}</label>
+						<input class="form-control" id="forward_price" v-model="form.forward_price" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
 						<label for="m2_size">{{ $t('m2_size') }}</label>
 						<input class="form-control" id="m2_size" v-model="form.m2_size" type="number" />
 					</div>
@@ -95,6 +123,10 @@
 							name: blanket.data.equipments ? blanket.data.equipments.name : '',
 							provider_id: blanket.data.providers.id,
 							brand_id: blanket.data.brands.id,
+							cost: blanket.data.equipments ? blanket.data.equipments.cost : '',
+							profit_margin: blanket.data.equipments ? blanket.data.equipments.profit_margin : '',
+							cash_price: blanket.data.equipments ? blanket.data.equipments.cash_price : '',
+							forward_price: blanket.data.equipments ? blanket.data.equipments.forward_price : '',
 							m2_size: blanket.data.m2_size,
 						}
 					})

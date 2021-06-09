@@ -49,6 +49,34 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
+						<label for="cost">{{ $t('cost') }}</label>
+						<input class="form-control" id="cost" v-model="form.cost" type="number" />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="profit_margin">{{ $t('profit_margin') }}</label>
+						<input class="form-control" id="profit_margin" v-model="form.profit_margin" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="cash_price">{{ $t('cash_price') }}</label>
+						<input class="form-control" id="cash_price" v-model="form.cash_price" type="number" />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="forward_price">{{ $t('forward_price') }}</label>
+						<input class="form-control" id="forward_price" v-model="form.forward_price" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
 						<label for="m2_size">{{ $t('m2_size') }}</label>
 						<input class="form-control" id="m2_size" v-model="form.m2_size" type="number" />
 					</div>
@@ -101,6 +129,10 @@
 							name: vinyl.data.equipments ? vinyl.data.equipments.name : '',
 							provider_id: vinyl.data.providers.id,
 							brand_id: vinyl.data.brands.id,
+							cost: vinyl.data.equipments ? vinyl.data.equipments.cost : '',
+							profit_margin: vinyl.data.equipments ? vinyl.data.equipments.profit_margin : '',
+							cash_price: vinyl.data.equipments ? vinyl.data.equipments.cash_price : '',
+							forward_price: vinyl.data.equipments ? vinyl.data.equipments.forward_price : '',
 							m2_size: vinyl.data.m2_size,
 							thickness: vinyl.data.thickness,
 						}

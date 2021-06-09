@@ -49,6 +49,34 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
+						<label for="cost">{{ $t('cost') }}</label>
+						<input class="form-control" id="cost" v-model="form.cost" type="number" />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="profit_margin">{{ $t('profit_margin') }}</label>
+						<input class="form-control" id="profit_margin" v-model="form.profit_margin" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="cash_price">{{ $t('cash_price') }}</label>
+						<input class="form-control" id="cash_price" v-model="form.cash_price" type="number" />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="forward_price">{{ $t('forward_price') }}</label>
+						<input class="form-control" id="forward_price" v-model="form.forward_price" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
 						<label for="size">{{ $t('size') }}</label>
 						<input class="form-control" id="size" v-model="form.size" type="number" />
 					</div>
@@ -95,6 +123,10 @@
 							name: profile.data.equipments ? profile.data.equipments.name : '',
 							provider_id: profile.data.providers.id,
 							brand_id: profile.data.brands.id,
+							cost: profile.data.equipments ? profile.data.equipments.cost : '',
+							profit_margin: profile.data.equipments ? profile.data.equipments.profit_margin : '',
+							cash_price: profile.data.equipments ? profile.data.equipments.cash_price : '',
+							forward_price: profile.data.equipments ? profile.data.equipments.forward_price : '',
 							size: profile.data.size,
 						}
 					})

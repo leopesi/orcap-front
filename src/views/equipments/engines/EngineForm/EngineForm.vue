@@ -49,6 +49,34 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
+						<label for="cost">{{ $t('cost') }}</label>
+						<input class="form-control" id="cost" v-model="form.cost" type="number" />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="profit_margin">{{ $t('profit_margin') }}</label>
+						<input class="form-control" id="profit_margin" v-model="form.profit_margin" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="cash_price">{{ $t('cash_price') }}</label>
+						<input class="form-control" id="cash_price" v-model="form.cash_price" type="number" />
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="forward_price">{{ $t('forward_price') }}</label>
+						<input class="form-control" id="forward_price" v-model="form.forward_price" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
 						<label for="max_capacity">{{ $t('max_capacity') }}</label>
 						<input class="form-control" id="max_capacity" v-model="form.max_capacity" type="number" />
 					</div>
@@ -95,6 +123,10 @@
 							name: engine.data.equipments ? engine.data.equipments.name : '',
 							provider_id: engine.data.providers.id,
 							brand_id: engine.data.brands.id,
+							cost: engine.data.equipments ? engine.data.equipments.cost : '',
+							profit_margin: engine.data.equipments ? engine.data.equipments.profit_margin : '',
+							cash_price: engine.data.equipments ? engine.data.equipments.cash_price : '',
+							forward_price: engine.data.equipments ? engine.data.equipments.forward_price : '',
 							max_capacity: engine.data.max_capacity,
 						}
 					})

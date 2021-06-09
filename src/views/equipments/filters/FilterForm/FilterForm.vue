@@ -77,6 +77,34 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
+						<label for="cost">{{ $t('cost') }}</label>
+						<input class="form-control" id="cost" v-model="form.cost" type="number"/>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="profit_margin">{{ $t('profit_margin') }}</label>
+						<input class="form-control" id="profit_margin" v-model="form.profit_margin" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="cash_price">{{ $t('cash_price') }}</label>
+						<input class="form-control" id="cash_price" v-model="form.cash_price" type="number"/>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="forward_price">{{ $t('forward_price') }}</label>
+						<input class="form-control" id="forward_price" v-model="form.forward_price" type="number" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
 						<label for="max_capacity">{{ $t('max_capacity') }}</label>
 						<input class="form-control" id="max_capacity" v-model="form.max_capacity" type="number" />
 					</div>
@@ -129,6 +157,10 @@
 							brand_id: filter.data.brands.id,
 							engine_id: filter.data.engine_id,
 							lid_id: filter.data.lid_id,
+							cost: filter.data.equipments ? filter.data.equipments.cost : '',
+							profit_margin: filter.data.equipments ? filter.data.equipments.profit_margin : '',
+							cash_price: filter.data.equipments ? filter.data.equipments.cash_price : '',
+							forward_price: filter.data.equipments ? filter.data.equipments.forward_price : '',
 							max_capacity: filter.data.max_capacity,
 						}
 					})
