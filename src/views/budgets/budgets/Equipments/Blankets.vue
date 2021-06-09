@@ -1,23 +1,31 @@
 <template>
 	<div class="card">
-		<div class="card-header">
+		<!-- <div class="card-header">
 			{{ $t('blankets') }}
-		</div>
+		</div> -->
 		<div class="card-body">
 			<div class="row">
-				<div class="col-sm-12">
+				<div class="col-sm-8">
 					<div class="form-group">
 						<label for="blanket">{{ $t('blanket') }}</label>
 						<select class="custom-select" id="blanket" v-model="form.blanket" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="blanket.id" v-for="(blanket, i) in this.blankets" :key="i">
-								{{ blanket.equipments.name }} / {{ blanket.brands.name }}
+								<span v-if="blanket.equipments && blanket.brands">
+									{{ blanket.equipments.name }} / {{ blanket.brands.name }}
+								</span>
 							</option>
 						</select>
 					</div>
 				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="discount">{{ $t('discount') }}</label>
+						<input class="form-control" id="discount" type="number" :value="this.discount" />
+					</div>
+				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.see_more">
 				<div class="col-sm-12">
 					<div class="form-group">
 						<label for="description">{{ $t('description') }}</label>
@@ -25,7 +33,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.see_more">
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="cash_price">{{ $t('cash_price') }}</label>
@@ -39,7 +47,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.see_more">
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="cash_price">{{ $t('cash_price') }} {{ $t('total') }}</label>
@@ -68,11 +76,13 @@
 		data() {
 			return {
 				blankets: [],
+				discount: 0,
 				description: '',
 				cash_price: 0,
 				forward_price: 0,
 				cash_price_total: 0,
 				forward_price_total: 0,
+				see_more: false
 			}
 		},
 		mounted() {

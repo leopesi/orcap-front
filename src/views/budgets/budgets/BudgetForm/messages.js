@@ -7,7 +7,7 @@ export default {
 		seller: 'Vendedor',
 		payment: 'Formas de pagamento',
 		status: 'Status',
-		type: 'Tipo',
+		layout: 'Tipo de Orçamento',
 
 		updatedAt: 'Última Atualização',
 		createdAt: 'Data de Criação',
@@ -50,9 +50,13 @@ export default {
 		vinyls: 'Vinis',
 		vinyl: 'Vinil',
 
+		discount: 'Desconto',
+		expiration_date: 'Data de Validade',
 		description: 'Descrição',
-		cash_price: 'Preço a vista',
-		forward_price: 'Preço a prazo',
+		cash_price: 'Preço à vista',
+		forward_price: 'Preço à prazo',
+		cash_price_total: 'Total à vista',
+		forward_price_total: 'Total à prazo',
 
 		total: 'Total',
 		totals: 'Totais',

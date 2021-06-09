@@ -24,9 +24,6 @@
 					// 'id',
 					{ clients: ['name'] },
 					{ sellers: ['name'] },
-					{ payments: ['name'] },
-					{ types_budgets: ['name'] },
-					{ status_budgets: ['name'] },
 				],
 				itens: [],
 				messages

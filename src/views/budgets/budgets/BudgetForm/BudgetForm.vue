@@ -30,7 +30,7 @@
 						<label for="client_id">{{ $t('client') }}</label>
 						<div class="input-group mb-3">
 							<select class="custom-select" id="client_id" v-model="form.client_id">
-								<option selected>{{ $t('choose') }}</option>
+								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
 									{{ client.name }}
 								</option>
@@ -41,12 +41,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-3">
 					<div class="form-group mb-3">
 						<label for="seller_id">{{ $t('seller') }}</label>
 						<div class="input-group mb-3">
 							<select class="custom-select" id="seller_id" v-model="form.seller_id">
-								<option selected>{{ $t('choose') }}</option>
+								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="seller.id" v-for="(seller, i) in this.sellers" :key="i">
 									{{ seller.name }}
 								</option>
@@ -58,12 +58,12 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group mb-3">
-						<label for="payment_id">{{ $t('payment') }}</label>
+						<label for="payment">{{ $t('payment') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="payment_id" v-model="form.payment_id">
-								<option selected>{{ $t('choose') }}</option>
-								<option :value="payment.id" v-for="(payment, i) in this.payments" :key="i">
-									{{ payment.name }}
+							<select class="custom-select" id="payment" v-model="form.payment">
+								<!-- <option selected>{{ $t('choose') }}</option> -->
+								<option :value="i" v-for="(payment, i) in this.payments" :key="i">
+									{{ payment }}
 								</option>
 							</select>
 						</div>
@@ -71,12 +71,12 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group mb-3">
-						<label for="status_budget_id">{{ $t('status') }}</label>
+						<label for="status">{{ $t('status') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="status_budget_id" v-model="form.status_budget_id">
-								<option selected>{{ $t('choose') }}</option>
-								<option :value="status.id" v-for="(status, i) in this.status_budget" :key="i">
-									{{ status.name }}
+							<select class="custom-select" id="status" v-model="form.status">
+								<!-- <option selected>{{ $t('choose') }}</option> -->
+								<option :value="i" v-for="(s, i) in this.status" :key="i">
+									{{ s }}
 								</option>
 							</select>
 						</div>
@@ -84,12 +84,12 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group mb-3">
-						<label for="type_budget_id">{{ $t('type') }}</label>
+						<label for="layout">{{ $t('layout') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="type_budget_id" v-model="form.type_budget_id">
-								<option selected>{{ $t('choose') }}</option>
-								<option :value="type.id" v-for="(type, i) in this.types_budget" :key="i">
-									{{ type.name }}
+							<select class="custom-select" id="layout" v-model="form.layout">
+								<!-- <option selected>{{ $t('choose') }}</option> -->
+								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
+									{{ layout.name }}
 								</option>
 							</select>
 						</div>
@@ -138,13 +138,35 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="forward_price">{{ $t('forward_price') }}</label>
-										<input
-											class="form-control"
-											id="forward_price"
-											type="text"
-											:value="this.form.forward_price"
-											disabled
-										/>
+										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="expiration_date">{{ $t('expiration_date') }}</label>
+										<input class="form-control" id="expiration_date" type="date" :value="this.form.expiration_date" />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="discount">{{ $t('discount') }}</label>
+										<input class="form-control" id="discount" type="number" :value="this.form.discount" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="cash_price_total">{{ $t('cash_price_total') }}</label>
+										<input class="form-control" id="cash_price_total" type="text" :value="this.form.cash_price_total" disabled />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="forward_price_total">{{ $t('forward_price_total') }}</label>
+										<input class="form-control" id="forward_price_total" type="text" :value="this.form.forward_price_total" disabled />
 									</div>
 								</div>
 							</div>
@@ -161,7 +183,6 @@
 	import Methods from '../../../../helpers/methods'
 
 	import Budgets from '../../../../controllers/budgets/budgets'
-	import Defaults from '../../../../controllers/budgets/defaults'
 	import Clients from '../../../../controllers/persons/clients'
 	import Sellers from '../../../../controllers/persons/sellers'
 
@@ -175,6 +196,9 @@
 	import Profiles from '../Equipments/Profiles'
 	import Vinyls from '../Equipments/Vinyls'
 
+	import Layouts from '../data/layouts'
+	import Status from '../data/status'
+	import Payments from '../data/payments'
 	import messages from './messages'
 
 	export default {
@@ -190,8 +214,8 @@
 					logist_id: null,
 					seller_id: null,
 					format_id: null,
-					status_budget_id: null,
-					type_budget_id: null,
+					status: null,
+					layout_id: null,
 					date: null,
 					length: null,
 					width: null,
@@ -204,9 +228,9 @@
 				},
 				clients: [],
 				sellers: [],
-				payments: [],
-				status_budget: [],
-				types_budget: [],
+				payments: Payments,
+				status: Status,
+				layouts: Layouts,
 				alert: {},
 				showEquipments: false,
 			}
@@ -230,21 +254,16 @@
 							.slice(1)
 							.join('.')
 					})
+				} else {
+					this.form.payment = Object.keys(this.payments)[0]
+					this.form.status = Object.keys(this.status)[0]
+					this.form.layout = Object.keys(this.layouts)[0]
 				}
 				Sellers.list((result) => {
 					this.sellers = result.data
 				})
 				Clients.list((result) => {
 					this.clients = result.data
-				})
-				Defaults.statusBudgets((result) => {
-					this.status_budget = result.data
-				})
-				Defaults.typesBudgets((result) => {
-					this.types_budget = result.data
-				})
-				Defaults.payments((result) => {
-					this.payments = result.data
 				})
 			},
 			save() {

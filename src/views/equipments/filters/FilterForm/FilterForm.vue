@@ -54,7 +54,7 @@
 							<select class="custom-select" id="engine" v-model="form.engine_id">
 								<option selected>{{ $t('choose') }}</option>
 								<option :value="engine.id" v-for="(engine, i) in this.engines" :key="i">
-									{{ engine.equipments.name }}
+									<span v-if="blanket.equipments && blanket.brands"> {{ blanket.equipments.name }} / {{ blanket.brands.name }} </span>
 								</option>
 							</select>
 						</div>
@@ -67,7 +67,7 @@
 							<select class="custom-select" id="lid" v-model="form.lid_id">
 								<option selected>{{ $t('choose') }}</option>
 								<option :value="lid.id" v-for="(lid, i) in this.lids" :key="i">
-									{{ lid.equipments.name }}
+									<span v-if="lid.equipments && lid.brands"> {{ lid.equipments.name }} / {{ lid.brands.name }} </span>
 								</option>
 							</select>
 						</div>
@@ -78,7 +78,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="cost">{{ $t('cost') }}</label>
-						<input class="form-control" id="cost" v-model="form.cost" type="number"/>
+						<input class="form-control" id="cost" v-model="form.cost" type="number" />
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -92,7 +92,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="cash_price">{{ $t('cash_price') }}</label>
-						<input class="form-control" id="cash_price" v-model="form.cash_price" type="number"/>
+						<input class="form-control" id="cash_price" v-model="form.cash_price" type="number" />
 					</div>
 				</div>
 				<div class="col-sm-6">

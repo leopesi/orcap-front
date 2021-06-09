@@ -1,23 +1,29 @@
 <template>
 	<div class="card">
-		<div class="card-header">
+		<!-- <div class="card-header">
 			{{ $t('filters') }}
-		</div>
+		</div> -->
 		<div class="card-body">
 			<div class="row">
-				<div class="col-sm-12">
+				<div class="col-sm-8">
 					<div class="form-group">
 						<label for="filter">{{ $t('filter') }}</label>
 						<select class="custom-select" id="filter" v-model="form.filter" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="filter.id" v-for="(filter, i) in this.filters" :key="i">
-								{{ filter.equipments.name }} / {{ filter.brands.name }}
+								<span v-if="filter.equipments && filter.brands"> {{ filter.equipments.name }} / {{ filter.brands.name }} </span>
 							</option>
 						</select>
 					</div>
 				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="discount">{{ $t('discount') }}</label>
+						<input class="form-control" id="discount" type="number" :value="this.discount" />
+					</div>
+				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.see_more">
 				<div class="col-sm-12">
 					<div class="form-group">
 						<label for="description">{{ $t('description') }}</label>
@@ -25,7 +31,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.see_more">
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="cash_price">{{ $t('cash_price') }}</label>
@@ -54,9 +60,11 @@
 		data() {
 			return {
 				filters: [],
+				discount: 0,
 				description: '',
 				cash_price: 0,
 				forward_price: 0,
+				see_more: false,
 			}
 		},
 		mounted() {
