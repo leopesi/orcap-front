@@ -11,7 +11,7 @@
 						<select class="custom-select" id="blanket" v-model="form.blanket" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="blanket.id" v-for="(blanket, i) in this.blankets" :key="i">
-								<span v-if="blanket.equipments && blanket.brands">
+								<span v-if="blanket && blanket.equipments && blanket.brands">
 									{{ blanket.equipments.name }} / {{ blanket.brands.name }}
 								</span>
 							</option>

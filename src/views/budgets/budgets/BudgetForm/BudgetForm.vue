@@ -41,7 +41,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-6">
 					<div class="form-group mb-3">
 						<label for="seller_id">{{ $t('seller') }}</label>
 						<div class="input-group mb-3">
@@ -56,7 +56,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-3">
 					<div class="form-group mb-3">
 						<label for="payment">{{ $t('payment') }}</label>
 						<div class="input-group mb-3">
@@ -95,10 +95,26 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-sm-3">
+					<div class="form-group mb-3">
+						<label for="beach">{{ $t('beach') }}</label>
+						<div class="input-group mb-3">
+							<select class="custom-select" id="beach" v-model="form.beach" @change="showBeach = $event.target.value">
+								<option selected :value="false">{{ $t('no') }}</option>
+								<option :value="true">{{ $t('yes') }}</option>
+							</select>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
 					<Dimensions :form="this.form" @change="showEquipments = false" @changed="changedDimension" />
+				</div>
+			</div>
+			<div class="row" v-if="this.showBeach == 'true'">
+				<div class="col-sm-12 pt-4">
+					<DimensionsBeach :form="this.form" @change="showEquipments = false" @changed="changedDimension" />
 				</div>
 			</div>
 			<div class="row">
@@ -146,13 +162,13 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="expiration_date">{{ $t('expiration_date') }}</label>
-										<input class="form-control" id="expiration_date" type="date" :value="this.form.expiration_date" />
+										<input class="form-control" id="expiration_date" v-model="form.expiration_date" type="datetime-local" />
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="discount">{{ $t('discount') }}</label>
-										<input class="form-control" id="discount" type="number" :value="this.form.discount" />
+										<input class="form-control" id="discount" v-model="form.discount" type="number" />
 									</div>
 								</div>
 							</div>
@@ -189,6 +205,7 @@
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Dimensions from '../Dimenions/Dimension'
+	import DimensionsBeach from '../Dimenions/DimensionBeach'
 	import Filters from '../Equipments/Filters'
 	import Engines from '../Equipments/Engines'
 	import Lids from '../Equipments/Lids'
@@ -205,7 +222,7 @@
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls },
+		components: { Form, Alert, Dimensions, DimensionsBeach, Filters, Engines, Lids, Blankets, Profiles, Vinyls },
 		data() {
 			return {
 				form: {
@@ -233,6 +250,7 @@
 				layouts: Layouts,
 				alert: {},
 				showEquipments: false,
+				showBeach: false,
 			}
 		},
 		mounted() {
@@ -243,21 +261,19 @@
 				if (this.id) {
 					Budgets.getBudget(this.id, (result) => {
 						this.form = result.data
-						this.form.createdAt = this.form.createdAt
-							.split('.')
-							.reverse()
-							.slice(1)
-							.join('.')
-						this.form.updatedAt = this.form.updatedAt
-							.split('.')
-							.reverse()
-							.slice(1)
-							.join('.')
+						this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
+						this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
+						this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
+						this.showBeach = this.form.beach.toString()
+						setTimeout(() => {
+							
+						}, 1)
 					})
 				} else {
 					this.form.payment = Object.keys(this.payments)[0]
 					this.form.status = Object.keys(this.status)[0]
 					this.form.layout = Object.keys(this.layouts)[0]
+					this.form.beach = false
 				}
 				Sellers.list((result) => {
 					this.sellers = result.data
@@ -267,7 +283,7 @@
 				})
 			},
 			save() {
-				if (this.id) {
+				if (this.id && this.id != 0) {
 					Budgets.updateBudget(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Orçamento',

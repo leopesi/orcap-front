@@ -1,6 +1,6 @@
 export default {
 	'pt-br': {
-		title: 'Criar um orçamento',
+		title: 'Criar um Orçamento',
 		id: 'Id',
 		new_client: 'Novo Cliente',
 		client: 'Cliente',
@@ -15,7 +15,13 @@ export default {
 		loading: 'Reacanculando',
 		choose: 'Escolha',
 		
-		dimensions: 'Dimensões da piscina',
+		dimensions_pool: 'Dimensões da Piscina',
+		dimensions_beach: 'Dimensões da Prainha',
+		beach: 'Prainha',
+		steps: 'Degraus',
+		number_steps: 'Quantidade de Degraus',
+		no: 'Não',
+		yes: 'Sim',
 		
 		length: 'Comprimento',
 		width: 'Largura',
@@ -23,7 +29,7 @@ export default {
 		final_depth: 'Profundidade Final',
 		sidewalk_width: 'Largura da Calçada',
 		// CALCULADOS
-		average_depth: 'Profundidade Média',
+		medium_depth: 'Profundidade Média',
 		sidewalk_area: 'Área da calçada',
 		m2_facial: 'M2 Facial',
 		perimeter: 'Perimetro',

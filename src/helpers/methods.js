@@ -21,4 +21,11 @@ export default {
 			view.$i18n.setLocaleMessage(i, Object.assign(messages1[i], messages2[i]))
 		}
 	},
+
+	fixSequelizeDate(date) {
+		return date.split('.')
+		.reverse()
+		.slice(1)
+		.join('.')
+	}
 }

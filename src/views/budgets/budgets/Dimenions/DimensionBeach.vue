@@ -1,99 +1,62 @@
 <template>
 	<div class="card" v-if="this.form">
 		<div class="card-header">
-			{{ $t('dimensions_pool') }}
+			{{ $t('dimensions_beach') }}
 		</div>
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="length">{{ $t('length') }}</label>
-						<input class="form-control" id="length" v-model="form.length" type="number" step="0.01" @keyup="calculate" />
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
 						<label for="width">{{ $t('width') }}</label>
-						<input class="form-control" id="width" v-model="form.width" type="number" step="0.01" @keyup="calculate" />
+						<input class="form-control" id="width" v-model="form.beach_width" type="number" step="0.01" @keyup="calculate" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="initial_depth">{{ $t('initial_depth') }}</label>
-						<input class="form-control" id="initial_depth" v-model="form.initial_depth" type="number" step="0.01" @keyup="calculate" />
+						<input class="form-control" id="initial_depth" v-model="form.beach_initial_depth" type="number" step="0.01" @keyup="calculate" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="final_depth">{{ $t('final_depth') }}</label>
-						<input class="form-control" id="final_depth" v-model="form.final_depth" type="number" step="0.01" @keyup="calculate" />
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="sidewalk_width">{{ $t('sidewalk_width') }}</label>
-						<input class="form-control" id="sidewalk_width" v-model="form.sidewalk_width" type="number" step="0.01" @keyup="calculate" />
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="sidewalk_area">{{ $t('sidewalk_area') }}</label>
-						<input class="form-control" id="sidewalk_area" v-model="form.sidewalk_area" type="text" />
+						<input class="form-control" id="final_depth" v-model="form.beach_final_depth" type="number" step="0.01" @keyup="calculate" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="perimeter">{{ $t('perimeter') }}</label>
-						<input class="form-control" id="perimeter" v-model="form.perimeter" type="text" />
+						<input class="form-control" id="perimeter" v-model="form.beach_perimeter" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="medium_depth">{{ $t('medium_depth') }}</label>
-						<input class="form-control" id="medium_depth" v-model="form.medium_depth" type="text" />
+						<input class="form-control" id="medium_depth" v-model="form.beach_medium_depth" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="m2_facial">{{ $t('m2_facial') }}</label>
-						<input class="form-control" id="m2_facial" v-model="form.m2_wall" type="text" />
+						<input class="form-control" id="m2_facial" v-model="form.beach_m2_wall" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="m2_facial">{{ $t('m2_facial') }}</label>
-						<input class="form-control" id="m2_facial" v-model="form.m2_facial" type="text" />
+						<input class="form-control" id="m2_facial" v-model="form.beach_m2_facial" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="m2_total">{{ $t('m2_total') }}</label>
-						<input class="form-control" id="m2_total" v-model="form.m2_total" type="text" />
+						<input class="form-control" id="m2_total" v-model="form.beach_m2_total" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="m3_total">{{ $t('m3_total') }}</label>
-						<input class="form-control" id="m3_total" v-model="form.m3_total" type="text" />
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="steps">{{ $t('steps') }}</label>
-						<select class="custom-select" id="steps" v-model="form.steps" @change="showSteps = $event.target.value">
-							<option :value="false">{{ $t('no') }}</option>
-							<option :value="true">{{ $t('yes') }}</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-sm-6" v-if="this.showSteps == 'true'">
-					<div class="form-group">
-						<label for="number_steps">{{ $t('number_steps') }}</label>
-						<input class="form-control" id="number_steps" v-model="form.number_steps" type="text" />
+						<input class="form-control" id="m3_total" v-model="form.beach_m3_total" type="text" />
 					</div>
 				</div>
 			</div>

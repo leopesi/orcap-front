@@ -54,7 +54,7 @@
 							<select class="custom-select" id="engine" v-model="form.engine_id">
 								<option selected>{{ $t('choose') }}</option>
 								<option :value="engine.id" v-for="(engine, i) in this.engines" :key="i">
-									<span v-if="blanket.equipments && blanket.brands"> {{ blanket.equipments.name }} / {{ blanket.brands.name }} </span>
+									<span v-if="engine.equipments && engine.brands"> {{ engine.equipments.name }} / {{ engine.brands.name }} </span>
 								</option>
 							</select>
 						</div>
