@@ -1,5 +1,5 @@
 <template>
-	<div class="card" v-if="this.form">
+	<Card v-if="this.form">
 		<div class="card-header">
 			{{ $t('dimensions_beach') }}
 		</div>
@@ -61,15 +61,17 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</Card>
 </template>
 
 <script>
 	// import Dimensions from '../../../../controllers/budgets/dimensions'
+	import Card from '../../../components/Card/Card'
 	import messages from '../BudgetForm/messages'
 
 	export default {
 		name: 'Dimensions',
+		components: { Card },
 		props: { form: Object },
 		i18n: { messages },
 		data() {

@@ -2,8 +2,8 @@
 	<div class="card">
 		<div :class="'card-visibility ' + (this.showBody ? 'show-body' : 'hide-body')">
 			<button @click="changeVisibility">
-				<i class="bi-arrow-up-circle" role="img" v-if="this.showBody"></i>
-				<i class="bi-arrow-down-circle" role="img" v-if="!this.showBody"></i>
+				<i class="bi-arrow-up-square-fill" role="img" v-if="this.showBody"></i>
+				<i class="bi-arrow-down-square-fill" role="img" v-if="!this.showBody"></i>
 			</button>
 			<slot class="slot" name="default" />
 		</div>

@@ -108,7 +108,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-12">
+				<div class="col-sm-12 pt-2">
 					<Dimensions :form="this.form" @change="showEquipments = false" @changed="changedDimension" />
 				</div>
 			</div>
