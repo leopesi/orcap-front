@@ -4,7 +4,7 @@
 			<div class="card-header">
 				<slot name="title" />
 			</div>
-			<form class="card-body">
+			<form class="card-body" @keyup="keyUp">
 				<slot name="default" />
 			</form>
 			<div class="card-footer">
@@ -33,11 +33,19 @@
 		i18n: { messages },
 		props: { size: String },
 		mounted() {},
+		beforeDestroy() {},
 		methods: {
 			saveForm() {
 				this.$emit('save')
-			},back() {
+			},
+			back() {
 				this.$router.back()
+			},
+			keyUp(e) {
+				if (e.key == 'Enter') {
+					e.srcElement.blur()
+					this.saveForm()
+				}
 			},
 		},
 	}

@@ -39,19 +39,36 @@
 		data() {
 			return {
 				show: false,
+				eventListener: undefined
 			}
 		},
 		mounted() {},
 		watch: {
 			message(to) {
-				if (to) this.show = true
-				else this.show = false
+				if (to) {
+					this.show = true
+					const self = this
+					this.eventListener = (e) => {
+						self.keyUp(e)
+					}
+					document.addEventListener('keyup', this.eventListener)
+				} else {
+					this.show = false
+					document.removeEventListener('keyup', this.eventListener)
+				}
 			},
 		},
 		methods: {
 			close() {
 				this.$emit('close')
 				// this.show = false
+			},
+			keyUp(e) {
+				console.log(e)
+				if (e.code == 'Enter' || e.code == 'Escape' || e.code == 'Space') {
+					// document.removeEventListener('keyup', this.eventListener)
+					this.close()
+				}
 			},
 		},
 	}
