@@ -265,9 +265,6 @@
 						this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 						this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
 						this.showBeach = this.form.beach.toString()
-						setTimeout(() => {
-							
-						}, 1)
 					})
 				} else {
 					this.form.payment = Object.keys(this.payments)[0]
