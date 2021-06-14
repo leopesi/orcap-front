@@ -1,16 +1,29 @@
 <template>
-	<div class="alert" v-if="this.message">
-		<div class="shadow" />
-		<div class="card">
-			<div class="title">
-				<h1>{{ this.title }}</h1>
-				<button @click="$emit('close')">x</button>
-			</div>
-			<div class="message">
-				{{ this.message }}
-			</div>
-			<div class="buttons">
-				<button @click="$emit('close')">{{ $t('close') }}</button>
+	<div
+		v-if="this.show"
+		:class="'modal fade ' + (this.show ? 'show' : '')"
+		id="modal-alert"
+		tabindex="-1"
+		aria-labelledby="modal-alert-label"
+		aria-hidden="true"
+		:style="this.show ? 'display: block;' : 'display: none;'"
+	>
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modal-alert-label">{{ this.title }}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					{{ this.message }}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close">
+						{{ $t('close') }}
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -23,6 +36,42 @@
 		name: 'Alert',
 		props: { title: String, message: String },
 		i18n: { messages },
+		data() {
+			return {
+				show: false,
+				eventListener: undefined
+			}
+		},
 		mounted() {},
+		watch: {
+			message(to) {
+				if (to) {
+					this.show = true
+					this.eventListener = (e) => {
+						this.keyUp(e)
+					}
+					document.addEventListener('keyup', this.eventListener)
+				} else {
+					this.show = false
+					document.removeEventListener('keyup', this.eventListener)
+				}
+			},
+		},
+		methods: {
+			close() {
+				this.$emit('close')
+			},
+			keyUp(e) {
+				if (e.code == 'Enter' || e.code == 'Escape' || e.code == 'Space') {
+					this.close()
+				}
+			},
+		},
 	}
 </script>
+
+<style scoped>
+	#modal-alert {
+		background: #00000066;
+	}
+</style>
