@@ -2,7 +2,7 @@
 	position: relative;
 }
 
-.card-visibility button {
+.card-visibility .card-visibility-button {
     content: 'X';
 	position: absolute;
 	top: 0px;
@@ -14,10 +14,10 @@
     background-color: transparent;
 	z-index: 1;
 }
-.card-visibility.show-body .card-body {
+.card-visibility.show-body .card-body, .card-visibility.show-body .card-footer {
 	display: block;
 }
 
-.card-visibility.hide-body .card-body {
+.card-visibility.hide-body .card-body, .card-visibility.hide-body .card-footer {
 	display: none;
 }

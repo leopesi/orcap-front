@@ -14,7 +14,7 @@ export default {
 
 		loading: 'Reacanculando',
 		choose: 'Escolha',
-		
+
 		dimensions_pool: 'Dimensões da Piscina',
 		dimensions_beach: 'Dimensões da Prainha',
 		beach: 'Prainha',
@@ -22,7 +22,7 @@ export default {
 		number_steps: 'Quantidade de Degraus',
 		no: 'Não',
 		yes: 'Sim',
-		
+
 		length: 'Comprimento',
 		width: 'Largura',
 		initial_depth: 'Profundidade Inicial',
@@ -38,9 +38,11 @@ export default {
 		m3_total: 'M3 Total',
 		m3_real: 'M3 real',
 
+		equipments: 'Equipamentos',
+		add_equipment: 'Adicionar Equipamento',
 		filters: 'Filtros',
 		filter: 'Filtro',
-		
+
 		engines: 'Motores',
 		engine: 'Motor',
 
@@ -63,6 +65,23 @@ export default {
 		forward_price: 'Preço à prazo',
 		cash_price_total: 'Total à vista',
 		forward_price_total: 'Total à prazo',
+
+		manpower: 'Mão de Obra',
+
+		side_wall: 'Muro Lateral',
+		subfloor: 'Contrapiso',
+		baldrame: 'Baldrame',
+		mold: 'Molde',
+		heating: 'Aquecimento',
+		cm_installation: 'Instalação C.M.',
+		vinyl_installation: 'Instalação Vinil',
+		excavation: 'Escavação',
+		mortar: 'Argamassa',
+		reserve: 'Reserva',
+		conduction: 'Condução',
+		material_placement: 'Colocação de Material',
+		earth_removal: 'Remoção de Terra',
+		art: 'A.R.T.',
 
 		total: 'Total',
 		totals: 'Totais',

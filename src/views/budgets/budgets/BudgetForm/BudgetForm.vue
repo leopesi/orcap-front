@@ -119,22 +119,46 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<Filters :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
+					<Card class="card" v-if="this.form">
+						<div class="card-header">
+							{{ $t('equipments') }}
+						</div>
+						<div class="card-body">
+							<div class="row" v-if="this.showEquipments">
+								<div class="col-sm-12 pt-4">
+									<Filters :form="this.form" @changed="changedValues" />
+								</div>
+								<div class="col-sm-12 pt-4">
+									<Engines :form="this.form" @changed="changedValues" />
+								</div>
+								<div class="col-sm-12 pt-4">
+									<Lids :form="this.form" @changed="changedValues" />
+								</div>
+								<div class="col-sm-12 pt-4">
+									<Blankets :form="this.form" @changed="changedValues" />
+								</div>
+								<div class="col-sm-12 pt-4">
+									<Profiles :form="this.form" @changed="changedValues" />
+								</div>
+								<div class="col-sm-12 pt-4">
+									<Vinyls :form="this.form" @changed="changedValues" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6"></div>
+								<div class="col-sm-6 text-right">
+									<button type="button" class="btn btn-secondary small" @click="addEquipment">
+										{{ $t('add_equipment') }}
+									</button>
+								</div>
+							</div>
+						</div>
+					</Card>
 				</div>
+			</div>
+			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<Engines :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
-				</div>
-				<div class="col-sm-12 pt-4">
-					<Lids :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
-				</div>
-				<div class="col-sm-12 pt-4">
-					<Blankets :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
-				</div>
-				<div class="col-sm-12 pt-4">
-					<Profiles :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
-				</div>
-				<div class="col-sm-12 pt-4">
-					<Vinyls :form="this.form" v-if="this.showEquipments" @changed="changedValues" />
+					<ManPower :form="this.form" v-if="this.form" />
 				</div>
 			</div>
 			<div class="row">
@@ -204,6 +228,7 @@
 
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
+	import Card from '../../../components/Card/Card'
 	import Dimensions from '../Dimenions/Dimension'
 	import DimensionsBeach from '../Dimenions/DimensionBeach'
 	import Filters from '../Equipments/Filters'
@@ -212,6 +237,7 @@
 	import Blankets from '../Equipments/Blankets'
 	import Profiles from '../Equipments/Profiles'
 	import Vinyls from '../Equipments/Vinyls'
+	import ManPower from '../ManPower/ManPower'
 
 	import Layouts from '../data/layouts'
 	import Status from '../data/status'
@@ -222,7 +248,7 @@
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Dimensions, DimensionsBeach, Filters, Engines, Lids, Blankets, Profiles, Vinyls },
+		components: { Form, Alert, Card, Dimensions, DimensionsBeach, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
 		data() {
 			return {
 				form: {
@@ -265,6 +291,7 @@
 						this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 						this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
 						this.showBeach = this.form.beach.toString()
+						this.changedValues()
 					})
 				} else {
 					this.form.payment = Object.keys(this.payments)[0]
@@ -314,7 +341,28 @@
 					this.form.cash_price += parseFloat(this.form.equipments[i].cash_price)
 					this.form.forward_price += parseFloat(this.form.equipments[i].forward_price)
 				}
+				const fields = [
+					'side_wall',
+					'subfloor',
+					'baldrame',
+					'mold',
+					'heating',
+					'cm_installation',
+					'vinyl_installation',
+					'excavation',
+					'mortar',
+					'reserve',
+					'conduction',
+					'material_placement',
+					'earth_removal',
+					'art',
+				]
+				for (const i in fields) {
+					this.form.cash_price += parseFloat(this.form[fields[i]])
+					this.form.forward_price += parseFloat(this.form[fields[i]])
+				}
 			},
+			addEquipment() {},
 		},
 	}
 </script>

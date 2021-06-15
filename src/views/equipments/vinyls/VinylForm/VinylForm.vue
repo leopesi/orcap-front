@@ -77,12 +77,6 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="m2_size">{{ $t('m2_size') }}</label>
-						<input class="form-control" id="m2_size" v-model="form.m2_size" type="number" />
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
 						<label for="thickness">{{ $t('thickness') }}</label>
 						<input class="form-control" id="thickness" v-model="form.thickness" type="number" />
 					</div>
@@ -133,7 +127,6 @@
 							profit_margin: vinyl.data.equipments ? vinyl.data.equipments.profit_margin : '',
 							cash_price: vinyl.data.equipments ? vinyl.data.equipments.cash_price : '',
 							forward_price: vinyl.data.equipments ? vinyl.data.equipments.forward_price : '',
-							m2_size: vinyl.data.m2_size,
 							thickness: vinyl.data.thickness,
 						}
 					})

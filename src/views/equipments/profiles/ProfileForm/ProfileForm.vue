@@ -74,14 +74,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="size">{{ $t('size') }}</label>
-						<input class="form-control" id="size" v-model="form.size" type="number" />
-					</div>
-				</div>
-			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
@@ -127,7 +119,6 @@
 							profit_margin: profile.data.equipments ? profile.data.equipments.profit_margin : '',
 							cash_price: profile.data.equipments ? profile.data.equipments.cash_price : '',
 							forward_price: profile.data.equipments ? profile.data.equipments.forward_price : '',
-							size: profile.data.size,
 						}
 					})
 				}
