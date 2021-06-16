@@ -8,10 +8,15 @@
 				<div class="col-sm-8">
 					<div class="form-group">
 						<label for="filter">{{ $t('filter') }}</label>
-						<select class="custom-select" id="filter" v-model="form.filter" @change="change">
+						<select class="custom-select" id="filter" v-model="value" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="filter.id" v-for="(filter, i) in this.filters" :key="i">
-								<span v-if="filter.equipments && filter.brands"> {{ filter.equipments.name }} / {{ filter.brands.name }} </span>
+								<span v-if="filter && filter.equipments">
+									{{ filter.equipments.name }}
+								</span>
+								<span v-if="filter && filter.brands">
+									/ {{ filter.brands.name }}
+								</span>
 							</option>
 						</select>
 					</div>
@@ -55,7 +60,7 @@
 
 	export default {
 		name: 'Filters',
-		props: { form: Object },
+		props: { id: String, dimension: Object, equipment: Object },
 		i18n: { messages },
 		data() {
 			return {
@@ -65,14 +70,20 @@
 				cash_price: 0,
 				forward_price: 0,
 				see_more: false,
+				value: this.id
 			}
 		},
 		mounted() {
 			this.load()
 		},
+		watch: {
+			id(to) {
+				this.value = to
+			}
+		},
 		methods: {
 			load() {
-				Equipments.getFiltersByDimension(this.form.dimension, (result) => {
+				Equipments.getFiltersByDimension(this.dimension, (result) => {
 					this.filters = {}
 					for (const i in result.data) {
 						this.filters[result.data[i].id] = result.data[i]
@@ -81,17 +92,14 @@
 				})
 			},
 			change() {
-				if (this.filters[this.form.filter]) {
-					this.description = this.filters[this.form.filter].equipments.description
-					this.cash_price = this.filters[this.form.filter].equipments.cash_price
-					this.forward_price = this.filters[this.form.filter].equipments.forward_price
-					if (!this.form.equipments) this.form.equipments = {}
-					this.form.equipments['filter'] = {
-						id: this.filters[this.form.filter].id,
-						cash_price: this.filters[this.form.filter].equipments.cash_price,
-						forward_price: this.filters[this.form.filter].equipments.forward_price,
+				if (this.filters[this.value]) {
+					const data = {
+						id: this.value,
+						index: this.equipment.index,
+						engine_id: this.filters[this.value].engine_id,
+						lid_id: this.filters[this.value].lid_id
 					}
-					this.$emit('changed')
+					this.$emit('changed', data)
 				}
 			},
 		},

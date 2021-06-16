@@ -51,7 +51,6 @@
 			load() {
 				if (this.id && this.id != 0) {
 					Providers.get(this.id, (provider) => {
-						console.log(provider)
 						this.form = {
 							id: this.id && this.id != 0 ? this.id : null,
 							name: provider.data.name

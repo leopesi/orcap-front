@@ -26,7 +26,6 @@
 		beforeDestroy() {},
 		methods: {
 			changeVisibility() {
-				console.log(this.showBody)
 				this.showBody = !this.showBody
 			},
 		},

@@ -64,7 +64,6 @@
 			save() {
 				if (this.form.new_password == this.form.re_new_password) {
 					Logists.changePassword(this.form, (result) => {
-						console.log(result)
 						this.alert = {
 							title: 'Alterar Senha',
 							message: result.status,

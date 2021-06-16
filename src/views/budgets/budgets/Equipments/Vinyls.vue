@@ -8,10 +8,15 @@
 				<div class="col-sm-8">
 					<div class="form-group">
 						<label for="vinyl">{{ $t('vinyl') }}</label>
-						<select class="custom-select" id="vinyl" v-model="form.vinyl" @change="change">
+						<select class="custom-select" id="vinyl" v-model="value" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="vinyl.id" v-for="(vinyl, i) in this.vinyls" :key="i">
-								<span v-if="vinyl.equipments && vinyl.brands"> {{ vinyl.equipments.name }} / {{ vinyl.brands.name }} </span>
+								<span v-if="vinyl && vinyl.equipments">
+									{{ vinyl.equipments.name }}
+								</span>
+								<span v-if="vinyl && vinyl.brands">
+									/ {{ vinyl.brands.name }}
+								</span>
 							</option>
 						</select>
 					</div>
@@ -69,7 +74,7 @@
 
 	export default {
 		name: 'Vinyls',
-		props: { form: Object },
+		props: { id: String, equipment: Object },
 		i18n: { messages },
 		data() {
 			return {
@@ -80,15 +85,21 @@
 				forward_price: 0,
 				cash_price_total: 0,
 				forward_price_total: 0,
-				see_more: false
+				see_more: false,
+				value: this.id,
 			}
 		},
 		mounted() {
 			this.load()
 		},
+		watch: {
+			id(to) {
+				this.value = to
+			}
+		},
 		methods: {
 			load() {
-				Equipments.getVinylsByDimension(this.form.dimension, (result) => {
+				Equipments.getVinylsByDimension(this.dimension, (result) => {
 					this.vinyls = {}
 					for (const i in result.data) {
 						this.vinyls[result.data[i].id] = result.data[i]
@@ -97,18 +108,12 @@
 				})
 			},
 			change() {
-				if (this.vinyls[this.form.vinyl]) {
-					this.description = this.vinyls[this.form.vinyl].equipments.description
-					this.cash_price = this.vinyls[this.form.vinyl].equipments.cash_price
-					this.forward_price = this.vinyls[this.form.vinyl].equipments.forward_price
-					this.cash_price_total = this.vinyls[this.form.vinyl].equipments.cash_price * this.form.m2_total
-					this.forward_price_total = this.vinyls[this.form.vinyl].equipments.forward_price * this.form.m2_total
-					if (!this.form.equipments) this.form.equipments = {}
-					this.form.equipments['vinyl'] = {
-						cash_price: this.vinyls[this.form.vinyl].equipments.cash_price * this.form.m2_total,
-						forward_price: this.vinyls[this.form.vinyl].equipments.forward_price * this.form.m2_total,
+				if (this.vinyls[this.value]) {
+					const data = {
+						id: this.value,
+						index: this.equipment.index,
 					}
-					this.$emit('changed')
+					this.$emit('changed', data)
 				}
 			},
 		},

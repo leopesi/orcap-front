@@ -1,17 +1,19 @@
 <template>
-	<div class="card" v-if="this.form">
-		<!-- <div class="card-header">
-			{{ $t('engines') }}
-		</div> -->
+	<div class="card">
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-8">
 					<div class="form-group">
 						<label for="engine">{{ $t('engine') }}</label>
-						<select class="custom-select" id="engine" v-model="form.engine" @change="change">
+						<select class="custom-select" id="engine" v-model="value" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="engine.id" v-for="(engine, i) in this.engines" :key="i">
-								<span v-if="engine.equipments && engine.brands"> {{ engine.equipments.name }} / {{ engine.brands.name }} </span>
+								<span v-if="engine && engine.equipments">
+									{{ engine.equipments.name }}
+								</span>
+								<span v-if="engine && engine.brands">
+									/ {{ engine.brands.name }}
+								</span>
 							</option>
 						</select>
 					</div>
@@ -55,7 +57,7 @@
 
 	export default {
 		name: 'Engines',
-		props: { form: Object },
+		props: { id: String, dimension: Object, equipment: Object },
 		i18n: { messages },
 		data() {
 			return {
@@ -65,14 +67,20 @@
 				cash_price: 0,
 				forward_price: 0,
 				see_more: false,
+				value: this.id,
 			}
 		},
 		mounted() {
 			this.load()
 		},
+		watch: {
+			id(to) {
+				this.value = to
+			}
+		},
 		methods: {
 			load() {
-				Equipments.getEnginesByDimension(this.form.dimension, (result) => {
+				Equipments.getEnginesByDimension(this.dimension, (result) => {
 					this.engines = {}
 					for (const i in result.data) {
 						this.engines[result.data[i].id] = result.data[i]
@@ -81,16 +89,12 @@
 				})
 			},
 			change() {
-				if (this.engines[this.form.engine]) {
-					this.description = this.engines[this.form.engine].equipments.description
-					this.cash_price = this.engines[this.form.engine].equipments.cash_price
-					this.forward_price = this.engines[this.form.engine].equipments.forward_price
-					if (!this.form.equipments) this.form.equipments = {}
-					this.form.equipments['engine'] = {
-						cash_price: this.engines[this.form.engine].equipments.cash_price,
-						forward_price: this.engines[this.form.engine].equipments.forward_price,
+				if (this.engines[this.id]) {
+					const data = {
+						id: this.value,
+						index: this.equipment.index,
 					}
-					this.$emit('changed')
+					this.$emit('changed', data)
 				}
 			},
 		},
