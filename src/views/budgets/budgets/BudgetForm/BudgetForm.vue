@@ -324,7 +324,6 @@
 				this.reloadEquipments()
 			},
 			changeEquipment(equipment) {
-				console.log(equipment)
 				if (equipment && equipment.engine_id && equipment.lid_id) {
 					const index = this.form.equipments[equipment.index].index
 					for (const i in this.form.equipments) {
