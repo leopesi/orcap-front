@@ -102,7 +102,11 @@
 				Equipments.getBlanketsByDimension(this.dimension, (result) => {
 					this.blankets = {}
 					for (const i in result.data) {
-						this.blankets[result.data[i].id] = result.data[i]
+						const id = result.data[i].id
+						this.blankets[id] = result.data[i]
+						if (this.blankets[id].equipment_id == this.equipment.equipment_id) {
+							this.value = id
+						}
 					}
 					this.change()
 				})
@@ -112,6 +116,7 @@
 					const data = {
 						id: this.value,
 						index: this.equipment.index,
+						equipment_id: this.blankets[this.value].equipments.id
 					}
 					this.$emit('changed', data)
 				}

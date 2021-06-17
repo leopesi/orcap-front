@@ -102,7 +102,11 @@
 				Equipments.getVinylsByDimension(this.dimension, (result) => {
 					this.vinyls = {}
 					for (const i in result.data) {
-						this.vinyls[result.data[i].id] = result.data[i]
+						const id = result.data[i].id
+						this.vinyls[id] = result.data[i]
+						if (this.vinyls[id].equipment_id == this.equipment.equipment_id) {
+							this.value = id
+						}
 					}
 					this.change()
 				})
@@ -112,6 +116,7 @@
 					const data = {
 						id: this.value,
 						index: this.equipment.index,
+						equipment_id: this.vinyls[this.value].equipments.id
 					}
 					this.$emit('changed', data)
 				}

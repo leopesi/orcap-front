@@ -83,16 +83,21 @@
 				Equipments.getEnginesByDimension(this.dimension, (result) => {
 					this.engines = {}
 					for (const i in result.data) {
-						this.engines[result.data[i].id] = result.data[i]
+						const id = result.data[i].id
+						this.engines[id] = result.data[i]
+						if (this.engines[id].equipment_id == this.equipment.equipment_id) {
+							this.value = id
+						}
 					}
 					this.change()
 				})
 			},
 			change() {
-				if (this.engines[this.id]) {
+				if (this.engines[this.value]) {
 					const data = {
 						id: this.value,
 						index: this.equipment.index,
+						equipment_id: this.engines[this.value].equipments.id
 					}
 					this.$emit('changed', data)
 				}

@@ -277,13 +277,12 @@
 			load() {
 				if (this.id) {
 					Budgets.getBudget(this.id, (result) => {
-						this.form = result.data
+						this.form = Object.assign({}, result.data)
 						this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
 						this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 						this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
 						this.showBeach = this.form.beach.toString()
-						this.changedValues()
-						this.changeLayout()
+						this.loadEquipments(result.data.equipments)
 					})
 				} else {
 					this.form.payment = Object.keys(this.payments)[0]
@@ -324,19 +323,25 @@
 				this.reloadEquipments()
 			},
 			changeEquipment(equipment) {
-				if (equipment && equipment.engine_id && equipment.lid_id) {
+				if (equipment && equipment.engine && equipment.lid) {
 					const index = this.form.equipments[equipment.index].index
 					for (const i in this.form.equipments) {
 						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
-							this.form.equipments[i].id = equipment.engine_id
+							this.form.equipments[i].id = equipment.engine.id
+							this.form.equipments[i].equipment_id = equipment.engine.equipment_id
 						}
 						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
-							this.form.equipments[i].id = equipment.lid_id
+							this.form.equipments[i].id = equipment.lid.id
+							this.form.equipments[i].equipment_id = equipment.lid.equipment_id
 						}
 					}
-					this.form = Object.assign({}, this.form)
-					this.changedValues()
 				}
+
+				this.form.equipments[equipment.index].id = equipment.id
+				this.form.equipments[equipment.index].equipment_id = equipment.equipment_id
+
+				this.form = Object.assign({}, this.form)
+				this.changedValues()
 			},
 			reloadEquipments() {
 				this.showEquipments = false
@@ -371,6 +376,16 @@
 					this.form.cash_price += parseFloat(this.form[fields[i]])
 					this.form.forward_price += parseFloat(this.form[fields[i]])
 				}
+			},
+			loadEquipments(equipments) {
+				this.form.equipments = {}
+				for (const i in equipments) {
+					const equipment = equipments[i]
+					this.form.equipments[equipment.index] = equipment
+				}
+				this.form = Object.assign({}, this.form)
+				this.changeLayout()
+				this.changedValues()
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]

@@ -14,9 +14,7 @@
 								<span v-if="filter && filter.equipments">
 									{{ filter.equipments.name }}
 								</span>
-								<span v-if="filter && filter.brands">
-									/ {{ filter.brands.name }}
-								</span>
+								<span v-if="filter && filter.brands"> / {{ filter.brands.name }} </span>
 							</option>
 						</select>
 					</div>
@@ -70,34 +68,51 @@
 				cash_price: 0,
 				forward_price: 0,
 				see_more: false,
-				value: this.id
+				value: this.id,
+				firstTime: true
 			}
 		},
 		mounted() {
+			this.firstTime = true
 			this.load()
 		},
 		watch: {
 			id(to) {
 				this.value = to
-			}
+			},
 		},
 		methods: {
 			load() {
 				Equipments.getFiltersByDimension(this.dimension, (result) => {
 					this.filters = {}
 					for (const i in result.data) {
-						this.filters[result.data[i].id] = result.data[i]
+						const id = result.data[i].id
+						this.filters[id] = result.data[i]
+						if (this.filters[id].equipment_id == this.equipment.equipment_id) {
+							this.value = id
+						}
 					}
 					this.change()
 				})
 			},
 			change() {
+				if (this.firstTime) {
+					this.firstTime = false
+					return
+				}
 				if (this.filters[this.value]) {
 					const data = {
 						id: this.value,
 						index: this.equipment.index,
-						engine_id: this.filters[this.value].engine_id,
-						lid_id: this.filters[this.value].lid_id
+						engine: {
+							id: this.filters[this.value].engines.id,
+							equipment_id: this.filters[this.value].engines.equipment_id,
+						},
+						lid: {
+							id: this.filters[this.value].lids.id,
+							equipment_id: this.filters[this.value].lids.equipment_id,
+						},
+						equipment_id: this.filters[this.value].equipment_id,
 					}
 					this.$emit('changed', data)
 				}
