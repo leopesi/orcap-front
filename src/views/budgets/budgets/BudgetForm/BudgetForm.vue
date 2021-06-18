@@ -109,12 +109,7 @@
 			</div>
 			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-2">
-					<Dimensions :form="this.form" @changed="changedDimension" />
-				</div>
-			</div>
-			<div class="row" v-if="this.id && this.showBeach == 'true'">
-				<div class="col-sm-12 pt-4">
-					<DimensionsBeach :form="this.form" @changed="changedDimension" />
+					<Dimensions :form="this.form" :beach="this.showBeach" @changed="changedDimension" />
 				</div>
 			</div>
 			<div class="row" v-if="this.id">
@@ -220,7 +215,6 @@
 	import Alert from '../../../components/Alert/Alert'
 	import Card from '../../../components/Card/Card'
 	import Dimensions from '../Dimenions/Dimension'
-	import DimensionsBeach from '../Dimenions/DimensionBeach'
 	import Filters from '../Equipments/Filters'
 	import Engines from '../Equipments/Engines'
 	import Lids from '../Equipments/Lids'
@@ -238,7 +232,7 @@
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Card, Dimensions, DimensionsBeach, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
+		components: { Form, Alert, Card, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
 		data() {
 			return {
 				form: {

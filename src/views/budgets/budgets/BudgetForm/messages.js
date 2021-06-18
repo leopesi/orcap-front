@@ -18,6 +18,8 @@ export default {
 		dimensions_pool: 'Dimensões da Piscina',
 		dimensions_beach: 'Dimensões da Prainha',
 		beach: 'Prainha',
+		beach_width: 'Largura da Prainha',
+		beach_medium_depth: 'Profundidade Média da Prainha',
 		steps: 'Degraus',
 		number_steps: 'Quantidade de Degraus',
 		no: 'Não',
