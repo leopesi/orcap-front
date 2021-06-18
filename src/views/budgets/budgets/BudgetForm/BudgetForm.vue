@@ -4,11 +4,11 @@
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
-			<div class="row" v-if="this.form.id">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="id">{{ $t('id') }}</label>
-						<input class="form-control" id="id" v-model="form.id" type="text" disabled />
+						<input class="form-control" id="id" v-model="id" type="text" disabled />
 					</div>
 				</div>
 				<div class="col-sm-3">
@@ -107,17 +107,17 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-2">
 					<Dimensions :form="this.form" @changed="changedDimension" />
 				</div>
 			</div>
-			<div class="row" v-if="this.showBeach == 'true'">
+			<div class="row" v-if="this.id && this.showBeach == 'true'">
 				<div class="col-sm-12 pt-4">
 					<DimensionsBeach :form="this.form" @changed="changedDimension" />
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-4">
 					<Card class="card" v-if="this.form">
 						<div class="card-header">
@@ -126,7 +126,7 @@
 						<div class="card-body">
 							<div class="row" v-if="this.form">
 								<div class="col-sm-6 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
-									<Filters :id="equipment.id" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
+									<Filters :id="equipment.id" :discount="equipment.discount" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
 									<Engines :id="equipment.id" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
 									<Lids :id="equipment.id" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
 									<Blankets :id="equipment.id" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'blankets'" />
@@ -146,12 +146,12 @@
 					</Card>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-4">
-					<ManPower :form="this.form" v-if="this.form" />
+					<ManPower :form="this.form" :layout="this.form.layout" v-if="this.form" />
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-4">
 					<div class="card" v-if="this.form">
 						<div class="card-header">
@@ -278,11 +278,13 @@
 				if (this.id) {
 					Budgets.getBudget(this.id, (result) => {
 						this.form = Object.assign({}, result.data)
-						this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
-						this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
-						this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
-						this.showBeach = this.form.beach.toString()
-						this.loadEquipments(result.data.equipments)
+						if (result.data) {
+							this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
+							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
+							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
+							this.showBeach = this.form.beach ? this.form.beach.toString() : 'false'
+							this.loadEquipments(result.data.equipments)
+						}
 					})
 				} else {
 					this.form.payment = Object.keys(this.payments)[0]
@@ -339,6 +341,7 @@
 
 				this.form.equipments[equipment.index].id = equipment.id
 				this.form.equipments[equipment.index].equipment_id = equipment.equipment_id
+				this.form.equipments[equipment.index].discount = equipment.discount
 
 				this.form = Object.assign({}, this.form)
 				this.changedValues()

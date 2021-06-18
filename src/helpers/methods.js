@@ -23,9 +23,16 @@ export default {
 	},
 
 	fixSequelizeDate(date) {
-		return date.split('.')
-		.reverse()
-		.slice(1)
-		.join('.')
-	}
+		if (!date) {
+			return undefined
+			// console.log(new Date(Date.now()).toLocaleString())
+			// return new Date(Date.now()).toLocaleString()
+		} else {
+			return date
+				.split('.')
+				.reverse()
+				.slice(1)
+				.join('.')
+		}
+	},
 }
