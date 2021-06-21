@@ -8,10 +8,15 @@
 				<div class="col-sm-8">
 					<div class="form-group">
 						<label for="profile">{{ $t('profile') }}</label>
-						<select class="custom-select" id="profile" v-model="form.profile" @change="change">
+						<select class="custom-select" id="profile" v-model="value" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="profile.id" v-for="(profile, i) in this.profiles" :key="i">
-								<span v-if="profile.equipments && profile.brands"> {{ profile.equipments.name }} / {{ profile.brands.name }} </span>
+								<span v-if="profile && profile.equipments">
+									{{ profile.equipments.name }}
+								</span>
+								<span v-if="profile && profile.brands">
+									/ {{ profile.brands.name }}
+								</span>
 							</option>
 						</select>
 					</div>
@@ -19,7 +24,7 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="discount">{{ $t('discount') }}</label>
-						<input class="form-control" id="discount" type="number" :value="this.discount" />
+						<input class="form-control" id="discount" type="number" v-model="discount"  @change="change"/>
 					</div>
 				</div>
 			</div>
@@ -69,46 +74,52 @@
 
 	export default {
 		name: 'Profiles',
-		props: { form: Object },
+		props: { id: String, discount: String, equipment: Object },
 		i18n: { messages },
 		data() {
 			return {
 				profiles: [],
-				discount: 0,
 				description: '',
 				cash_price: 0,
 				forward_price: 0,
 				cash_price_total: 0,
 				forward_price_total: 0,
-				see_more: false
+				see_more: false,
+				value: this.id,
 			}
 		},
 		mounted() {
 			this.load()
 		},
+		watch: {
+			id(to) {
+				this.value = to
+			}
+		},
 		methods: {
 			load() {
-				Equipments.getProfilesByDimension(this.form.dimension, (result) => {
+				Equipments.getProfilesByDimension(this.dimension, (result) => {
 					this.profiles = {}
 					for (const i in result.data) {
-						this.profiles[result.data[i].id] = result.data[i]
+						const id = result.data[i].id
+						this.profiles[id] = result.data[i]
+						if (this.profiles[id].equipment_id == this.equipment.equipment_id) {
+							this.value = id
+						}
 					}
 					this.change()
 				})
 			},
 			change() {
-				if (this.profiles[this.form.profile]) {
-					this.description = this.profiles[this.form.profile].equipments.description
-					this.cash_price = this.profiles[this.form.profile].equipments.cash_price
-					this.forward_price = this.profiles[this.form.profile].equipments.forward_price
-					this.cash_price_total = this.profiles[this.form.profile].equipments.cash_price * this.form.m2_total
-					this.forward_price_total = this.profiles[this.form.profile].equipments.forward_price * this.form.m2_total
-					if (!this.form.equipments) this.form.equipments = {}
-					this.form.equipments['profile'] = {
-						cash_price: this.profiles[this.form.profile].equipments.cash_price * this.form.m2_total,
-						forward_price: this.profiles[this.form.profile].equipments.forward_price * this.form.m2_total,
+				if (this.profiles[this.value]) {
+					const data = {
+						id: this.value,
+						type: 'profiles',
+						index: this.equipment.index,
+						equipment_id: this.profiles[this.value].equipments.id,
+						discount: this.discount
 					}
-					this.$emit('changed')
+					this.$emit('changed', data)
 				}
 			},
 		},

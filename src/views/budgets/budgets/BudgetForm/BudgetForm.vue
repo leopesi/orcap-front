@@ -4,11 +4,11 @@
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
-			<div class="row" v-if="this.form.id">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="id">{{ $t('id') }}</label>
-						<input class="form-control" id="id" v-model="form.id" type="text" disabled />
+						<input class="form-control" id="id" v-model="id" type="text" disabled />
 					</div>
 				</div>
 				<div class="col-sm-3">
@@ -86,7 +86,7 @@
 					<div class="form-group mb-3">
 						<label for="layout">{{ $t('layout') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="layout" v-model="form.layout">
+							<select class="custom-select" id="layout" v-model="form.layout" @change="changeLayout">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
 									{{ layout.name }}
@@ -107,41 +107,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-2">
-					<Dimensions :form="this.form" @change="showEquipments = false" @changed="changedDimension" />
+					<Dimensions :form="this.form" :beach="this.showBeach == 'false' ? false : true" @changed="changedDimension" />
 				</div>
 			</div>
-			<div class="row" v-if="this.showBeach == 'true'">
-				<div class="col-sm-12 pt-4">
-					<DimensionsBeach :form="this.form" @change="showEquipments = false" @changed="changedDimension" />
-				</div>
-			</div>
-			<div class="row">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-4">
 					<Card class="card" v-if="this.form">
 						<div class="card-header">
 							{{ $t('equipments') }}
 						</div>
 						<div class="card-body">
-							<div class="row" v-if="this.showEquipments">
-								<div class="col-sm-12 pt-4">
-									<Filters :form="this.form" @changed="changedValues" />
-								</div>
-								<div class="col-sm-12 pt-4">
-									<Engines :form="this.form" @changed="changedValues" />
-								</div>
-								<div class="col-sm-12 pt-4">
-									<Lids :form="this.form" @changed="changedValues" />
-								</div>
-								<div class="col-sm-12 pt-4">
-									<Blankets :form="this.form" @changed="changedValues" />
-								</div>
-								<div class="col-sm-12 pt-4">
-									<Profiles :form="this.form" @changed="changedValues" />
-								</div>
-								<div class="col-sm-12 pt-4">
-									<Vinyls :form="this.form" @changed="changedValues" />
+							<div class="row" v-if="this.form">
+								<div class="col-sm-6 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
+									<Filters :id="equipment.id" :discount="equipment.discount" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
+									<Engines :id="equipment.id" :discount="equipment.discount" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
+									<Lids :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
+									<Blankets :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'blankets'" />
+									<Profiles :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'profiles'" />
+									<Vinyls :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'vinyls'" />
 								</div>
 							</div>
 							<div class="row">
@@ -156,12 +141,12 @@
 					</Card>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-4">
-					<ManPower :form="this.form" v-if="this.form" />
+					<ManPower :form="this.form" :layout="this.form.layout" v-if="this.form" />
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-4">
 					<div class="card" v-if="this.form">
 						<div class="card-header">
@@ -230,7 +215,6 @@
 	import Alert from '../../../components/Alert/Alert'
 	import Card from '../../../components/Card/Card'
 	import Dimensions from '../Dimenions/Dimension'
-	import DimensionsBeach from '../Dimenions/DimensionBeach'
 	import Filters from '../Equipments/Filters'
 	import Engines from '../Equipments/Engines'
 	import Lids from '../Equipments/Lids'
@@ -248,7 +232,7 @@
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Card, Dimensions, DimensionsBeach, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
+		components: { Form, Alert, Card, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
 		data() {
 			return {
 				form: {
@@ -258,7 +242,7 @@
 					seller_id: null,
 					format_id: null,
 					status: null,
-					layout_id: null,
+					layout: null,
 					date: null,
 					length: null,
 					width: null,
@@ -274,6 +258,7 @@
 				payments: Payments,
 				status: Status,
 				layouts: Layouts,
+				layout: '',
 				alert: {},
 				showEquipments: false,
 				showBeach: false,
@@ -286,12 +271,14 @@
 			load() {
 				if (this.id) {
 					Budgets.getBudget(this.id, (result) => {
-						this.form = result.data
-						this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
-						this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
-						this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
-						this.showBeach = this.form.beach.toString()
-						this.changedValues()
+						this.form = Object.assign({}, result.data)
+						if (result.data) {
+							this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
+							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
+							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
+							this.showBeach = this.form.beach ? this.form.beach.toString() : 'false'
+							this.loadEquipments(result.data.equipments)
+						}
 					})
 				} else {
 					this.form.payment = Object.keys(this.payments)[0]
@@ -329,18 +316,43 @@
 					final_depth: this.form.final_depth,
 					sidewalk_width: this.form.sidewalk_width,
 				}
+				this.reloadEquipments()
+			},
+			changeEquipment(equipment) {
+				if (equipment && equipment.engine && equipment.lid) {
+					const index = this.form.equipments[equipment.index].index
+					for (const i in this.form.equipments) {
+						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
+							this.form.equipments[i].id = equipment.engine.id
+							this.form.equipments[i].equipment_id = equipment.engine.equipment_id
+						}
+						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
+							this.form.equipments[i].id = equipment.lid.id
+							this.form.equipments[i].equipment_id = equipment.lid.equipment_id
+						}
+					}
+				}
+
+				this.form.equipments[equipment.index].id = equipment.id
+				this.form.equipments[equipment.index].equipment_id = equipment.equipment_id
+				this.form.equipments[equipment.index].discount = equipment.discount
+
+				this.form = Object.assign({}, this.form)
+				this.changedValues()
+			},
+			reloadEquipments() {
 				this.showEquipments = false
 				setTimeout(() => {
 					this.showEquipments = true
-				}, 1)
+				}, 100)
 			},
 			changedValues() {
 				this.form.cash_price = 0
 				this.form.forward_price = 0
-				for (const i in this.form.equipments) {
-					this.form.cash_price += parseFloat(this.form.equipments[i].cash_price)
-					this.form.forward_price += parseFloat(this.form.equipments[i].forward_price)
-				}
+				// for (const i in this.form.equipments) {
+				// 	this.form.cash_price += parseFloat(this.form.equipments[i].cash_price)
+				// 	this.form.forward_price += parseFloat(this.form.equipments[i].forward_price)
+				// }
 				const fields = [
 					'side_wall',
 					'subfloor',
@@ -361,6 +373,34 @@
 					this.form.cash_price += parseFloat(this.form[fields[i]])
 					this.form.forward_price += parseFloat(this.form[fields[i]])
 				}
+			},
+			loadEquipments(equipments) {
+				if (!this.form.equipments) this.form.equipments = {}
+				for (const i in equipments) {
+					const equipment = equipments[i]
+					this.form.equipments[equipment.index] = equipment
+				}
+				this.form = Object.assign({}, this.form)
+				this.changeLayout()
+				this.changedValues()
+			},
+			changeLayout() {
+				this.layout = Layouts[this.form.layout]
+				if (!this.form.equipments) this.form.equipments = {}
+				for (const i in this.layout.equipments) {
+					const type = this.layout.equipments[i]
+					let finded = false
+					for (const j in this.form.equipments) {
+						if (this.form.equipments[j].type == type) {
+							finded = true
+						}
+					}
+					if (!finded) {
+						const index = Object.keys(this.form.equipments).length
+						this.form.equipments[index] = { type, index }
+					}
+				}
+				this.reloadEquipments()
 			},
 			addEquipment() {},
 		},

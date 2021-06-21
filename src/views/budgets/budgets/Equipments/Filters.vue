@@ -8,10 +8,13 @@
 				<div class="col-sm-8">
 					<div class="form-group">
 						<label for="filter">{{ $t('filter') }}</label>
-						<select class="custom-select" id="filter" v-model="form.filter" @change="change">
+						<select class="custom-select" id="filter" v-model="value" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="filter.id" v-for="(filter, i) in this.filters" :key="i">
-								<span v-if="filter.equipments && filter.brands"> {{ filter.equipments.name }} / {{ filter.brands.name }} </span>
+								<span v-if="filter && filter.equipments">
+									{{ filter.equipments.name }}
+								</span>
+								<span v-if="filter && filter.brands"> / {{ filter.brands.name }} </span>
 							</option>
 						</select>
 					</div>
@@ -19,7 +22,7 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="discount">{{ $t('discount') }}</label>
-						<input class="form-control" id="discount" type="number" :value="this.discount" />
+						<input class="form-control" id="discount" type="number" v-model="discount" @change="change"/>
 					</div>
 				</div>
 			</div>
@@ -55,43 +58,64 @@
 
 	export default {
 		name: 'Filters',
-		props: { form: Object },
+		props: { id: String, discount: String, dimension: Object, equipment: Object },
 		i18n: { messages },
 		data() {
 			return {
 				filters: [],
-				discount: 0,
 				description: '',
 				cash_price: 0,
 				forward_price: 0,
 				see_more: false,
+				value: this.id,
+				firstTime: true,
 			}
 		},
 		mounted() {
+			this.firstTime = true
 			this.load()
+		},
+		watch: {
+			id(to) {
+				this.value = to
+			},
 		},
 		methods: {
 			load() {
-				Equipments.getFiltersByDimension(this.form.dimension, (result) => {
+				Equipments.getFiltersByDimension(this.dimension, (result) => {
 					this.filters = {}
 					for (const i in result.data) {
-						this.filters[result.data[i].id] = result.data[i]
+						const id = result.data[i].id
+						this.filters[id] = result.data[i]
+						if (this.filters[id].equipment_id == this.equipment.equipment_id) {
+							this.value = id
+						}
 					}
 					this.change()
 				})
 			},
 			change() {
-				if (this.filters[this.form.filter]) {
-					this.description = this.filters[this.form.filter].equipments.description
-					this.cash_price = this.filters[this.form.filter].equipments.cash_price
-					this.forward_price = this.filters[this.form.filter].equipments.forward_price
-					if (!this.form.equipments) this.form.equipments = {}
-					this.form.equipments['filter'] = {
-						id: this.filters[this.form.filter].id,
-						cash_price: this.filters[this.form.filter].equipments.cash_price,
-						forward_price: this.filters[this.form.filter].equipments.forward_price,
+				if (this.firstTime) {
+					this.firstTime = false
+					return
+				}
+				if (this.filters[this.value]) {
+					const data = {
+						id: this.value,
+						type: 'filters',
+						index: this.equipment.index,
+						engine: {
+							id: this.filters[this.value].engines.id,
+							equipment_id: this.filters[this.value].engines.equipment_id,
+						},
+						lid: {
+							id: this.filters[this.value].lids.id,
+							equipment_id: this.filters[this.value].lids.equipment_id,
+						},
+						equipment_id: this.filters[this.value].equipment_id,
+						discount: this.discount,
 					}
-					this.$emit('changed')
+					this.$emit('changed', data)
 				}
 			},
 		},

@@ -80,8 +80,20 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
+			<div class="row" v-if="this.beach">
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="beach_width">{{ $t('beach_width') }}</label>
+						<input class="form-control" id="beach_width" v-model="form.beach_width" type="number" step="0.01" @keyup="calculate" />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="beach_medium_depth">{{ $t('beach_medium_depth') }}</label>
+						<input class="form-control" id="beach_medium_depth" v-model="form.beach_medium_depth" type="number" step="0.01" @keyup="calculate" />
+					</div>
+				</div>
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="steps">{{ $t('steps') }}</label>
 						<select class="custom-select" id="steps" v-model="form.steps" @change="showSteps = $event.target.value">
@@ -90,7 +102,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-sm-6" v-if="this.showSteps == 'true'">
+				<div class="col-sm-3" v-if="this.showSteps == 'true'">
 					<div class="form-group">
 						<label for="number_steps">{{ $t('number_steps') }}</label>
 						<input class="form-control" id="number_steps" v-model="form.number_steps" type="text" />
@@ -109,7 +121,7 @@
 	export default {
 		name: 'Dimensions',
 		components: { Card },
-		props: { form: Object },
+		props: { form: Object, beach: Boolean },
 		i18n: { messages },
 		data() {
 			return {

@@ -1,5 +1,5 @@
 <template>
-	<div class="card" v-if="this.form">
+	<div class="card">
 		<!-- <div class="card-header">
 			{{ $t('lids') }}
 		</div> -->
@@ -8,10 +8,15 @@
 				<div class="col-sm-8">
 					<div class="form-group">
 						<label for="lid">{{ $t('lid') }}</label>
-						<select class="custom-select" id="lid" v-model="form.lid" @change="change">
+						<select class="custom-select" id="lid" v-model="value" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="lid.id" v-for="(lid, i) in this.lids" :key="i">
-								<span v-if="lid.equipments && lid.brands"> {{ lid.equipments.name }} / {{ lid.brands.name }} </span>
+								<span v-if="lid && lid.equipments">
+									{{ lid.equipments.name }}
+								</span>
+								<span v-if="lid && lid.brands">
+									/ {{ lid.brands.name }}
+								</span>
 							</option>
 						</select>
 					</div>
@@ -19,7 +24,7 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="discount">{{ $t('discount') }}</label>
-						<input class="form-control" id="discount" type="number" :value="this.discount" />
+						<input class="form-control" id="discount" type="number" v-model="discount"  @change="change"/>
 					</div>
 				</div>
 			</div>
@@ -55,42 +60,50 @@
 
 	export default {
 		name: 'Lids',
-		props: { form: Object },
+		props: { id: String, discount: String, dimension: Object, equipment: Object },
 		i18n: { messages },
 		data() {
 			return {
 				lids: [],
-				discount: 0,
 				description: '',
 				cash_price: 0,
 				forward_price: 0,
-				see_more: false
+				see_more: false,
+				value: this.id,
 			}
 		},
 		mounted() {
 			this.load()
 		},
+		watch: {
+			id(to) {
+				this.value = to
+			}
+		},
 		methods: {
 			load() {
-				Equipments.getLidsByFilters(this.form.dimension, (result) => {
+				Equipments.getLidsByFilters(this.dimension, (result) => {
 					this.lids = {}
 					for (const i in result.data) {
-						this.lids[result.data[i].id] = result.data[i]
+						const id = result.data[i].id
+						this.lids[id] = result.data[i]
+						if (this.lids[id].equipment_id == this.equipment.equipment_id) {
+							this.value = id
+						}
 					}
 					this.change()
 				})
 			},
 			change() {
-				if (this.lids[this.form.lid]) {
-					this.description = this.lids[this.form.lid].equipments.description
-					this.cash_price = this.lids[this.form.lid].equipments.cash_price
-					this.forward_price = this.lids[this.form.lid].equipments.forward_price
-					if (!this.form.equipments) this.form.equipments = {}
-					this.form.equipments['lid'] = {
-						cash_price: this.lids[this.form.lid].equipments.cash_price,
-						forward_price: this.lids[this.form.lid].equipments.forward_price,
+				if (this.lids[this.value]) {
+					const data = {
+						id: this.value,
+						type: 'lids',
+						index: this.equipment.index,
+						equipment_id: this.lids[this.value].equipments.id,
+						discount: this.discount
 					}
-					this.$emit('changed')
+					this.$emit('changed', data)
 				}
 			},
 		},

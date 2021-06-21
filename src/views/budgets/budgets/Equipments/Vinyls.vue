@@ -8,10 +8,15 @@
 				<div class="col-sm-8">
 					<div class="form-group">
 						<label for="vinyl">{{ $t('vinyl') }}</label>
-						<select class="custom-select" id="vinyl" v-model="form.vinyl" @change="change">
+						<select class="custom-select" id="vinyl" v-model="value" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="vinyl.id" v-for="(vinyl, i) in this.vinyls" :key="i">
-								<span v-if="vinyl.equipments && vinyl.brands"> {{ vinyl.equipments.name }} / {{ vinyl.brands.name }} </span>
+								<span v-if="vinyl && vinyl.equipments">
+									{{ vinyl.equipments.name }}
+								</span>
+								<span v-if="vinyl && vinyl.brands">
+									/ {{ vinyl.brands.name }}
+								</span>
 							</option>
 						</select>
 					</div>
@@ -19,7 +24,7 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="discount">{{ $t('discount') }}</label>
-						<input class="form-control" id="discount" type="number" :value="this.discount" />
+						<input class="form-control" id="discount" type="number" v-model="discount"  @change="change"/>
 					</div>
 				</div>
 			</div>
@@ -69,46 +74,52 @@
 
 	export default {
 		name: 'Vinyls',
-		props: { form: Object },
+		props: { id: String, discount: String, equipment: Object },
 		i18n: { messages },
 		data() {
 			return {
 				vinyls: [],
-				discount: 0,
 				description: '',
 				cash_price: 0,
 				forward_price: 0,
 				cash_price_total: 0,
 				forward_price_total: 0,
-				see_more: false
+				see_more: false,
+				value: this.id,
 			}
 		},
 		mounted() {
 			this.load()
 		},
+		watch: {
+			id(to) {
+				this.value = to
+			}
+		},
 		methods: {
 			load() {
-				Equipments.getVinylsByDimension(this.form.dimension, (result) => {
+				Equipments.getVinylsByDimension(this.dimension, (result) => {
 					this.vinyls = {}
 					for (const i in result.data) {
-						this.vinyls[result.data[i].id] = result.data[i]
+						const id = result.data[i].id
+						this.vinyls[id] = result.data[i]
+						if (this.vinyls[id].equipment_id == this.equipment.equipment_id) {
+							this.value = id
+						}
 					}
 					this.change()
 				})
 			},
 			change() {
-				if (this.vinyls[this.form.vinyl]) {
-					this.description = this.vinyls[this.form.vinyl].equipments.description
-					this.cash_price = this.vinyls[this.form.vinyl].equipments.cash_price
-					this.forward_price = this.vinyls[this.form.vinyl].equipments.forward_price
-					this.cash_price_total = this.vinyls[this.form.vinyl].equipments.cash_price * this.form.m2_total
-					this.forward_price_total = this.vinyls[this.form.vinyl].equipments.forward_price * this.form.m2_total
-					if (!this.form.equipments) this.form.equipments = {}
-					this.form.equipments['vinyl'] = {
-						cash_price: this.vinyls[this.form.vinyl].equipments.cash_price * this.form.m2_total,
-						forward_price: this.vinyls[this.form.vinyl].equipments.forward_price * this.form.m2_total,
+				if (this.vinyls[this.value]) {
+					const data = {
+						id: this.value,
+						type: 'vinyls',
+						index: this.equipment.index,
+						equipment_id: this.vinyls[this.value].equipments.id,
+						discount: this.discount
 					}
-					this.$emit('changed')
+					this.$emit('changed', data)
 				}
 			},
 		},
