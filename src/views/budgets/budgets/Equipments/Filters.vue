@@ -102,6 +102,7 @@
 				if (this.filters[this.value]) {
 					const data = {
 						id: this.value,
+						type: 'filters',
 						index: this.equipment.index,
 						engine: {
 							id: this.filters[this.value].engines.id,

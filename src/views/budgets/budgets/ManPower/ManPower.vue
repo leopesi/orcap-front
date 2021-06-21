@@ -86,7 +86,6 @@
 		},
 		watch: {
 			layout() {
-				console.log('MAN CHANGE FORM')
 				this.manpowers = Layouts[this.layout] ? Layouts[this.layout].manpowers : []
 			},
 		},

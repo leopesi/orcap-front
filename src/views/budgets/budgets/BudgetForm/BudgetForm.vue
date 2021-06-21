@@ -109,7 +109,7 @@
 			</div>
 			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-2">
-					<Dimensions :form="this.form" :beach="this.showBeach" @changed="changedDimension" />
+					<Dimensions :form="this.form" :beach="this.showBeach == 'false' ? false : true" @changed="changedDimension" />
 				</div>
 			</div>
 			<div class="row" v-if="this.id">
@@ -122,11 +122,11 @@
 							<div class="row" v-if="this.form">
 								<div class="col-sm-6 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
 									<Filters :id="equipment.id" :discount="equipment.discount" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
-									<Engines :id="equipment.id" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
-									<Lids :id="equipment.id" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
-									<Blankets :id="equipment.id" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'blankets'" />
-									<Profiles :id="equipment.id" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'profiles'" />
-									<Vinyls :id="equipment.id" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'vinyls'" />
+									<Engines :id="equipment.id" :discount="equipment.discount" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
+									<Lids :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
+									<Blankets :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'blankets'" />
+									<Profiles :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'profiles'" />
+									<Vinyls :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'vinyls'" />
 								</div>
 							</div>
 							<div class="row">
@@ -375,7 +375,7 @@
 				}
 			},
 			loadEquipments(equipments) {
-				this.form.equipments = {}
+				if (!this.form.equipments) this.form.equipments = {}
 				for (const i in equipments) {
 					const equipment = equipments[i]
 					this.form.equipments[equipment.index] = equipment

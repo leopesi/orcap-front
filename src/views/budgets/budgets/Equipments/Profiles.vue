@@ -24,7 +24,7 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="discount">{{ $t('discount') }}</label>
-						<input class="form-control" id="discount" type="number" :value="this.discount" />
+						<input class="form-control" id="discount" type="number" v-model="discount"  @change="change"/>
 					</div>
 				</div>
 			</div>
@@ -74,12 +74,11 @@
 
 	export default {
 		name: 'Profiles',
-		props: { id: String, equipment: Object },
+		props: { id: String, discount: String, equipment: Object },
 		i18n: { messages },
 		data() {
 			return {
 				profiles: [],
-				discount: 0,
 				description: '',
 				cash_price: 0,
 				forward_price: 0,
@@ -115,8 +114,10 @@
 				if (this.profiles[this.value]) {
 					const data = {
 						id: this.value,
+						type: 'profiles',
 						index: this.equipment.index,
-						equipment_id: this.profiles[this.value].equipments.id
+						equipment_id: this.profiles[this.value].equipments.id,
+						discount: this.discount
 					}
 					this.$emit('changed', data)
 				}

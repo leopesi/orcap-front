@@ -25,8 +25,6 @@ export default {
 	fixSequelizeDate(date) {
 		if (!date) {
 			return undefined
-			// console.log(new Date(Date.now()).toLocaleString())
-			// return new Date(Date.now()).toLocaleString()
 		} else {
 			return date
 				.split('.')
