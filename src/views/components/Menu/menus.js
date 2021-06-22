@@ -1,6 +1,6 @@
 export default {
 	my_data: {
-		profile: 'logists/0',
+		profile: 'profile',
 		change_password: 'change_password',
 		config: 'config',
 	},
