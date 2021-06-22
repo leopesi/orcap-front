@@ -4,8 +4,8 @@
 			<div class="row">
 				<div class="col-sm-8">
 					<div class="form-group">
-						<label for="engine">{{ $t('engine') }}</label>
-						<select class="custom-select" id="engine" v-model="value" @change="change">
+						<label>{{ $t('engine') }}</label>
+						<select class="custom-select" v-model="value" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="engine.id" v-for="(engine, i) in this.engines" :key="i">
 								<span v-if="engine && engine.equipments">
@@ -20,30 +20,30 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="form-group">
-						<label for="discount">{{ $t('discount') }}</label>
-						<input class="form-control" id="discount" type="number" v-model="discount"  @change="change"/>
+						<label>{{ $t('discount') }}</label>
+						<input class="form-control" type="number" v-model="discountValue"  @change="change"/>
 					</div>
 				</div>
 			</div>
 			<div class="row" v-if="this.see_more">
 				<div class="col-sm-12">
 					<div class="form-group">
-						<label for="description">{{ $t('description') }}</label>
-						<input class="form-control" id="description" type="text" :value="this.description" disabled />
+						<label>{{ $t('description') }}</label>
+						<input class="form-control" type="text" :value="this.description" disabled />
 					</div>
 				</div>
 			</div>
 			<div class="row" v-if="this.see_more">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="cash_price">{{ $t('cash_price') }}</label>
-						<input class="form-control" id="cash_price" type="text" :value="this.cash_price" disabled />
+						<label>{{ $t('cash_price') }}</label>
+						<input class="form-control" type="text" :value="this.cash_price" disabled />
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="forward_price">{{ $t('forward_price') }}</label>
-						<input class="form-control" id="forward_price" type="text" :value="this.forward_price" disabled />
+						<label>{{ $t('forward_price') }}</label>
+						<input class="form-control" type="text" :value="this.forward_price" disabled />
 					</div>
 				</div>
 			</div>
@@ -67,6 +67,7 @@
 				forward_price: 0,
 				see_more: false,
 				value: this.id,
+				discountValue: this.discount
 			}
 		},
 		mounted() {
@@ -98,7 +99,7 @@
 						type: 'engines',
 						index: this.equipment.index,
 						equipment_id: this.engines[this.value].equipments.id,
-						discount: this.discount
+						discount: this.discountValue
 					}
 					this.$emit('changed', data)
 				}

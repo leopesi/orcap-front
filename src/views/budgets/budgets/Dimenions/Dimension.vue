@@ -57,8 +57,8 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
-						<label for="m2_facial">{{ $t('m2_facial') }}</label>
-						<input class="form-control" id="m2_facial" v-model="form.m2_wall" type="text" />
+						<label for="m2_wall">{{ $t('m2_wall') }}</label>
+						<input class="form-control" id="m2_wall" v-model="form.m2_wall" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-3">

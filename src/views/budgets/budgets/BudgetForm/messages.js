@@ -32,7 +32,7 @@ export default {
 		sidewalk_width: 'Largura da Calçada',
 		// CALCULADOS
 		medium_depth: 'Profundidade Média',
-		sidewalk_area: 'Área da calçada',
+		sidewalk_area: 'Área da calçada (Calculado)',
 		m2_facial: 'M2 Facial',
 		perimeter: 'Perimetro',
 		m2_wall: 'M2 da Parede',
@@ -41,6 +41,7 @@ export default {
 		m3_real: 'M3 real',
 
 		equipments: 'Equipamentos',
+		equipment: 'Equipamento',
 		add_equipment: 'Adicionar Equipamento',
 		filters: 'Filtros',
 		filter: 'Filtro',

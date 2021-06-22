@@ -132,7 +132,7 @@
 							<div class="row">
 								<div class="col-sm-6"></div>
 								<div class="col-sm-6 text-right">
-									<button type="button" class="btn btn-secondary small" @click="addEquipment">
+									<button type="button" class="btn btn-secondary small" @click="showEquipment">
 										{{ $t('add_equipment') }}
 									</button>
 								</div>
@@ -177,7 +177,7 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="discount">{{ $t('discount') }}</label>
-										<input class="form-control" id="discount" v-model="form.discount" type="number" />
+										<input class="form-control" v-model="form.discount" type="number" />
 									</div>
 								</div>
 							</div>
@@ -200,6 +200,28 @@
 				</div>
 			</div>
 		</Form>
+		<FloatCard :title="$t('add_equipment')" :show="this.showAddEquipment" @close="showAddEquipment = false">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group mb-3">
+						<label for="new_equipment">{{ $t('equipment') }}</label>
+						<div class="input-group mb-3">
+							<select class="custom-select" id="new_equipment" v-model="newEquipment">
+								<!-- <option selected>{{ $t('choose') }}</option> -->
+								<option :value="i" v-for="(equipment, i) in this.equipments" :key="i">
+									{{ equipment }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div slot="footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal" @click="addEquipment">
+					{{ $t('add_equipment') }}
+				</button>
+			</div>
+		</FloatCard>
 		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
 </template>
@@ -210,10 +232,12 @@
 	import Budgets from '../../../../controllers/budgets/budgets'
 	import Clients from '../../../../controllers/persons/clients'
 	import Sellers from '../../../../controllers/persons/sellers'
-
+	// COMPONENTS
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Card from '../../../components/Card/Card'
+	import FloatCard from '../../../components/FloatCard/FloatCard'
+	// BUDGET COMPONENTS
 	import Dimensions from '../Dimenions/Dimension'
 	import Filters from '../Equipments/Filters'
 	import Engines from '../Equipments/Engines'
@@ -226,13 +250,14 @@
 	import Layouts from '../data/layouts'
 	import Status from '../data/status'
 	import Payments from '../data/payments'
+	import Equipments from '../data/equipments'
 	import messages from './messages'
 
 	export default {
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Card, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
+		components: { Form, Alert, Card, FloatCard, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
 		data() {
 			return {
 				form: {
@@ -256,11 +281,14 @@
 				clients: [],
 				sellers: [],
 				payments: Payments,
+				equipments: Equipments,
 				status: Status,
 				layouts: Layouts,
 				layout: '',
 				alert: {},
+				newEquipment: 'filter',
 				showEquipments: false,
+				showAddEquipment: false,
 				showBeach: false,
 			}
 		},
@@ -402,7 +430,20 @@
 				}
 				this.reloadEquipments()
 			},
-			addEquipment() {},
+			showEquipment() {
+				this.showAddEquipment = true
+				this.newEquipment = Object.keys(this.equipments)[0]
+			},
+			addEquipment() {
+				const index = Object.keys(this.form.equipments).length
+				const type = this.newEquipment
+				this.form.equipments[index] = { type, index }
+				if (type == 'filters') {
+					this.form.equipments[index + 1] = { type: 'engines', index: index + 1 }
+					this.form.equipments[index + 2] = { type: 'lids', index: index + 2 }
+				}
+				this.showAddEquipment = false
+			},
 		},
 	}
 </script>
