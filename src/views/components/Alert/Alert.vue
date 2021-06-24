@@ -62,7 +62,7 @@
 				this.$emit('close')
 			},
 			keyUp(e) {
-				if (e.code == 'Escape' || e.code == 'Space') {
+				if (e.code == 'Escape') {
 					this.close()
 				}
 			},
