@@ -208,6 +208,52 @@
 					</Card>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="col-sm-12 pt-4">
+					<Card>
+						<div class="card-header">
+							{{ $t('by_financial_down_payment') }}
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group mb-3">
+										<label for="number_by_financial_down_payment">{{ $t('number_installments') }}</label>
+										<input
+											class="form-control"
+											id="number_by_financial_down_payment"
+											v-model="number_by_financial_down_payment"
+											@keyup="by_financial_down_payment = changeInstallment($event, by_financial_down_payment)"
+										/>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<table class="table">
+										<tr v-for="i in parseInt(by_financial_down_payment.length / 2)" :key="i">
+											<td>
+												{{ parseInt(i * 2) - 1 }}
+											</td>
+											<td>
+												<input class="form-control" v-model="by_financial_down_payment[parseInt(i * 2) - 2]" />
+											</td>
+											<td>
+												{{ parseInt(i * 2) }}
+											</td>
+											<td>
+												<input class="form-control" v-model="by_financial_down_payment[parseInt(i * 2) - 1]" />
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</Card>
+				</div>
+			</div>
+
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
@@ -241,6 +287,8 @@
 				by_logist: [],
 				number_by_financial: 0,
 				by_financial: [],
+				number_by_financial_down_payment: 0,
+				by_financial_down_payment: [],
 				token: localStorage.token,
 				brands: {},
 				alert: {},
@@ -268,6 +316,10 @@
 						if (!this.by_financial) this.by_financial = []
 						this.number_by_financial = this.by_financial.length
 
+						this.by_financial_down_payment = JSON.parse(result.data.by_financial_down_payment)
+						if (!this.by_financial_down_payment) this.by_financial_down_payment = []
+						this.number_by_financial_down_payment = this.by_financial_down_payment.length
+
 						this.brands = brands.data
 					})
 				})
@@ -276,6 +328,7 @@
 				this.form.installment_credit_card = JSON.stringify(this.installment_credit_card)
 				this.form.by_logist = JSON.stringify(this.by_logist)
 				this.form.by_financial = JSON.stringify(this.by_financial)
+				this.form.by_financial_down_payment = JSON.stringify(this.by_financial_down_payment)
 				console.log(this.form.max_discount)
 				Logists.update(this.form, (result) => {
 					this.alert = {

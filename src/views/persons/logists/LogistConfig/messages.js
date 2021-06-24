@@ -10,6 +10,7 @@ export default {
 		installment_credit_card: 'Taxas de Cartão de crédito',
 		by_logist: 'Taxas de Parcelamento pela Loja',
 		by_financial: 'Taxas de Parcelamento pela Financeira',
+		by_financial_down_payment: 'Taxas pela Financeira com Entrada',
 		number_installments: 'Número de Parcelas'
 	},
 }
