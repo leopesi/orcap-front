@@ -60,7 +60,7 @@
 					<div class="form-group mb-3">
 						<label for="payment">{{ $t('payment') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="payment" v-model="form.payment">
+							<select class="custom-select" id="payment" v-model="form.payment" @change="changedValues">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(payment, i) in this.payments" :key="i">
 									{{ payment }}
@@ -143,7 +143,7 @@
 			</div>
 			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-4">
-					<ManPower :form="this.form" :layout="this.form.layout" v-if="this.form" />
+					<ManPower :form="this.form" :layout="this.form.layout" :logist="this.logist" v-if="this.form" />
 				</div>
 			</div>
 			<div class="row" v-if="this.id">
@@ -177,7 +177,7 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="discount">{{ $t('discount') }}</label>
-										<input class="form-control" v-model="form.discount" type="number" />
+										<input class="form-control" v-model="form.discount" type="number" @keyup="changedValues"/>
 									</div>
 								</div>
 							</div>
@@ -230,6 +230,7 @@
 	import Methods from '../../../../helpers/methods'
 
 	import Budgets from '../../../../controllers/budgets/budgets'
+	import Logists from '../../../../controllers/persons/logists'
 	import Clients from '../../../../controllers/persons/clients'
 	import Sellers from '../../../../controllers/persons/sellers'
 	// COMPONENTS
@@ -280,6 +281,7 @@
 				},
 				clients: [],
 				sellers: [],
+				logist: {},
 				payments: Payments,
 				equipments: Equipments,
 				status: Status,
@@ -314,6 +316,9 @@
 					this.form.layout = Object.keys(this.layouts)[0]
 					this.form.beach = false
 				}
+				Logists.getByToken((result) => {
+					this.logist = result.data
+				})
 				Sellers.list((result) => {
 					this.sellers = result.data
 				})
@@ -377,16 +382,24 @@
 				this.form.cash_price = 0
 				this.form.forward_price = 0
 				for (const i in this.form.equipments) {
-					const profit_margin = parseFloat(this.form.equipments[i].profit_margin)
-					const cost = parseFloat(this.form.equipments[i].cost)
-					const price = isNaN(cost) ? 0 : cost * (1 + (isNaN(profit_margin) ? 0 : profit_margin))
+					const price = parseFloat(this.form.equipments[i].price)
+					const discount = parseFloat(this.form.equipments[i].discount)
+					const final_price = price - (isNaN(discount) ? 0 : discount)
 					if (this.form.equipments[i].type == 'vinyls') {
-						this.form.cash_price += (price * this.form.m2_total)
+						this.form.cash_price += final_price * this.form.m2_total
 					} else {
-						this.form.cash_price += price
+						this.form.cash_price += final_price
 					}
-					// this.form.forward_price += parseFloat(this.form.equipments[i].forward_price)
 				}
+				const manpowers = this.layout.manpowers ? this.layout.manpowers : []
+				let total_manpower_price = 0
+				for (const i in manpowers) {
+					const manpower_price = parseFloat(this.form[manpowers[i]])
+					total_manpower_price += isNaN(manpower_price) ? 0 : manpower_price
+				}
+				this.form.cash_price += total_manpower_price
+
+				this.form.cash_price_total = this.form.cash_price - (isNaN(this.form.discount) ? 0 : this.form.discount)
 			},
 			loadEquipments(equipments) {
 				if (!this.form.equipments) this.form.equipments = {}
@@ -396,7 +409,6 @@
 				}
 				this.form = Object.assign({}, this.form)
 				this.changeLayout()
-				this.changedValues()
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
@@ -415,6 +427,7 @@
 					}
 				}
 				this.reloadEquipments()
+				this.changedValues()
 			},
 			showEquipment() {
 				this.showAddEquipment = true

@@ -392,7 +392,6 @@
 			},
 			changeInstallment(e, installment) {
 				installment = installment.slice(0, parseInt(e.target.value))
-				console.log(installment)
 				for (let i = 0; i < parseInt(e.target.value); i++) {
 					if (i >= installment.length) {
 						installment.push(0)

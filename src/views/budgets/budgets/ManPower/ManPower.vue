@@ -8,7 +8,7 @@
 				<div class="col-sm-3" v-for="(field, i) in this.manpowers" :key="i">
 					<div class="form-group">
 						<label :for="field">{{ $t(field) }}</label>
-						<input class="form-control" :id="field" type="text" v-model="form[field]"/>
+						<input class="form-control" :id="field" type="text" v-model="form[field]" />
 					</div>
 				</div>
 			</div>
@@ -23,19 +23,26 @@
 	export default {
 		name: 'ManPower',
 		components: {},
-		props: { form: Object, layout: String },
+		props: { form: Object, layout: String, logist: Object },
 		i18n: { messages },
 		data() {
 			return {
 				manpowers: [],
 			}
 		},
+		mounted() {},
 		watch: {
 			layout() {
-				this.manpowers = Layouts[this.layout] ? Layouts[this.layout].manpowers : []
+				this.changeLayout()
 			},
 		},
-		mounted() {},
-		methods: {},
+		methods: {
+			changeLayout() {
+				this.manpowers = Layouts[this.layout] ? Layouts[this.layout].manpowers : []
+				for (const i in this.manpowers) {
+					this.form[this.manpowers[i]] = this.logist[this.manpowers[i]]
+				}
+			},
+		},
 	}
 </script>
