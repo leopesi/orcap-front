@@ -380,7 +380,11 @@
 					const profit_margin = parseFloat(this.form.equipments[i].profit_margin)
 					const cost = parseFloat(this.form.equipments[i].cost)
 					const price = isNaN(cost) ? 0 : cost * (1 + (isNaN(profit_margin) ? 0 : profit_margin))
-					this.form.cash_price += price
+					if (this.form.equipments[i].type == 'vinyls') {
+						this.form.cash_price += (price * this.form.m2_total)
+					} else {
+						this.form.cash_price += price
+					}
 					// this.form.forward_price += parseFloat(this.form.equipments[i].forward_price)
 				}
 			},

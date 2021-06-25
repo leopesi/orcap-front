@@ -88,9 +88,7 @@
 			},
 			change() {
 				if (this.blankets[this.value]) {
-					const profit_margin = parseFloat(this.blankets[this.value].equipments.profit_margin)
-					const cost = parseFloat(this.blankets[this.value].equipments.cost)
-					this.price = isNaN(cost) ? 0 : cost * (1 + (isNaN(profit_margin) ? 0 : profit_margin))
+					this.setData()
 					const data = {
 						id: this.value,
 						type: 'blankets',

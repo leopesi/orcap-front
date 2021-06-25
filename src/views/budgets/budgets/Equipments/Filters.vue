@@ -121,7 +121,6 @@
 					this.price = isNaN(cost) ? 0 : cost * (1 + (isNaN(profit_margin) ? 0 : profit_margin))
 					this.final_price = this.price - (isNaN(this.discount) ? 0 : this.discount)
 				}
-				console.log(this.price)
 			},
 		},
 	}

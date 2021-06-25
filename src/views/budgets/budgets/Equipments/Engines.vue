@@ -85,9 +85,7 @@
 			},
 			change() {
 				if (this.engines[this.value]) {
-					const profit_margin = parseFloat(this.engines[this.value].profit_margin)
-					const cost = parseFloat(this.engines[this.value].cost)
-					this.price = isNaN(cost) ? 0 : cost * (1 + (isNaN(profit_margin) ? 0 : profit_margin))
+					this.setData()
 					const data = {
 						id: this.value,
 						type: 'engines',
