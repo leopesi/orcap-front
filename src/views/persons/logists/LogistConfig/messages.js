@@ -11,6 +11,17 @@ export default {
 		by_logist: 'Taxas de Parcelamento pela Loja',
 		by_financial: 'Taxas de Parcelamento pela Financeira',
 		by_financial_down_payment: 'Taxas pela Financeira com Entrada',
-		number_installments: 'Número de Parcelas'
+		number_installments: 'Número de Parcelas',
+
+		man_power: 'Mão de Obra',
+		construction_labor: 'Construção',
+		excavation_labor: 'Escavação',
+		earth_removal_labor: 'Remoção de Terra',
+		short_wall_labor: 'Mureta',
+		subfloor_labor: 'Contrapiso',
+		material_placement_labor: 'Colocação de Materiais',
+		reserve: 'Reserva',
+		art: 'A.R.T.',
+		job_monitoring_fee: 'Taxa de acompanhamento de obra',
 	},
 }
