@@ -364,7 +364,6 @@
 				this.form.equipments[equipment.index].id = equipment.id
 				this.form.equipments[equipment.index].equipment_id = equipment.equipment_id
 				this.form.equipments[equipment.index].discount = equipment.discount
-
 				this.form = Object.assign({}, this.form)
 				this.changedValues()
 			},
@@ -377,29 +376,12 @@
 			changedValues() {
 				this.form.cash_price = 0
 				this.form.forward_price = 0
-				// for (const i in this.form.equipments) {
-				// 	this.form.cash_price += parseFloat(this.form.equipments[i].cash_price)
-				// 	this.form.forward_price += parseFloat(this.form.equipments[i].forward_price)
-				// }
-				const fields = [
-					'side_wall',
-					'subfloor',
-					'baldrame',
-					'mold',
-					'heating',
-					'cm_installation',
-					'vinyl_installation',
-					'excavation',
-					'mortar',
-					'reserve',
-					'conduction',
-					'material_placement',
-					'earth_removal',
-					'art',
-				]
-				for (const i in fields) {
-					this.form.cash_price += parseFloat(this.form[fields[i]])
-					this.form.forward_price += parseFloat(this.form[fields[i]])
+				for (const i in this.form.equipments) {
+					const profit_margin = parseFloat(this.form.equipments[i].profit_margin)
+					const cost = parseFloat(this.form.equipments[i].cost)
+					const price = isNaN(cost) ? 0 : cost * (1 + (isNaN(profit_margin) ? 0 : profit_margin))
+					this.form.cash_price += price
+					// this.form.forward_price += parseFloat(this.form.equipments[i].forward_price)
 				}
 			},
 			loadEquipments(equipments) {

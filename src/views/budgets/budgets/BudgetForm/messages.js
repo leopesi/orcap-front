@@ -65,6 +65,8 @@ export default {
 		expiration_date: 'Data de Validade',
 		description: 'Descrição',
 		cash_price: 'Preço à vista',
+		price: 'Preço',
+		final_price: 'Preço Final',
 		forward_price: 'Preço à prazo',
 		cash_price_total: 'Total à vista',
 		forward_price_total: 'Total à prazo',

@@ -22,29 +22,21 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label>{{ $t('discount') }}</label>
-						<input class="form-control" type="number" v-model="discountValue" @change="change"/>
+						<input class="form-control" type="number" v-model="discountValue" @change="change" />
 					</div>
 				</div>
 			</div>
-			<div class="row" v-if="this.see_more">
-				<div class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-8">
 					<div class="form-group">
 						<label>{{ $t('description') }}</label>
 						<input class="form-control" type="text" :value="this.description" disabled />
 					</div>
 				</div>
-			</div>
-			<div class="row" v-if="this.see_more">
-				<div class="col-sm-6">
+				<div class="col-sm-4">
 					<div class="form-group">
-						<label>{{ $t('cash_price') }}</label>
-						<input class="form-control" type="text" :value="this.cash_price" disabled />
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label>{{ $t('forward_price') }}</label>
-						<input class="form-control" type="text" :value="this.forward_price" disabled />
+						<label>{{ $t('final_price') }}</label>
+						<input class="form-control" type="number" :value="this.final_price.toFixed(2)" disabled />
 					</div>
 				</div>
 			</div>
@@ -64,12 +56,11 @@
 			return {
 				filters: [],
 				description: '',
-				cash_price: 0,
-				forward_price: 0,
-				see_more: false,
+				price: 0,
+				final_price: 0,
 				value: this.id,
 				firstTime: true,
-				discountValue: this.discount
+				discountValue: this.discount,
 			}
 		},
 		mounted() {
@@ -79,6 +70,7 @@
 		watch: {
 			id(to) {
 				this.value = to
+				this.setData()
 			},
 		},
 		methods: {
@@ -93,6 +85,7 @@
 						}
 					}
 					this.change()
+					this.setData()
 				})
 			},
 			change() {
@@ -101,6 +94,7 @@
 					return
 				}
 				if (this.filters[this.value]) {
+					this.setData()
 					const data = {
 						id: this.value,
 						type: 'filters',
@@ -115,9 +109,19 @@
 						},
 						equipment_id: this.filters[this.value].equipment_id,
 						discount: this.discountValue,
+						price: this.price,
 					}
 					this.$emit('changed', data)
 				}
+			},
+			setData() {
+				if (this.filters[this.value] && this.filters[this.value].equipments) {
+					const profit_margin = parseFloat(this.filters[this.value].equipments.profit_margin)
+					const cost = parseFloat(this.filters[this.value].equipments.cost)
+					this.price = isNaN(cost) ? 0 : cost * (1 + (isNaN(profit_margin) ? 0 : profit_margin))
+					this.final_price = this.price - (isNaN(this.discount) ? 0 : this.discount)
+				}
+				console.log(this.price)
 			},
 		},
 	}
