@@ -61,7 +61,8 @@ export default {
 		vinyls: 'Vinis',
 		vinyl: 'Vinil',
 
-		discount: 'Desconto',
+		discount_percent: 'Desconto ( % )',
+		discount: 'Desconto ( R$ )',
 		expiration_date: 'Data de Validade',
 		description: 'Descrição',
 		cash_price: 'Preço à vista',

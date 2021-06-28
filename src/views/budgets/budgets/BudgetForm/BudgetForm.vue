@@ -143,7 +143,7 @@
 			</div>
 			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-4">
-					<ManPower :form="this.form" :layout="this.form.layout" :logist="this.logist" v-if="this.form" />
+					<ManPower :form="this.form" :layout="this.form.layout" :logist="this.logist" v-if="this.form" @change="changedValues" />
 				</div>
 			</div>
 			<div class="row" v-if="this.id">
@@ -177,7 +177,7 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="discount">{{ $t('discount') }}</label>
-										<input class="form-control" v-model="form.discount" type="number" @keyup="changedValues"/>
+										<input class="form-control" v-model="form.discount" type="number" @keyup="changedValues" />
 									</div>
 								</div>
 							</div>
@@ -385,34 +385,52 @@
 					const price = parseFloat(this.form.equipments[i].price)
 					const discount = parseFloat(this.form.equipments[i].discount)
 					const final_price = price - (isNaN(discount) ? 0 : discount)
-					if (this.form.equipments[i].type == 'vinyls') {
-						this.form.cash_price += final_price * this.form.m2_total
+					let calculate_price = 0
+					if (this.form.equipments[i].type == 'blankets') {
+						calculate_price = final_price * this.form.m2_facial
+					} else if (this.form.equipments[i].type == 'profiles') {
+						calculate_price = final_price * this.form.perimeter
+					} else if (this.form.equipments[i].type == 'vinyls') {
+						calculate_price = final_price * this.form.m2_total
 					} else {
-						this.form.cash_price += final_price
+						calculate_price = final_price
 					}
+					this.form.cash_price += isNaN(calculate_price) ? 0 : calculate_price
 				}
+
 				const manpowers = this.layout.manpowers ? this.layout.manpowers : []
 				let total_manpower_price = 0
 				for (const i in manpowers) {
-					const manpower_price = parseFloat(this.form[manpowers[i]])
-					total_manpower_price += isNaN(manpower_price) ? 0 : manpower_price
+					if (manpowers[i] == 'excavation_labor') {
+						total_manpower_price = parseFloat(this.form[manpowers[i]]) * this.form.m3_total
+					} else if (manpowers[i] == 'earth_removal_labor') {
+						total_manpower_price = parseFloat(this.form[manpowers[i]]) * this.form.m3_total * 1.2
+					} else if (manpowers[i] == 'excavation_labor') {
+						// (Perímetro * Largura da Calçada) + ((Largura da Calçada * Largura da Calçada) * 4) * Preço
+						total_manpower_price = (this.form.perimeter * this.form.sidewalk_width + this.form.sidewalk_width * this.form.sidewalk_width * 4) * parseFloat(this.form[manpowers[i]])
+					} else if (manpowers[i] == 'art') {
+						// NAO CALCULA, POIS CALCULA % DO TOTAL DO ORÇAMENTO
+					} else {
+						total_manpower_price = parseFloat(this.form[manpowers[i]])
+					}
+					this.form.cash_price += isNaN(total_manpower_price) ? 0 : total_manpower_price
 				}
-				this.form.cash_price += total_manpower_price
 
 				this.form.cash_price_total = this.form.cash_price - (isNaN(this.form.discount) ? 0 : this.form.discount)
+				this.form.cash_price_total = this.form.cash_price_total + (this.form.cash_price_total * (isNaN(this.form.art) ? 0 : this.form.art)) / 100
 			},
 			loadEquipments(equipments) {
 				if (!this.form.equipments) this.form.equipments = {}
 				for (const i in equipments) {
 					const equipment = equipments[i]
 					this.form.equipments[equipment.index] = equipment
+					this.form.equipments[equipment.index].discount = isNaN(parseFloat(equipment.discount)) ? 0 : parseFloat(equipment.discount)
 				}
 				this.form = Object.assign({}, this.form)
-				this.changeLayout()
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
-				if (!this.form.equipments) this.form.equipments = {}
+				this.form.equipments = {}
 				for (const i in this.layout.equipments) {
 					const type = this.layout.equipments[i]
 					let finded = false
@@ -426,7 +444,7 @@
 						this.form.equipments[index] = { type, index }
 					}
 				}
-				this.reloadEquipments()
+				this.loadEquipments()
 				this.changedValues()
 			},
 			showEquipment() {

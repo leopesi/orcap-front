@@ -18,22 +18,22 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="form-group">
-						<label>{{ $t('discount') }}</label>
-						<input class="form-control" type="number" v-model="discountValue" @change="change" />
+						<label>{{ $t('final_price') }}</label>
+						<input class="form-control" type="number" :value="this.final_price.toFixed(2)" disabled />
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-8">
 					<div class="form-group">
-						<label>{{ $t('description') }}</label>
-						<input class="form-control" type="text" :value="this.description" disabled />
+						<label>{{ $t('discount_percent') }}</label>
+						<input class="form-control" type="number" v-model="discountPercent" @change="changePercent" />
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="form-group">
-						<label>{{ $t('final_price') }}</label>
-						<input class="form-control" type="number" :value="this.final_price.toFixed(2)" disabled />
+						<label>{{ $t('discount') }}</label>
+						<input class="form-control" type="number" v-model="discountValue" @change="change" />
 					</div>
 				</div>
 			</div>
@@ -47,7 +47,7 @@
 
 	export default {
 		name: 'Engines',
-		props: { id: String, discount: String, dimension: Object, equipment: Object },
+		props: { id: String, discount: Number, dimension: Object, equipment: Object },
 		i18n: { messages },
 		data() {
 			return {
@@ -57,6 +57,7 @@
 				final_price: 0,
 				value: this.id,
 				discountValue: this.discount,
+				discountPercent: 0
 			}
 		},
 		mounted() {
@@ -96,12 +97,24 @@
 					this.$emit('changed', data)
 				}
 			},
+			changePercent() {
+				if (this.engines[this.value] && this.engines[this.value].equipments) {
+					const profit_margin = parseFloat(this.engines[this.value].equipments.profit_margin)
+					const cost = parseFloat(this.engines[this.value].equipments.cost)
+					const price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
+					const price_with_discount = isNaN(price) ? 0 : price + (price * (isNaN(this.discountPercent) ? 0 : this.discountPercent)) / 100
+					this.discountValue = price_with_discount - price
+					this.discount = price_with_discount - price
+					this.setData()
+					this.change()
+				}
+			},
 			setData() {
 				if (this.engines[this.value] && this.engines[this.value].equipments) {
 					const profit_margin = parseFloat(this.engines[this.value].equipments.profit_margin)
 					const cost = parseFloat(this.engines[this.value].equipments.cost)
-					this.price = isNaN(cost) ? 0 : cost * (1 + (isNaN(profit_margin) ? 0 : profit_margin))
-					this.final_price = this.price - (isNaN(this.discount) ? 0 : this.discount)
+					this.price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
+					this.final_price = this.price - (isNaN(this.discountValue) ? 0 : this.discountValue)
 				}
 			},
 		},

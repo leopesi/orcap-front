@@ -6,9 +6,13 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-3" v-for="(field, i) in this.manpowers" :key="i">
-					<div class="form-group">
+					<div class="form-group" v-if="field != 'art'">
 						<label :for="field">{{ $t(field) }}</label>
-						<input class="form-control" :id="field" type="text" v-model="form[field]" />
+						<input class="form-control" :id="field" type="text" v-model="form[field]" disabled/>
+					</div>
+					<div class="form-group" v-else>
+						<label :for="field">{{ $t(field) }}</label>
+						<input class="form-control" :id="field" type="text" v-model="form[field]" @keyup="$emit('change')"/>
 					</div>
 				</div>
 			</div>

@@ -116,12 +116,6 @@
 								<input class="form-control" id="reserve" type="text" v-model="form.reserve" />
 							</div>
 						</div>
-						<div class="col-sm-3">
-							<div class="form-group">
-								<label for="art">{{ $t('art') }}</label>
-								<input class="form-control" id="art" type="text" v-model="form.art" />
-							</div>
-						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="material_placement_labor">{{ $t('material_placement_labor') }}</label>
