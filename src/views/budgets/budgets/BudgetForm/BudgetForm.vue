@@ -253,6 +253,7 @@
 	import Payments from '../data/payments'
 	import Equipments from '../data/equipments'
 	import messages from './messages'
+	import './style.css'
 
 	export default {
 		name: 'BudgetForm',
@@ -370,7 +371,6 @@
 				this.form.equipments[equipment.index].equipment_id = equipment.equipment_id
 				this.form.equipments[equipment.index].discount = equipment.discount
 				this.form = Object.assign({}, this.form)
-				this.changedValues()
 			},
 			reloadEquipments() {
 				this.showEquipments = false
@@ -398,26 +398,28 @@
 					this.form.cash_price += isNaN(calculate_price) ? 0 : calculate_price
 				}
 
-				const manpowers = this.layout.manpowers ? this.layout.manpowers : []
-				let total_manpower_price = 0
-				for (const i in manpowers) {
-					if (manpowers[i] == 'excavation_labor') {
-						total_manpower_price = parseFloat(this.form[manpowers[i]]) * this.form.m3_total
-					} else if (manpowers[i] == 'earth_removal_labor') {
-						total_manpower_price = parseFloat(this.form[manpowers[i]]) * this.form.m3_total * 1.2
-					} else if (manpowers[i] == 'excavation_labor') {
-						// (Perímetro * Largura da Calçada) + ((Largura da Calçada * Largura da Calçada) * 4) * Preço
-						total_manpower_price = (this.form.perimeter * this.form.sidewalk_width + this.form.sidewalk_width * this.form.sidewalk_width * 4) * parseFloat(this.form[manpowers[i]])
-					} else if (manpowers[i] == 'art') {
-						// NAO CALCULA, POIS CALCULA % DO TOTAL DO ORÇAMENTO
-					} else {
-						total_manpower_price = parseFloat(this.form[manpowers[i]])
-					}
-					this.form.cash_price += isNaN(total_manpower_price) ? 0 : total_manpower_price
-				}
+				const construction_labor = parseFloat(this.form.construction_labor) * this.form.m2_total
+				const excavation_labor = parseFloat(this.form.excavation_labor) * this.form.m3_total
+				const earth_removal_labor = parseFloat(this.form.earth_removal_labor) * this.form.m3_total * 1.2
+				const short_wall_labor = parseFloat(this.form.short_wall_labor)
+				const subfloor_labor = parseFloat(this.form.subfloor_labor) * (this.form.perimeter * this.form.sidewalk_width + this.form.sidewalk_width * this.form.sidewalk_width * 4)
+				const material_placement_labor = parseFloat(this.form.material_placement_labor)
+				const reserve = parseFloat(this.form.reserve)
+				const job_monitoring_fee = parseFloat(this.form.job_monitoring_fee)
 
-				this.form.cash_price_total = this.form.cash_price - (isNaN(this.form.discount) ? 0 : this.form.discount)
-				this.form.cash_price_total = this.form.cash_price_total + (this.form.cash_price_total * (isNaN(this.form.art) ? 0 : this.form.art)) / 100
+				this.form.cash_price += isNaN(construction_labor) ? 0 : construction_labor
+				this.form.cash_price += isNaN(excavation_labor) ? 0 : excavation_labor
+				this.form.cash_price += isNaN(earth_removal_labor) ? 0 : earth_removal_labor
+				this.form.cash_price += isNaN(short_wall_labor) ? 0 : short_wall_labor
+				this.form.cash_price += isNaN(subfloor_labor) ? 0 : subfloor_labor
+				this.form.cash_price += isNaN(material_placement_labor) ? 0 : material_placement_labor
+				this.form.cash_price += isNaN(reserve) ? 0 : reserve
+				this.form.cash_price += isNaN(job_monitoring_fee) ? 0 : job_monitoring_fee
+
+				this.form.cash_price_total = this.form.cash_price - (isNaN(this.form.discount) ? 0 : this.form.discount) + (this.form.cash_price * (isNaN(this.form.art) ? 0 : this.form.art)) / 100
+
+				this.form.cash_price = this.form.cash_price.toFixed(2)
+				this.form.cash_price_total = this.form.cash_price_total.toFixed(2)
 			},
 			loadEquipments(equipments) {
 				if (!this.form.equipments) this.form.equipments = {}
@@ -427,6 +429,7 @@
 					this.form.equipments[equipment.index].discount = isNaN(parseFloat(equipment.discount)) ? 0 : parseFloat(equipment.discount)
 				}
 				this.form = Object.assign({}, this.form)
+				this.changedValues()
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
