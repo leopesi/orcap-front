@@ -5,7 +5,7 @@
 				{{ $t('title') }}
 			</div>
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-6" v-if="this.form.id">
 					<div class="form-group">
 						<label for="id">{{ $t('id') }}</label>
 						<input class="form-control" id="id" v-model="form.id" type="text" disabled />

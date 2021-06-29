@@ -1,16 +1,13 @@
 <template>
 	<div class="card">
-		<!-- <div class="card-header">
-			{{ $t('profiles') }}
-		</div> -->
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-9">
 					<div class="form-group">
 						<label>{{ $t('profile') }}</label>
-						<select class="custom-select" v-model="value" @change="change">
+						<select class="custom-select" v-model="form.equipments[index].equipment_id" @change="change">
 							<option selected>{{ $t('choose') }}</option>
-							<option :value="profile.id" v-for="(profile, i) in this.profiles" :key="i">
+							<option :value="profile.equipment_id" v-for="(profile, i) in this.profiles" :key="i">
 								<span v-if="profile && profile.equipments">
 									{{ profile.equipments.name }}
 								</span>
@@ -22,7 +19,7 @@
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label>{{ $t('price') }}</label>
-						<input class="form-control" type="number" :value="this.price.toFixed(2)" disabled />
+						<input class="form-control" type="number" v-model="form.equipments[index].price" disabled />
 					</div>
 				</div>
 			</div>
@@ -36,19 +33,19 @@
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label>{{ $t('discount') }}</label>
-						<input class="form-control" type="number" v-model="discountValue" @change="change" />
+						<input class="form-control" type="number" v-model="form.equipments[index].discount" @change="change" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label>{{ $t('manpower') }}</label>
-						<input class="form-control" type="number" :value="this.man_power.toFixed(2)" disabled />
+						<input class="form-control" type="number" v-model="form.equipments[index].man_power" disabled />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label>{{ $t('final_price') }}</label>
-						<input class="form-control" type="number" :value="this.final_price.toFixed(2)" disabled />
+						<input class="form-control" type="number" v-model="form.equipments[index].final_price" disabled />
 					</div>
 				</div>
 			</div>
@@ -62,81 +59,58 @@
 
 	export default {
 		name: 'Profiles',
-		props: { id: String, discount: Number, equipment: Object },
+		props: { index: Number, form: Object, perimeter: Number },
 		i18n: { messages },
 		data() {
 			return {
 				profiles: [],
-				description: '',
-				price: 0,
-				final_price: 0,
-				man_power: 0,
-				value: this.id,
-				discountValue: this.discount,
 				discountPercent: 0,
 			}
 		},
 		mounted() {
 			this.load()
 		},
-		watch: {
-			id(to) {
-				this.value = to
-				this.setData()
-			},
-		},
 		methods: {
 			load() {
 				Equipments.getProfilesByDimension(this.dimension, (result) => {
 					this.profiles = {}
 					for (const i in result.data) {
-						const id = result.data[i].id
-						this.profiles[id] = result.data[i]
-						if (this.profiles[id].equipment_id == this.equipment.equipment_id) {
-							this.value = id
-						}
+						this.profiles[result.data[i].equipment_id] = result.data[i]
 					}
 					this.change()
 					this.setData()
 				})
 			},
 			change() {
-				if (this.profiles[this.value]) {
-					this.setData()
-					const data = {
-						id: this.value,
-						type: 'profiles',
-						index: this.equipment.index,
-						equipment_id: this.profiles[this.value].equipments.id,
-						discount: this.discountValue,
-					}
-					this.$emit('changed', data)
-				}
+				this.setData()
+				this.$emit('changed')
 			},
 			changePercent() {
-				if (this.profiles[this.value] && this.profiles[this.value].equipments) {
-					const profit_margin = parseFloat(this.profiles[this.value].equipments.profit_margin)
-					const cost = parseFloat(this.profiles[this.value].equipments.cost)
-					const price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
-					const price_with_discount = isNaN(price) ? 0 : price + (price * (isNaN(this.discountPercent) ? 0 : this.discountPercent)) / 100
-					this.discountValue = price_with_discount - price
-					this.discount = price_with_discount - price
-					this.setData()
-					this.change()
-				}
+				const price = this.form.equipments[this.index].price
+				const price_with_discount = isNaN(price) ? 0 : price + (price * (isNaN(this.discountPercent) ? 0 : this.discountPercent)) / 100
+				this.form.equipments[this.index].discount = price_with_discount - price
+				this.setData()
+				this.change()
 			},
 			setData() {
-				if (this.profiles[this.value] && this.profiles[this.value].equipments) {
-					const profit_margin = parseFloat(this.profiles[this.value].equipments.profit_margin)
-					const cost = parseFloat(this.profiles[this.value].equipments.cost)
-					this.price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
-					this.final_price = this.price - (isNaN(this.discountValue) ? 0 : this.discountValue)
+				const id = this.form.equipments[this.index].equipment_id
+				if (this.profiles[id] && this.profiles[id].equipments) {
+					const profit_margin = parseFloat(this.profiles[id].equipments.profit_margin)
+					const cost = parseFloat(this.profiles[id].equipments.cost)
+					const price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
+					const discount = parseFloat(this.form.equipments[this.index].discount)
+					const price_with_discount = price - (isNaN(discount) ? 0 : discount)
 
-					const man_power_profit_margin = parseFloat(this.profiles[this.value].equipments.man_power_profit_margin)
-					const man_power_cost = parseFloat(this.profiles[this.value].equipments.man_power_cost)
+					const man_power_profit_margin = parseFloat(this.profiles[id].equipments.man_power_profit_margin)
+					const man_power_cost = parseFloat(this.profiles[id].equipments.man_power_cost)
 					const man_power_price = isNaN(man_power_cost) ? 0 : man_power_cost + (man_power_cost * (isNaN(man_power_profit_margin) ? 0 : man_power_profit_margin)) / 100
-					this.final_price = this.final_price + (isNaN(man_power_price) ? 0 : man_power_price)
-					this.man_power = man_power_price
+
+					this.form.equipments[this.index].cost = cost
+					this.form.equipments[this.index].profit_margin = profit_margin
+					this.form.equipments[this.index].price = price_with_discount
+					this.form.equipments[this.index].final_price = (price_with_discount * this.perimeter) + (isNaN(man_power_price) ? 0 : man_power_price)
+					this.form.equipments[this.index].man_power = man_power_price
+					
 				}
 			},
 		},

@@ -34,9 +34,7 @@
 				manpowers: [],
 			}
 		},
-		mounted() {
-			
-		},
+		mounted() {},
 		watch: {
 			layout() {
 				this.changeLayout()
@@ -46,7 +44,10 @@
 			changeLayout() {
 				this.manpowers = Layouts[this.layout] ? Layouts[this.layout].manpowers : []
 				for (const i in this.manpowers) {
-					if (this.manpowers[i] != 'art') this.form[this.manpowers[i]] = this.logist[this.manpowers[i]]
+					if (this.manpowers[i] != 'art') {
+						const value = parseFloat(this.form[this.manpowers[i]])
+						if (isNaN(value) || value <= 0) this.form[this.manpowers[i]] = this.logist[this.manpowers[i]]
+					}
 				}
 			},
 		},

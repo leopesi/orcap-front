@@ -121,12 +121,12 @@
 						<div class="card-body">
 							<div class="row" v-if="this.form">
 								<div class="col-sm-6 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
-									<Filters :id="equipment.id" :discount="equipment.discount" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
-									<Engines :id="equipment.id" :discount="equipment.discount" :dimension="form.dimension" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
-									<Lids :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
-									<Blankets :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'blankets'" />
-									<Profiles :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'profiles'" />
-									<Vinyls :id="equipment.id" :discount="equipment.discount" :equipment="equipment" @changed="changeEquipment" v-if="equipment.type == 'vinyls'" />
+									<Filters :index="equipment.index" :form="form" :dimension="form.dimension" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
+									<Engines :index="equipment.index" :form="form" :dimension="form.dimension" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
+									<Lids :index="equipment.index" :form="form" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
+									<Blankets :index="equipment.index" :form="form" :m2_facial="parseFloat(form.m2_facial)" @changed="changeEquipment" v-if="equipment.type == 'blankets'" />
+									<Profiles :index="equipment.index" :form="form" :perimeter="parseFloat(form.perimeter)" @changed="changeEquipment" v-if="equipment.type == 'profiles'" />
+									<Vinyls :index="equipment.index" :form="form" :m2_total="parseFloat(form.m2_total)" @changed="changeEquipment" v-if="equipment.type == 'vinyls'" />
 								</div>
 							</div>
 							<div class="row">
@@ -329,6 +329,7 @@
 			},
 			save() {
 				if (this.id && this.id != 0) {
+					console.log(this.form.equipments[0])
 					Budgets.updateBudget(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Orçamento',
@@ -336,7 +337,7 @@
 						}
 					})
 				} else {
-					delete this.form.id
+					if (this.form) delete this.form.id
 					Budgets.insertBudget(this.form, (result) => {
 						Methods.openPage(this, 'budget/' + result.data.id)
 					})
@@ -354,23 +355,24 @@
 			},
 			changeEquipment(equipment) {
 				if (equipment && equipment.engine && equipment.lid) {
-					const index = this.form.equipments[equipment.index].index
-					for (const i in this.form.equipments) {
-						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
-							this.form.equipments[i].id = equipment.engine.id
-							this.form.equipments[i].equipment_id = equipment.engine.equipment_id
-						}
-						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
-							this.form.equipments[i].id = equipment.lid.id
-							this.form.equipments[i].equipment_id = equipment.lid.equipment_id
-						}
-					}
+				// 	const index = this.form.equipments[equipment.index].index
+				// 	for (const i in this.form.equipments) {
+				// 		if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
+				// 			this.form.equipments[i].id = equipment.engine.id
+				// 			this.form.equipments[i].equipment_id = equipment.engine.equipment_id
+				// 		}
+				// 		if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
+				// 			this.form.equipments[i].id = equipment.lid.id
+				// 			this.form.equipments[i].equipment_id = equipment.lid.equipment_id
+				// 		}
+				// 	}
 				}
 
-				this.form.equipments[equipment.index].id = equipment.id
-				this.form.equipments[equipment.index].equipment_id = equipment.equipment_id
-				this.form.equipments[equipment.index].discount = equipment.discount
-				this.form = Object.assign({}, this.form)
+				// this.form.equipments[equipment.index].id = equipment.id
+				// this.form.equipments[equipment.index].equipment_id = equipment.equipment_id
+				// this.form.equipments[equipment.index].discount = equipment.discount
+				// this.form.equipments[equipment.index].final_price = equipment.final_price
+				// this.form = Object.assign({}, this.form)
 			},
 			reloadEquipments() {
 				this.showEquipments = false
@@ -379,25 +381,13 @@
 				}, 100)
 			},
 			changedValues() {
+				console.log('CHANGE VALUES')
 				this.form.cash_price = 0
 				this.form.forward_price = 0
 				for (const i in this.form.equipments) {
-					const price = parseFloat(this.form.equipments[i].price)
-					const discount = parseFloat(this.form.equipments[i].discount)
-					const final_price = price - (isNaN(discount) ? 0 : discount)
-					let calculate_price = 0
-					if (this.form.equipments[i].type == 'blankets') {
-						calculate_price = final_price * this.form.m2_facial
-					} else if (this.form.equipments[i].type == 'profiles') {
-						calculate_price = final_price * this.form.perimeter
-					} else if (this.form.equipments[i].type == 'vinyls') {
-						calculate_price = final_price * this.form.m2_total
-					} else {
-						calculate_price = final_price
-					}
-					this.form.cash_price += isNaN(calculate_price) ? 0 : calculate_price
+					this.form.cash_price += this.form.equipments[i].final_price
 				}
-
+				console.log(this.form.cash_price)
 				const construction_labor = parseFloat(this.form.construction_labor) * this.form.m2_total
 				const excavation_labor = parseFloat(this.form.excavation_labor) * this.form.m3_total
 				const earth_removal_labor = parseFloat(this.form.earth_removal_labor) * this.form.m3_total * 1.2
@@ -427,9 +417,9 @@
 					const equipment = equipments[i]
 					this.form.equipments[equipment.index] = equipment
 					this.form.equipments[equipment.index].discount = isNaN(parseFloat(equipment.discount)) ? 0 : parseFloat(equipment.discount)
+					this.form.equipments[equipment.index].final_price = isNaN(parseFloat(equipment.final_price)) ? 0 : parseFloat(equipment.final_price)
 				}
 				this.form = Object.assign({}, this.form)
-				this.changedValues()
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
