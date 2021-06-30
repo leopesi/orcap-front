@@ -1,9 +1,6 @@
 <template>
 	<div class="card">
-		<!-- <div class="card-header">
-			{{ $t('engines') }}
-		</div> -->
-		<div class="card-body">
+		<div class="card-body" v-if="this.show">
 			<div class="row">
 				<div class="col-sm-9">
 					<div class="form-group">
@@ -67,6 +64,7 @@
 		data() {
 			return {
 				engines: [],
+				show: false,
 				discountPercent: 0,
 			}
 		},
@@ -82,32 +80,12 @@
 					}
 					this.change()
 					this.setData()
+					this.show = true
 				})
 			},
 			change() {
 				this.setData()
 				this.$emit('changed')
-				// if (this.engines[this.value]) {
-				// 	this.setData()
-				// 	const data = {
-				// 		id: this.value,
-				// 		type: 'engines',
-				// 		index: this.equipment.index,
-				// 		engine: {
-				// 			id: this.engines[this.value].engines.id,
-				// 			equipment_id: this.engines[this.value].engines.equipment_id,
-				// 		},
-				// 		lid: {
-				// 			id: this.engines[this.value].lids.id,
-				// 			equipment_id: this.engines[this.value].lids.equipment_id,
-				// 		},
-				// 		equipment_id: this.engines[this.value].equipment_id,
-				// 		discount: this.discountValue,
-				// 		price: this.price,
-				// 		final_price: this.final_price,
-				// 	}
-				// 	this.$emit('changed', data)
-				// }
 			},
 			changePercent() {
 				const price = this.form.equipments[this.index].price
@@ -123,7 +101,7 @@
 					const cost = parseFloat(this.engines[id].equipments.cost)
 					const price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
 					const discount = parseFloat(this.form.equipments[this.index].discount)
-					const price_with_discount = price - (isNaN(discount) ? 0 : discount)
+					const price_with_discount = price
 
 					const man_power_profit_margin = parseFloat(this.engines[id].equipments.man_power_profit_margin)
 					const man_power_cost = parseFloat(this.engines[id].equipments.man_power_cost)
@@ -132,9 +110,12 @@
 					this.form.equipments[this.index].cost = cost
 					this.form.equipments[this.index].profit_margin = profit_margin
 					this.form.equipments[this.index].price = price_with_discount
-					this.form.equipments[this.index].final_price = price_with_discount + (isNaN(man_power_price) ? 0 : man_power_price)
+					this.form.equipments[this.index].final_price = price_with_discount + (isNaN(man_power_price) ? 0 : man_power_price) - (isNaN(discount) ? 0 : discount)
 					this.form.equipments[this.index].man_power = man_power_price
-					
+					this.show = false
+					setTimeout(() => {
+						this.show = true
+					})
 				}
 			},
 		},

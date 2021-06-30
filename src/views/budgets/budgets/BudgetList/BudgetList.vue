@@ -39,7 +39,7 @@
 				})
 			},
 			create() {
-				Methods.openPage(this, 'budget/0')
+				Methods.openPage(this, 'budget')
 			},
 			edit(id) {
 				Methods.openPage(this, 'budget/' + id)

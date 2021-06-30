@@ -8,7 +8,7 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="id">{{ $t('id') }}</label>
-						<input class="form-control" id="id" v-model="id" type="text" disabled />
+						<input class="form-control" id="id" v-model="form.id" type="text" disabled />
 					</div>
 				</div>
 				<div class="col-sm-3">
@@ -308,7 +308,9 @@
 							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
 							this.showBeach = this.form.beach ? this.form.beach.toString() : 'false'
+							this.changedDimension()
 							this.loadEquipments(result.data.equipments)
+							this.changeLayout()
 						}
 					})
 				} else {
@@ -329,7 +331,6 @@
 			},
 			save() {
 				if (this.id && this.id != 0) {
-					console.log(this.form.equipments[0])
 					Budgets.updateBudget(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Orçamento',
@@ -339,7 +340,14 @@
 				} else {
 					if (this.form) delete this.form.id
 					Budgets.insertBudget(this.form, (result) => {
-						Methods.openPage(this, 'budget/' + result.data.id)
+						this.form.id = result.data.id
+						window.location.hash = '/budget/' + result.data.id
+						this.form.expiration_date = Methods.fixSequelizeDate(result.data.expiration_date)
+						this.form.updatedAt = Methods.fixSequelizeDate(result.data.updatedAt)
+						this.form.createdAt = Methods.fixSequelizeDate(result.data.createdAt)
+						this.showBeach = result.data.beach ? result.data.beach.toString() : 'false'
+						this.changedDimension()
+						this.changeLayout()
 					})
 				}
 			},
@@ -355,17 +363,17 @@
 			},
 			changeEquipment(equipment) {
 				if (equipment && equipment.engine && equipment.lid) {
-				// 	const index = this.form.equipments[equipment.index].index
-				// 	for (const i in this.form.equipments) {
-				// 		if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
-				// 			this.form.equipments[i].id = equipment.engine.id
-				// 			this.form.equipments[i].equipment_id = equipment.engine.equipment_id
-				// 		}
-				// 		if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
-				// 			this.form.equipments[i].id = equipment.lid.id
-				// 			this.form.equipments[i].equipment_id = equipment.lid.equipment_id
-				// 		}
-				// 	}
+					// 	const index = this.form.equipments[equipment.index].index
+					// 	for (const i in this.form.equipments) {
+					// 		if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
+					// 			this.form.equipments[i].id = equipment.engine.id
+					// 			this.form.equipments[i].equipment_id = equipment.engine.equipment_id
+					// 		}
+					// 		if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
+					// 			this.form.equipments[i].id = equipment.lid.id
+					// 			this.form.equipments[i].equipment_id = equipment.lid.equipment_id
+					// 		}
+					// 	}
 				}
 
 				// this.form.equipments[equipment.index].id = equipment.id
@@ -381,13 +389,11 @@
 				}, 100)
 			},
 			changedValues() {
-				console.log('CHANGE VALUES')
 				this.form.cash_price = 0
 				this.form.forward_price = 0
 				for (const i in this.form.equipments) {
 					this.form.cash_price += this.form.equipments[i].final_price
 				}
-				console.log(this.form.cash_price)
 				const construction_labor = parseFloat(this.form.construction_labor) * this.form.m2_total
 				const excavation_labor = parseFloat(this.form.excavation_labor) * this.form.m3_total
 				const earth_removal_labor = parseFloat(this.form.earth_removal_labor) * this.form.m3_total * 1.2
@@ -423,7 +429,7 @@
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
-				this.form.equipments = {}
+				if (!this.form.equipments) this.form.equipments = {}
 				for (const i in this.layout.equipments) {
 					const type = this.layout.equipments[i]
 					let finded = false

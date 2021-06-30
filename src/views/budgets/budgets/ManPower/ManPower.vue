@@ -3,7 +3,7 @@
 		<div class="card-header">
 			{{ $t('manpower') }}
 		</div>
-		<div class="card-body">
+		<div class="card-body" v-if="this.show">
 			<div class="row">
 				<div class="col-sm-3" v-for="(field, i) in this.manpowers" :key="i">
 					<div class="form-group" v-if="field != 'art'">
@@ -32,6 +32,7 @@
 		data() {
 			return {
 				manpowers: [],
+				show: true
 			}
 		},
 		mounted() {},

@@ -1,9 +1,6 @@
 <template>
 	<div class="card">
-		<!-- <div class="card-header">
-			{{ $t('lids') }}
-		</div> -->
-		<div class="card-body">
+		<div class="card-body" v-if="this.show">
 			<div class="row">
 				<div class="col-sm-9">
 					<div class="form-group">
@@ -67,6 +64,7 @@
 		data() {
 			return {
 				lids: [],
+				show: false,
 				discountPercent: 0,
 			}
 		},
@@ -82,6 +80,7 @@
 					}
 					this.change()
 					this.setData()
+					this.show = true
 				})
 			},
 			change() {
@@ -102,7 +101,7 @@
 					const cost = parseFloat(this.lids[id].equipments.cost)
 					const price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
 					const discount = parseFloat(this.form.equipments[this.index].discount)
-					const price_with_discount = price - (isNaN(discount) ? 0 : discount)
+					const price_with_discount = price
 
 					const man_power_profit_margin = parseFloat(this.lids[id].equipments.man_power_profit_margin)
 					const man_power_cost = parseFloat(this.lids[id].equipments.man_power_cost)
@@ -111,9 +110,12 @@
 					this.form.equipments[this.index].cost = cost
 					this.form.equipments[this.index].profit_margin = profit_margin
 					this.form.equipments[this.index].price = price_with_discount
-					this.form.equipments[this.index].final_price = price_with_discount + (isNaN(man_power_price) ? 0 : man_power_price)
+					this.form.equipments[this.index].final_price = price_with_discount + (isNaN(man_power_price) ? 0 : man_power_price) - (isNaN(discount) ? 0 : discount)
 					this.form.equipments[this.index].man_power = man_power_price
-					
+					this.show = false
+					setTimeout(() => {
+						this.show = true
+					})
 				}
 			},
 		},
