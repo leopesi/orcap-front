@@ -60,7 +60,7 @@
 					<div class="form-group mb-3">
 						<label for="payment">{{ $t('payment') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="payment" v-model="form.payment" @change="changedValues">
+							<select class="custom-select" id="payment" v-model="form.payment" @change="changeTax">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(payment, i) in this.payments" :key="i">
 									{{ payment }}
@@ -121,12 +121,33 @@
 						<div class="card-body">
 							<div class="row" v-if="this.form">
 								<div class="col-sm-6 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
-									<Filters :index="equipment.index" :form="form" :dimension="form.dimension" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
-									<Engines :index="equipment.index" :form="form" :dimension="form.dimension" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
-									<Lids :index="equipment.index" :form="form" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
-									<Blankets :index="equipment.index" :form="form" :m2_facial="parseFloat(form.m2_facial)" @changed="changeEquipment" v-if="equipment.type == 'blankets'" />
-									<Profiles :index="equipment.index" :form="form" :perimeter="parseFloat(form.perimeter)" @changed="changeEquipment" v-if="equipment.type == 'profiles'" />
-									<Vinyls :index="equipment.index" :form="form" :m2_total="parseFloat(form.m2_total)" @changed="changeEquipment" v-if="equipment.type == 'vinyls'" />
+									<Filters :index="equipment.index" :form="form" :dimension="form.dimension" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
+									<Engines :index="equipment.index" :form="form" :dimension="form.dimension" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
+									<Lids :index="equipment.index" :form="form" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
+									<Blankets
+										:index="equipment.index"
+										:form="form"
+										:m2_facial="parseFloat(form.m2_facial)"
+										:tax="parseFloat(form.installment_tax)"
+										@changed="changeEquipment"
+										v-if="equipment.type == 'blankets'"
+									/>
+									<Profiles
+										:index="equipment.index"
+										:form="form"
+										:perimeter="parseFloat(form.perimeter)"
+										:tax="parseFloat(form.installment_tax)"
+										@changed="changeEquipment"
+										v-if="equipment.type == 'profiles'"
+									/>
+									<Vinyls
+										:index="equipment.index"
+										:form="form"
+										:m2_total="parseFloat(form.m2_total)"
+										:tax="parseFloat(form.installment_tax)"
+										@changed="changeEquipment"
+										v-if="equipment.type == 'vinyls'"
+									/>
 								</div>
 							</div>
 							<div class="row">
@@ -153,6 +174,20 @@
 							{{ $t('totals') }}
 						</div>
 						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="installment_number">{{ $t('installment_number') }}</label>
+										<input class="form-control" id="installment_number" v-model="form.installment_number" type="number" @keyup="changeTax" />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="installment_tax">{{ $t('installment_tax') }}</label>
+										<input class="form-control" id="installment_tax" v-model="form.installment_tax" type="number" disabled />
+									</div>
+								</div>
+							</div>
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
@@ -311,6 +346,7 @@
 							this.changedDimension()
 							this.loadEquipments(result.data.equipments)
 							this.changeLayout()
+							this.changeTax()
 						}
 					})
 				} else {
@@ -416,6 +452,40 @@
 
 				this.form.cash_price = this.form.cash_price.toFixed(2)
 				this.form.cash_price_total = this.form.cash_price_total.toFixed(2)
+			},
+			changeTax() {
+				try {
+					if (this.form.installment_number > 0) {
+						if (this.form.payment == 'in_cash') {
+							this.form.installment_tax = 0
+							this.form.forward_price = parseFloat(this.form.cash_price).toFixed(2)
+							this.form.forward_price_total = parseFloat(this.form.cash_price_total).toFixed(2)
+						} else if (this.form.payment == 'debit_card') {
+							this.form.installment_tax = this.logist[this.form.payment]
+							this.form.forward_price = parseFloat(parseFloat(this.form.cash_price) + (parseFloat(this.form.cash_price) * parseFloat(this.form.installment_tax)) / 100).toFixed(2)
+							this.form.forward_price_total = parseFloat(parseFloat(this.form.cash_price_total) + (parseFloat(this.form.cash_price_total) * parseFloat(this.form.installment_tax)) / 100).toFixed(2)
+						} else if (this.form.payment == 'by_financial') {
+							const installment_tax = JSON.parse(this.logist[this.form.payment])
+							const tax = parseFloat(installment_tax[this.form.installment_number - 1])
+							if (isNaN(tax)) {
+								this.form.installment_tax = 0
+							} else {
+								const installment_cash = parseFloat(parseFloat(this.form.cash_price) * parseFloat(tax)).toFixed(2)
+								const total_price_cash = installment_cash * this.form.installment_number
+								this.form.installment_tax = ((total_price_cash * 100) / this.form.cash_price - 100).toFixed(2)
+							}
+						} else if (this.form.payment == 'installment_credit_card') {
+							const installment_tax = JSON.parse(this.logist[this.form.payment])
+							this.form.installment_tax = installment_tax[this.form.installment_number - 1]
+						}
+					} else {
+						this.form.installment_tax = 0
+					}
+					this.form.forward_price = parseFloat(parseFloat(this.form.cash_price) + (parseFloat(this.form.cash_price) * parseFloat(this.form.installment_tax)) / 100).toFixed(2)
+					this.form.forward_price_total = parseFloat(parseFloat(this.form.cash_price_total) + (parseFloat(this.form.cash_price_total) * parseFloat(this.form.installment_tax)) / 100).toFixed(2)
+				} catch (e) {
+					this.form.installment_tax = 0
+				}
 			},
 			loadEquipments(equipments) {
 				if (!this.form.equipments) this.form.equipments = {}

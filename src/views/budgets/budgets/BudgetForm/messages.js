@@ -6,6 +6,8 @@ export default {
 		client: 'Cliente',
 		seller: 'Vendedor',
 		payment: 'Formas de pagamento',
+		installment_number: 'Número de Parcelas',
+		installment_tax: 'Taxa Calculada',
 		status: 'Status',
 		layout: 'Tipo de Orçamento',
 

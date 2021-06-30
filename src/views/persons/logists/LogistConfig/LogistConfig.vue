@@ -64,13 +64,13 @@
 				<div class="col-sm-6">
 					<div class="form-group mb-3">
 						<label for="debit_card">{{ $t('debit_card') }}</label>
-						<input class="form-control" id="debit_card" v-model="form.debit_card" />
+						<input class="form-control" id="debit_card" v-model="form.debit_card" type="number" />
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group mb-3">
 						<label for="max_discount">{{ $t('max_discount') }}</label>
-						<input class="form-control" id="max_discount" v-model="form.max_discount" />
+						<input class="form-control" id="max_discount" v-model="form.max_discount" type="number" />
 					</div>
 				</div>
 			</div>
@@ -83,49 +83,49 @@
 						<div class="col-sm-3">
 							<div class="form-group">
 								<label for="construction_labor">{{ $t('construction_labor') }}</label>
-								<input class="form-control" id="construction_labor" type="text" v-model="form.construction_labor" />
+								<input class="form-control" id="construction_labor" type="number" v-model="form.construction_labor" />
 							</div>
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
 								<label for="excavation_labor">{{ $t('excavation_labor') }}</label>
-								<input class="form-control" id="excavation_labor" type="text" v-model="form.excavation_labor" />
+								<input class="form-control" id="excavation_labor" type="number" v-model="form.excavation_labor" />
 							</div>
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
 								<label for="earth_removal_labor">{{ $t('earth_removal_labor') }}</label>
-								<input class="form-control" id="earth_removal_labor" type="text" v-model="form.earth_removal_labor" />
+								<input class="form-control" id="earth_removal_labor" type="number" v-model="form.earth_removal_labor" />
 							</div>
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
 								<label for="short_wall_labor">{{ $t('short_wall_labor') }}</label>
-								<input class="form-control" id="short_wall_labor" type="text" v-model="form.short_wall_labor" />
+								<input class="form-control" id="short_wall_labor" type="number" v-model="form.short_wall_labor" />
 							</div>
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
 								<label for="subfloor_labor">{{ $t('subfloor_labor') }}</label>
-								<input class="form-control" id="subfloor_labor" type="text" v-model="form.subfloor_labor" />
+								<input class="form-control" id="subfloor_labor" type="number" v-model="form.subfloor_labor" />
 							</div>
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
 								<label for="reserve">{{ $t('reserve') }}</label>
-								<input class="form-control" id="reserve" type="text" v-model="form.reserve" />
+								<input class="form-control" id="reserve" type="number" v-model="form.reserve" />
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="material_placement_labor">{{ $t('material_placement_labor') }}</label>
-								<input class="form-control" id="material_placement_labor" type="text" v-model="form.material_placement_labor" />
+								<input class="form-control" id="material_placement_labor" type="number" v-model="form.material_placement_labor" />
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="job_monitoring_fee">{{ $t('job_monitoring_fee') }}</label>
-								<input class="form-control" id="job_monitoring_fee" type="text" v-model="form.job_monitoring_fee" />
+								<input class="form-control" id="job_monitoring_fee" type="number" v-model="form.job_monitoring_fee" />
 							</div>
 						</div>
 					</div>
@@ -146,6 +146,7 @@
 											class="form-control"
 											id="number_installment_credit_card"
 											v-model="number_installment_credit_card"
+											type="number"
 											@keyup="installment_credit_card = changeInstallment($event, installment_credit_card)"
 										/>
 									</div>
@@ -159,13 +160,13 @@
 												{{ parseInt(i * 2) - 1 }}
 											</td>
 											<td>
-												<input class="form-control" v-model="installment_credit_card[parseInt(i * 2) - 2]" />
+												<input class="form-control" v-model="installment_credit_card[parseInt(i * 2) - 2]" type="number" />
 											</td>
 											<td>
 												{{ parseInt(i * 2) }}
 											</td>
 											<td>
-												<input class="form-control" v-model="installment_credit_card[parseInt(i * 2) - 1]" />
+												<input class="form-control" v-model="installment_credit_card[parseInt(i * 2) - 1]" type="number" />
 											</td>
 										</tr>
 									</table>
@@ -187,7 +188,7 @@
 								<div class="col-sm-6">
 									<div class="form-group mb-3">
 										<label for="number_by_logist">{{ $t('number_installments') }}</label>
-										<input class="form-control" id="number_by_logist" v-model="number_by_logist" @keyup="by_logist = changeInstallment($event, by_logist)" />
+										<input class="form-control" id="number_by_logist" type="number" v-model="number_by_logist" @keyup="by_logist = changeInstallment($event, by_logist)" />
 									</div>
 								</div>
 							</div>
@@ -199,13 +200,13 @@
 												{{ parseInt(i * 2) - 1 }}
 											</td>
 											<td>
-												<input class="form-control" v-model="by_logist[parseInt(i * 2) - 2]" />
+												<input class="form-control" type="number" v-model="by_logist[parseInt(i * 2) - 2]" />
 											</td>
 											<td>
 												{{ parseInt(i * 2) }}
 											</td>
 											<td>
-												<input class="form-control" v-model="by_logist[parseInt(i * 2) - 1]" />
+												<input class="form-control" type="number" v-model="by_logist[parseInt(i * 2) - 1]" />
 											</td>
 										</tr>
 									</table>
@@ -227,7 +228,7 @@
 								<div class="col-sm-6">
 									<div class="form-group mb-3">
 										<label for="number_by_financial">{{ $t('number_installments') }}</label>
-										<input class="form-control" id="number_by_financial" v-model="number_by_financial" @keyup="by_financial = changeInstallment($event, by_financial)" />
+										<input class="form-control" id="number_by_financial" type="number" v-model="number_by_financial" @keyup="by_financial = changeInstallment($event, by_financial)" />
 									</div>
 								</div>
 							</div>
@@ -239,13 +240,13 @@
 												{{ parseInt(i * 2) - 1 }}
 											</td>
 											<td>
-												<input class="form-control" v-model="by_financial[parseInt(i * 2) - 2]" />
+												<input class="form-control" type="number" v-model="by_financial[parseInt(i * 2) - 2]" />
 											</td>
 											<td>
 												{{ parseInt(i * 2) }}
 											</td>
 											<td>
-												<input class="form-control" v-model="by_financial[parseInt(i * 2) - 1]" />
+												<input class="form-control" type="number" v-model="by_financial[parseInt(i * 2) - 1]" />
 											</td>
 										</tr>
 									</table>
@@ -270,6 +271,7 @@
 										<input
 											class="form-control"
 											id="number_by_financial_down_payment"
+											type="number"
 											v-model="number_by_financial_down_payment"
 											@keyup="by_financial_down_payment = changeInstallment($event, by_financial_down_payment)"
 										/>
@@ -284,13 +286,13 @@
 												{{ parseInt(i * 2) - 1 }}
 											</td>
 											<td>
-												<input class="form-control" v-model="by_financial_down_payment[parseInt(i * 2) - 2]" />
+												<input class="form-control" type="number" v-model="by_financial_down_payment[parseInt(i * 2) - 2]" />
 											</td>
 											<td>
 												{{ parseInt(i * 2) }}
 											</td>
 											<td>
-												<input class="form-control" v-model="by_financial_down_payment[parseInt(i * 2) - 1]" />
+												<input class="form-control" type="number" v-model="by_financial_down_payment[parseInt(i * 2) - 1]" />
 											</td>
 										</tr>
 									</table>

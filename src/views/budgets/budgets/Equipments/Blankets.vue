@@ -2,7 +2,7 @@
 	<div class="card">
 		<div class="card-body" v-if="this.show">
 			<div class="row">
-				<div class="col-sm-9">
+				<div class="col-sm-12">
 					<div class="form-group">
 						<label>{{ $t('blanket') }}</label>
 						<select class="custom-select" v-model="form.equipments[index].equipment_id" @change="change">
@@ -16,36 +16,42 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label>{{ $t('price') }}</label>
-						<input class="form-control" type="number" v-model="form.equipments[index].price" disabled />
-					</div>
-				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<div class="form-group">
 						<label>{{ $t('discount_percent') }}</label>
 						<input class="form-control" type="number" v-model="discountPercent" @change="changePercent" />
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<div class="form-group">
 						<label>{{ $t('discount') }}</label>
 						<input class="form-control" type="number" v-model="form.equipments[index].discount" @change="change" />
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label>{{ $t('price') }}</label>
+						<input class="form-control" type="number" v-model="form.equipments[index].price" disabled />
+					</div>
+				</div>
+				<div class="col-sm-4">
 					<div class="form-group">
 						<label>{{ $t('manpower') }}</label>
 						<input class="form-control" type="number" v-model="form.equipments[index].man_power" disabled />
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<div class="form-group">
 						<label>{{ $t('final_price') }}</label>
 						<input class="form-control" type="number" v-model="form.equipments[index].final_price" disabled />
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label>{{ $t('forward_price') }}</label>
+						<input class="form-control" type="number" v-model="forward_price" disabled />
 					</div>
 				</div>
 			</div>
@@ -59,11 +65,12 @@
 
 	export default {
 		name: 'Blankets',
-		props: { index: Number, form: Object, m2_facial: Number },
+		props: { index: Number, form: Object, m2_facial: Number, tax: Number },
 		i18n: { messages },
 		data() {
 			return {
 				blankets: [],
+				forward_price: 0,
 				show: false,
 				discountPercent: 0,
 			}
@@ -112,6 +119,8 @@
 					this.form.equipments[this.index].price = price_with_discount
 					this.form.equipments[this.index].final_price = price_with_discount * this.m2_facial + (isNaN(man_power_price) ? 0 : man_power_price) - (isNaN(discount) ? 0 : discount)
 					this.form.equipments[this.index].man_power = man_power_price
+
+					this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
 					this.show = false
 					setTimeout(() => {
 						this.show = true
