@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<Form @save="save" :size="'medium'">
+		<Form @save="save" v-if="this.token">
 			<div slot="title" v-if="!this.token">
 				{{ $t('title') }}
 			</div>

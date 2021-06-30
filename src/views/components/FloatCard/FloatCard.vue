@@ -17,12 +17,10 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					{{ this.message }}
+					<slot name="default"/>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close">
-						{{ $t('close') }}
-					</button>
+					<slot name="footer"/>
 				</div>
 			</div>
 		</div>
@@ -34,19 +32,17 @@
 	import './style.css'
 	export default {
 		name: 'Alert',
-		props: { title: String, message: String },
+		props: { title: String, show: Boolean },
 		i18n: { messages },
 		data() {
 			return {
-				show: false,
 				eventListener: undefined
 			}
 		},
 		mounted() {},
 		watch: {
-			message(to) {
+			show(to) {
 				if (to) {
-					this.show = true
 					this.eventListener = (e) => {
 						this.keyUp(e)
 					}
@@ -62,7 +58,7 @@
 				this.$emit('close')
 			},
 			keyUp(e) {
-				if (e.code == 'Escape') {
+				if (e.code == 'Escape' || e.code == 'Space') {
 					this.close()
 				}
 			},

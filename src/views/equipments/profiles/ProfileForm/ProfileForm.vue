@@ -63,14 +63,14 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="cash_price">{{ $t('cash_price') }}</label>
-						<input class="form-control" id="cash_price" v-model="form.cash_price" type="number" />
+						<label for="man_power_cost">{{ $t('man_power_cost') }}</label>
+						<input class="form-control" id="man_power_cost" v-model="form.man_power_cost" type="number" />
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="forward_price">{{ $t('forward_price') }}</label>
-						<input class="form-control" id="forward_price" v-model="form.forward_price" type="number" />
+						<label for="man_power_profit_margin">{{ $t('man_power_profit_margin') }}</label>
+						<input class="form-control" id="man_power_profit_margin" v-model="form.man_power_profit_margin" type="number" />
 					</div>
 				</div>
 			</div>
@@ -119,6 +119,8 @@
 							profit_margin: profile.data.equipments ? profile.data.equipments.profit_margin : '',
 							cash_price: profile.data.equipments ? profile.data.equipments.cash_price : '',
 							forward_price: profile.data.equipments ? profile.data.equipments.forward_price : '',
+							man_power_cost: profile.data.equipments ? profile.data.equipments.man_power_cost : '',
+							man_power_profit_margin: profile.data.equipments ? profile.data.equipments.man_power_profit_margin : '',
 						}
 					})
 				}

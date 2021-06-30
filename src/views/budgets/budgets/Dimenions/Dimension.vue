@@ -40,43 +40,43 @@
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="sidewalk_area">{{ $t('sidewalk_area') }}</label>
-						<input class="form-control" id="sidewalk_area" v-model="form.sidewalk_area" type="text" />
+						<input class="form-control" id="sidewalk_area" v-model="form.sidewalk_area" type="number" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="perimeter">{{ $t('perimeter') }}</label>
-						<input class="form-control" id="perimeter" v-model="form.perimeter" type="text" />
+						<input class="form-control" id="perimeter" v-model="form.perimeter" type="number" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="medium_depth">{{ $t('medium_depth') }}</label>
-						<input class="form-control" id="medium_depth" v-model="form.medium_depth" type="text" />
+						<input class="form-control" id="medium_depth" v-model="form.medium_depth" type="number" />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="m2_wall">{{ $t('m2_wall') }}</label>
+						<input class="form-control" id="m2_wall" v-model="form.m2_wall" type="number" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="m2_facial">{{ $t('m2_facial') }}</label>
-						<input class="form-control" id="m2_facial" v-model="form.m2_wall" type="text" />
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="m2_facial">{{ $t('m2_facial') }}</label>
-						<input class="form-control" id="m2_facial" v-model="form.m2_facial" type="text" />
+						<input class="form-control" id="m2_facial" v-model="form.m2_facial" type="number" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="m2_total">{{ $t('m2_total') }}</label>
-						<input class="form-control" id="m2_total" v-model="form.m2_total" type="text" />
+						<input class="form-control" id="m2_total" v-model="form.m2_total" type="number" />
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="m3_total">{{ $t('m3_total') }}</label>
-						<input class="form-control" id="m3_total" v-model="form.m3_total" type="text" />
+						<input class="form-control" id="m3_total" v-model="form.m3_total" type="number" />
 					</div>
 				</div>
 			</div>
