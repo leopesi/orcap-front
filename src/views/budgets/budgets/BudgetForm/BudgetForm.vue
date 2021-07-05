@@ -58,19 +58,6 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="form-group mb-3">
-						<label for="payment">{{ $t('payment') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="payment" v-model="form.payment" @change="changeTax">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
-								<option :value="i" v-for="(payment, i) in this.payments" :key="i">
-									{{ payment }}
-								</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group mb-3">
 						<label for="status">{{ $t('status') }}</label>
 						<div class="input-group mb-3">
 							<select class="custom-select" id="status" v-model="form.status">
@@ -176,31 +163,59 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col-sm-6">
+									<div class="form-group mb-3">
+										<label for="payment">{{ $t('payment') }}</label>
+										<div class="input-group mb-3">
+											<select class="custom-select" id="payment" v-model="form.payment" @change="changeTax">
+												<!-- <option selected>{{ $t('choose') }}</option> -->
+												<option :value="i" v-for="(payment, i) in this.payments" :key="i">
+													{{ payment }}
+												</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
 									<div class="form-group">
 										<label for="installment_number">{{ $t('installment_number') }}</label>
 										<input class="form-control" id="installment_number" v-model="form.installment_number" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-3">
 									<div class="form-group">
-										<label for="installment_tax">{{ $t('installment_tax') }}</label>
-										<input class="form-control" id="installment_tax" v-model="form.installment_tax" type="number" disabled />
+										<label for="down_payment">{{ $t('down_payment') }}</label>
+										<input class="form-control" id="down_payment" v-model="form.down_payment" type="number" @keyup="changeTax" />
 									</div>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-3">
 									<div class="form-group">
 										<label for="cash_price">{{ $t('cash_price') }}</label>
 										<input class="form-control" id="cash_price" type="text" :value="this.form.cash_price" disabled />
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-3">
 									<div class="form-group">
 										<label for="forward_price">{{ $t('forward_price') }}</label>
 										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
 									</div>
 								</div>
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="installment_tax">{{ $t('installment_tax') }}</label>
+										<input class="form-control" id="installment_tax" v-model="form.installment_tax" type="number" disabled />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="installment_value">{{ $t('installment_value') }}</label>
+										<input class="form-control" id="installment_value" :value="parseFloat(form.forward_price_total / form.installment_number).toFixed(2)" type="number" disabled />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								
 							</div>
 							<div class="row">
 								<div class="col-sm-6">
@@ -212,7 +227,7 @@
 								<div class="col-sm-6">
 									<div class="form-group">
 										<label for="discount">{{ $t('discount') }}</label>
-										<input class="form-control" v-model="form.discount" type="number" @keyup="changedValues" />
+										<input class="form-control" v-model="form.discount" type="number" @keyup="changeTax" />
 									</div>
 								</div>
 							</div>
@@ -455,6 +470,7 @@
 			},
 			changeTax() {
 				try {
+					this.changedValues()
 					if (this.form.installment_number > 0) {
 						if (this.form.payment == 'in_cash') {
 							this.form.installment_tax = 0
@@ -464,7 +480,7 @@
 							this.form.installment_tax = this.logist[this.form.payment]
 							this.form.forward_price = parseFloat(parseFloat(this.form.cash_price) + (parseFloat(this.form.cash_price) * parseFloat(this.form.installment_tax)) / 100).toFixed(2)
 							this.form.forward_price_total = parseFloat(parseFloat(this.form.cash_price_total) + (parseFloat(this.form.cash_price_total) * parseFloat(this.form.installment_tax)) / 100).toFixed(2)
-						} else if (this.form.payment == 'by_financial') {
+						} else if (this.form.payment == 'by_financial' || this.form.payment == 'by_financial_down_payment') {
 							const installment_tax = JSON.parse(this.logist[this.form.payment])
 							const tax = parseFloat(installment_tax[this.form.installment_number - 1])
 							if (isNaN(tax)) {
@@ -481,8 +497,12 @@
 					} else {
 						this.form.installment_tax = 0
 					}
-					this.form.forward_price = parseFloat(parseFloat(this.form.cash_price) + (parseFloat(this.form.cash_price) * parseFloat(this.form.installment_tax)) / 100).toFixed(2)
-					this.form.forward_price_total = parseFloat(parseFloat(this.form.cash_price_total) + (parseFloat(this.form.cash_price_total) * parseFloat(this.form.installment_tax)) / 100).toFixed(2)
+					const cash_price = isNaN(parseFloat(this.form.cash_price)) ? 0 : parseFloat(this.form.cash_price)
+					const down_payment = isNaN(parseFloat(this.form.down_payment)) ? 0 : parseFloat(this.form.down_payment)
+					const cash_price_total = isNaN(parseFloat(this.form.cash_price_total)) ? 0 : parseFloat(this.form.cash_price_total)
+					const installment_tax = isNaN(parseFloat(this.form.installment_tax)) ? 0 : parseFloat(this.form.installment_tax)
+					this.form.forward_price = parseFloat(cash_price - down_payment + ((cash_price - down_payment) * installment_tax) / 100).toFixed(2)
+					this.form.forward_price_total = parseFloat(cash_price_total - down_payment + ((cash_price_total - down_payment) * installment_tax) / 100).toFixed(2)
 				} catch (e) {
 					this.form.installment_tax = 0
 				}

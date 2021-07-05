@@ -5,4 +5,5 @@ export default {
 	installment_credit_card: 'Cartão de crédito',
 	by_logist: 'À prazo pela Loja',
 	by_financial: 'À prazo pela Financeira',
+	by_financial_down_payment: 'Com entrada pela Financeira',
 }
