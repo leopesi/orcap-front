@@ -82,21 +82,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-3">
-					<div class="form-group mb-3">
-						<label for="beach">{{ $t('beach') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="beach" v-model="form.beach" @change="showBeach = $event.target.value">
-								<option selected :value="false">{{ $t('no') }}</option>
-								<option :value="true">{{ $t('yes') }}</option>
-							</select>
-						</div>
-					</div>
-				</div>
 			</div>
 			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-2">
-					<Dimensions :form="this.form" :beach="this.showBeach == 'false' ? false : true" @changed="changedDimension" />
+					<Dimensions :form="this.form" @changed="changedDimension" />
 				</div>
 			</div>
 			<div class="row" v-if="this.id">
@@ -342,7 +331,6 @@
 				newEquipment: 'filter',
 				showEquipments: false,
 				showAddEquipment: false,
-				showBeach: false,
 			}
 		},
 		mounted() {
@@ -357,7 +345,6 @@
 							this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
 							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
-							this.showBeach = this.form.beach ? this.form.beach.toString() : 'false'
 							this.changedDimension()
 							this.loadEquipments(result.data.equipments)
 							this.changeLayout()
@@ -368,7 +355,6 @@
 					this.form.payment = Object.keys(this.payments)[0]
 					this.form.status = Object.keys(this.status)[0]
 					this.form.layout = Object.keys(this.layouts)[0]
-					this.form.beach = false
 				}
 				Logists.getByToken((result) => {
 					this.logist = result.data
@@ -396,7 +382,6 @@
 						this.form.expiration_date = Methods.fixSequelizeDate(result.data.expiration_date)
 						this.form.updatedAt = Methods.fixSequelizeDate(result.data.updatedAt)
 						this.form.createdAt = Methods.fixSequelizeDate(result.data.createdAt)
-						this.showBeach = result.data.beach ? result.data.beach.toString() : 'false'
 						this.changedDimension()
 						this.changeLayout()
 					})

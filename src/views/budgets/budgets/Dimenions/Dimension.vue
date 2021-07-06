@@ -80,20 +80,49 @@
 					</div>
 				</div>
 			</div>
-			<div class="row" v-if="this.beach">
+			<div class="row">
 				<div class="col-sm-3">
+					<div class="form-group mb-3">
+						<label for="beach">{{ $t('beach') }}</label>
+						<div class="input-group mb-3">
+							<select class="custom-select" id="beach" v-model="form.beach" @change="clearBeach">
+								<option selected :value="false">{{ $t('no') }}</option>
+								<option :value="true">{{ $t('yes') }}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3" v-if="form.beach">
+					<div class="form-group">
+						<label for="beach_length">{{ $t('beach_length') }}</label>
+						<input class="form-control" id="beach_length" v-model="form.beach_length" type="number" step="0.01" @keyup="calculate" />
+					</div>
+				</div>
+				<div class="col-sm-3" v-if="form.beach">
 					<div class="form-group">
 						<label for="beach_width">{{ $t('beach_width') }}</label>
 						<input class="form-control" id="beach_width" v-model="form.beach_width" type="number" step="0.01" @keyup="calculate" />
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-3" v-if="form.beach">
 					<div class="form-group">
 						<label for="beach_medium_depth">{{ $t('beach_medium_depth') }}</label>
 						<input class="form-control" id="beach_medium_depth" v-model="form.beach_medium_depth" type="number" step="0.01" @keyup="calculate" />
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-3" v-if="form.beach">
+					<div class="form-group">
+						<label for="beach_m2_wall">{{ $t('beach_m2_wall') }}</label>
+						<input class="form-control" id="beach_m2_wall" v-model="form.beach_m2_wall" type="number" step="0.01" @keyup="calculate" />
+					</div>
+				</div>
+				<div class="col-sm-3" v-if="form.beach">
+					<div class="form-group">
+						<label for="beach_perimeter">{{ $t('beach_perimeter') }}</label>
+						<input class="form-control" id="beach_perimeter" v-model="form.beach_perimeter" type="number" step="0.01" @keyup="calculate" />
+					</div>
+				</div>
+				<div class="col-sm-3" v-if="form.beach">
 					<div class="form-group">
 						<label for="steps">{{ $t('steps') }}</label>
 						<select class="custom-select" id="steps" v-model="form.steps" @change="showSteps = $event.target.value">
@@ -137,44 +166,35 @@
 		},
 		methods: {
 			calculate() {
-				// if (this.interval) clearInterval(this.interval)
-				// if (this.form) {
-				// 	this.form.perimeter = this.$t('loading')
-				// 	this.form.medium_depth = this.$t('loading')
-				// 	this.form.sidewalk_area = this.$t('loading')
-				// 	this.form.m2_facial = this.$t('loading')
-				// 	this.form.m2_wall = this.$t('loading')
-				// 	this.form.m2_total = this.$t('loading')
-				// 	this.form.m3_total = this.$t('loading')
-				// 	this.form.m3_real = this.$t('loading')
-				// 	this.interval = setInterval(() => {
-				// 		this.$emit('change')
-				// 		Dimensions.calculate(this.form, (result) => {
-				// 			if (result.dimension) {
-				// 				this.form.perimeter = this.form.perimeter > 0 ? this.form.perimeter : parseFloat(result.dimension.perimeter).toFixed(2)
-				// 				this.form.medium_depth = parseFloat(result.dimension.medium_depth).toFixed(2)
-				// 				this.form.sidewalk_area = parseFloat(result.dimension.sidewalk_area).toFixed(2)
-				// 				this.form.m2_facial = parseFloat(result.dimension.m2_facial).toFixed(2)
-				// 				this.form.m2_wall = parseFloat(result.dimension.m2_wall).toFixed(2)
-				// 				this.form.m2_total = parseFloat(result.dimension.m2_total).toFixed(2)
-				// 				this.form.m3_total = parseFloat(result.dimension.m3_total).toFixed(2)
-				// 				this.form.m3_real = parseFloat(result.dimension.m3_real).toFixed(2)
-
-				// 				this.form.perimeter = !isNaN(this.form.perimeter) ? this.form.perimeter : 0
-				// 				this.form.medium_depth = !isNaN(this.form.medium_depth) ? this.form.medium_depth : 0
-				// 				this.form.sidewalk_area = !isNaN(this.form.sidewalk_area) ? this.form.sidewalk_area : 0
-				// 				this.form.m2_facial = !isNaN(this.form.m2_facial) ? this.form.m2_facial : 0
-				// 				this.form.m2_wall = !isNaN(this.form.m2_wall) ? this.form.m2_wall : 0
-				// 				this.form.m2_total = !isNaN(this.form.m2_total) ? this.form.m2_total : 0
-				// 				this.form.m3_total = !isNaN(this.form.m3_total) ? this.form.m3_total : 0
-				// 				this.form.m3_real = !isNaN(this.form.m3_real) ? this.form.m3_real : 0
-				// 				this.$emit('changed')
-				// 			}
-				// 		})
-				// 		clearInterval(this.interval)
-				// 	}, 1000)
-				// }
+				const length = parseFloat(this.form.length)
+				const width = parseFloat(this.form.width)
+				const medium_depth = parseFloat(this.form.medium_depth)
+				const beach_length = parseFloat(this.form.beach_length)
+				const beach_width = parseFloat(this.form.beach_width)
+				const beach_medium_depth = parseFloat(this.form.beach_medium_depth)
+				const perimeter = length * 2 + width * 2 - beach_length
+				const m2_wall = perimeter * medium_depth + (medium_depth - beach_medium_depth) * beach_length
+				const beach_perimeter = beach_length + beach_width * 2
+				const beach_m2_wall = beach_perimeter * beach_medium_depth
+				const m2_facial = length * width + beach_length * beach_width
+				const m2_total = m2_wall + beach_m2_wall + m2_facial
+				const m3_total = length * width * medium_depth + beach_length * beach_width * beach_medium_depth
+				this.form.perimeter = parseFloat(perimeter).toFixed(2)
+				this.form.m2_wall = parseFloat(m2_wall).toFixed(2)
+				this.form.beach_perimeter = parseFloat(beach_perimeter).toFixed(2)
+				this.form.beach_m2_wall = parseFloat(beach_m2_wall).toFixed(2)
+				this.form.m2_facial = parseFloat(m2_facial).toFixed(2)
+				this.form.m2_total = parseFloat(m2_total).toFixed(2)
+				this.form.m3_total = parseFloat(m3_total).toFixed(2)
 			},
+			clearBeach() {
+				this.form.beach_perimeter = 0
+				this.form.beach_m2_wall = 0
+				this.form.beach_length = 0
+				this.form.beach_width = 0
+				this.form.beach_medium_depth = 0
+				this.calculate()
+			}
 		},
 	}
 </script>
