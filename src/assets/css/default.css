@@ -1,0 +1,14 @@
+body {
+	font-family: Avenir, Arial, Tahoma, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+    background-color: #f4f7f6;
+	color: #212121;
+	margin: 0px;
+	padding: 0px;
+	min-height: 100vh;
+	display: grid;
+	grid: grid-template-areas;
+	grid-template-rows: 56px auto 56px;
+	grid-template-areas: 'Header' 'Body' 'Footer';
+}

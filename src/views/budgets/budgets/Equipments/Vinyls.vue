@@ -5,7 +5,7 @@
 				<div class="col-sm-12">
 					<div class="form-group">
 						<label>{{ $t('vinyl') }}</label>
-						<select class="custom-select" v-model="form.equipments[index].equipment_id" @change="change">
+						<select class="form-control custom-select" v-model="form.equipments[index].equipment_id" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="vinyl.equipment_id" v-for="(vinyl, i) in this.vinyls" :key="i">
 								<span v-if="vinyl && vinyl.equipments">

@@ -26,18 +26,20 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
-					<div class="form-group mb-3">
-						<label for="client_id">{{ $t('client') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="client_id" v-model="form.client_id">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
-								<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
-									{{ client.name }}
-								</option>
-							</select>
-							<div class="input-group-append">
-								<label class="input-group-text" for="client">{{ $t('new_client') }}</label>
+					<div class="form-group mb-3 row align-items-md-end">
+						<div class="col-sm-9">
+							<label for="client_id">{{ $t('client') }}</label>
+							<div class="input-group mb-3">
+								<select class="form-control custom-select" id="client_id" v-model="form.client_id">
+									<!-- <option selected>{{ $t('choose') }}</option> -->
+									<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
+										{{ client.name }}
+									</option>
+								</select>
 							</div>
+						</div>
+						<div class="col-sm-3 mb-3">
+							<button class="btn btn-primary" for="client">{{ $t('new_client') }}</button>
 						</div>
 					</div>
 				</div>
@@ -45,7 +47,7 @@
 					<div class="form-group mb-3">
 						<label for="seller_id">{{ $t('seller') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="seller_id" v-model="form.seller_id">
+							<select class="form-control custom-select" id="seller_id" v-model="form.seller_id">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="seller.id" v-for="(seller, i) in this.sellers" :key="i">
 									{{ seller.name }}
@@ -56,27 +58,27 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-3">
+				<div class="col-sm-6">
 					<div class="form-group mb-3">
-						<label for="status">{{ $t('status') }}</label>
+						<label for="layout">{{ $t('layout') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="status" v-model="form.status">
+							<select class="form-control custom-select" id="layout" v-model="form.layout" @change="changeLayout">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
-								<option :value="i" v-for="(s, i) in this.status" :key="i">
-									{{ s }}
+								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
+									{{ layout.name }}
 								</option>
 							</select>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-6">
 					<div class="form-group mb-3">
-						<label for="layout">{{ $t('layout') }}</label>
+						<label for="status">{{ $t('status') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="layout" v-model="form.layout" @change="changeLayout">
+							<select class="form-control custom-select" id="status" v-model="form.status">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
-								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
-									{{ layout.name }}
+								<option :value="i" v-for="(s, i) in this.status" :key="i">
+									{{ s }}
 								</option>
 							</select>
 						</div>
@@ -155,7 +157,7 @@
 									<div class="form-group mb-3">
 										<label for="payment">{{ $t('payment') }}</label>
 										<div class="input-group mb-3">
-											<select class="custom-select" id="payment" v-model="form.payment" @change="changeTax">
+											<select class="form-control custom-select" id="payment" v-model="form.payment" @change="changeTax">
 												<!-- <option selected>{{ $t('choose') }}</option> -->
 												<option :value="i" v-for="(payment, i) in this.payments" :key="i">
 													{{ payment }}
@@ -203,9 +205,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="row">
-								
-							</div>
+							<div class="row"></div>
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
@@ -245,7 +245,7 @@
 					<div class="form-group mb-3">
 						<label for="new_equipment">{{ $t('equipment') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="new_equipment" v-model="newEquipment">
+							<select class="form-control custom-select" id="new_equipment" v-model="newEquipment">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(equipment, i) in this.equipments" :key="i">
 									{{ equipment }}

@@ -50,15 +50,3 @@
 		},
 	}
 </script>
-
-<style scoped>
-	.form-small {
-		width: 400px;
-	}
-	.form-medium {
-		width: 600px;
-	}
-	.form-large {
-		width: 800px;
-	}
-</style>

@@ -1,14 +1,13 @@
-
 .menu {
 	width: 300px;
-	background: #f9f9f9;
-	padding: 18px 10px;
+	padding: 24px 16px;
+	margin-right: -48px;
 }
 
 .menu .menu-header {
-	padding: 10px 16px;
-	font-size: 18px;
-	font-weight: 600;
+	padding: 8px 8px;
+	font-size: 16px;
+	font-weight: 400;
 	display: flex;
 	flex: 1;
 	flex-direction: row;
@@ -17,16 +16,21 @@
 }
 
 .menu .menu-body {
-	padding-left: 18px;
+	padding-left: 8px;
 }
 
 .menu .link {
 	padding: 10px 16px;
 	font-size: 14px;
-	font-weight: 600;
+	font-weight: 400;
 	display: flex;
 	flex: 1;
 	flex-direction: row;
 	align-items: flex-start;
 	cursor: pointer;
+}
+
+.menu .menu-body .link::before {
+	content: '-';
+	padding-right: 8px;
 }

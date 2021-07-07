@@ -85,7 +85,7 @@
 					<div class="form-group mb-3">
 						<label for="beach">{{ $t('beach') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="beach" v-model="form.beach" @change="clearBeach">
+							<select class="form-control custom-select" id="beach" v-model="form.beach" @change="clearBeach">
 								<option selected :value="false">{{ $t('no') }}</option>
 								<option :value="true">{{ $t('yes') }}</option>
 							</select>
@@ -125,7 +125,7 @@
 				<div class="col-sm-3" v-if="form.beach">
 					<div class="form-group">
 						<label for="steps">{{ $t('steps') }}</label>
-						<select class="custom-select" id="steps" v-model="form.steps" @change="showSteps = $event.target.value">
+						<select class="form-control custom-select" id="steps" v-model="form.steps" @change="showSteps = $event.target.value">
 							<option :value="false">{{ $t('no') }}</option>
 							<option :value="true">{{ $t('yes') }}</option>
 						</select>
