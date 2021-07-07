@@ -6,6 +6,9 @@
 .card .card-header {
 	background-color: transparent !important;
     border: 0;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 20px 20px 0px;
 }
 
 .card .card-body:hover {
@@ -23,4 +26,10 @@
 	color: #616161;
 	font-weight: 400;
 	transition: all 0.2s ease-in-out;
+}
+
+.card .card-footer {
+	background-color: transparent !important;
+    border: 0;
+    padding: 24px 0;
 }

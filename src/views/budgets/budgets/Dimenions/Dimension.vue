@@ -169,9 +169,9 @@
 				const length = parseFloat(this.form.length)
 				const width = parseFloat(this.form.width)
 				const medium_depth = parseFloat(this.form.medium_depth)
-				const beach_length = parseFloat(this.form.beach_length)
-				const beach_width = parseFloat(this.form.beach_width)
-				const beach_medium_depth = parseFloat(this.form.beach_medium_depth)
+				const beach_length = isNaN(parseFloat(this.form.beach_length)) ? 0 : parseFloat(this.form.beach_length)
+				const beach_width = isNaN(parseFloat(this.form.beach_width)) ? 0 : parseFloat(this.form.beach_width)
+				const beach_medium_depth = isNaN(parseFloat(this.form.beach_medium_depth)) ? 0 : parseFloat(this.form.beach_medium_depth)
 				const perimeter = length * 2 + width * 2 - beach_length
 				const m2_wall = perimeter * medium_depth + (medium_depth - beach_medium_depth) * beach_length
 				const beach_perimeter = beach_length + beach_width * 2
@@ -194,7 +194,7 @@
 				this.form.beach_width = 0
 				this.form.beach_medium_depth = 0
 				this.calculate()
-			}
+			},
 		},
 	}
 </script>

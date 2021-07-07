@@ -1,10 +1,10 @@
 <template>
-	<div class="card">
-		<div class="card-body" v-if="this.show">
+	<div class="card" v-if="this.show">
+		<div class="card-header">{{ $t('blanket') }}</div>
+		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="form-group">
-						<label>{{ $t('blanket') }}</label>
 						<select class="form-control custom-select" v-model="form.equipments[index].equipment_id" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="blanket.equipment_id" v-for="(blanket, i) in this.blankets" :key="i">
