@@ -71,7 +71,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-3">
 					<div class="form-group mb-3">
 						<label for="status">{{ $t('status') }}</label>
 						<div class="input-group mb-3">
@@ -82,6 +82,12 @@
 								</option>
 							</select>
 						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="expiration_date">{{ $t('expiration_date') }}</label>
+						<input class="form-control" id="expiration_date" v-model="form.expiration_date" type="date" />
 					</div>
 				</div>
 			</div>
@@ -96,9 +102,9 @@
 						<div class="card-header">
 							{{ $t('equipments') }}
 						</div>
-						<div class="card-body">
+						<div class="">
 							<div class="row" v-if="this.form">
-								<div class="col-sm-6 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
+								<div class="col-sm-4 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
 									<Filters :index="equipment.index" :form="form" :dimension="form.dimension" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
 									<Engines :index="equipment.index" :form="form" :dimension="form.dimension" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
 									<Lids :index="equipment.index" :form="form" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
@@ -151,9 +157,9 @@
 						<div class="card-header">
 							{{ $t('totals') }}
 						</div>
-						<div class="card-body">
+						<div class="">
 							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-4">
 									<div class="form-group mb-3">
 										<label for="payment">{{ $t('payment') }}</label>
 										<div class="input-group mb-3">
@@ -166,68 +172,61 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="installment_number">{{ $t('installment_number') }}</label>
 										<input class="form-control" id="installment_number" v-model="form.installment_number" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="down_payment">{{ $t('down_payment') }}</label>
 										<input class="form-control" id="down_payment" v-model="form.down_payment" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="cash_price">{{ $t('cash_price') }}</label>
-										<input class="form-control" id="cash_price" type="text" :value="this.form.cash_price" disabled />
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="forward_price">{{ $t('forward_price') }}</label>
-										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
-									</div>
-								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="installment_tax">{{ $t('installment_tax') }}</label>
 										<input class="form-control" id="installment_tax" v-model="form.installment_tax" type="number" disabled />
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="installment_value">{{ $t('installment_value') }}</label>
 										<input class="form-control" id="installment_value" :value="parseFloat(form.forward_price_total / form.installment_number).toFixed(2)" type="number" disabled />
 									</div>
 								</div>
-							</div>
-							<div class="row"></div>
-							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<div class="form-group">
-										<label for="expiration_date">{{ $t('expiration_date') }}</label>
-										<input class="form-control" id="expiration_date" v-model="form.expiration_date" type="datetime-local" />
+										<label for="art">{{ $t('art') }}</label>
+										<input class="form-control" v-model="form.art" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="discount">{{ $t('discount') }}</label>
 										<input class="form-control" v-model="form.discount" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="cash_price">{{ $t('cash_price') }}</label>
+										<input class="form-control" id="cash_price" type="text" :value="this.form.cash_price" disabled />
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="forward_price">{{ $t('forward_price') }}</label>
+										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
+									</div>
+								</div>
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="cash_price_total">{{ $t('cash_price_total') }}</label>
 										<input class="form-control" id="cash_price_total" type="text" :value="this.form.cash_price_total" disabled />
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="forward_price_total">{{ $t('forward_price_total') }}</label>
 										<input class="form-control" id="forward_price_total" type="text" :value="this.form.forward_price_total" disabled />
@@ -342,7 +341,8 @@
 					Budgets.getBudget(this.id, (result) => {
 						this.form = Object.assign({}, result.data)
 						if (result.data) {
-							this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
+							this.form.expiration_date = Methods.fixSequelizeOnlyDate(this.form.expiration_date)
+							console.log(this.form.expiration_date)
 							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
 							this.changedDimension()

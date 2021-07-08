@@ -26,8 +26,8 @@ export default {
 		beach_width: 'Largura da Prainha',
 		beach_medium_depth: 'Profundidade Média da Prainha',
 		beach_m2_wall: 'M2 da Parede Prainha',
-		steps: 'Degraus',
-		number_steps: 'Quantidade de Degraus',
+		steps: 'Patamares',
+		number_steps: 'Quantidade de Patamares',
 		no: 'Não',
 		yes: 'Sim',
 

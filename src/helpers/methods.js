@@ -22,6 +22,20 @@ export default {
 		}
 	},
 
+	fixSequelizeOnlyDate(date) {
+		if (!date) {
+			return undefined
+		} else {
+			return date
+				.split('.')
+				.reverse()
+				.slice(1)
+				.join('.')
+				.split(' ')[0]
+				.split('T')[0]
+		}
+	},
+
 	fixSequelizeDate(date) {
 		if (!date) {
 			return undefined

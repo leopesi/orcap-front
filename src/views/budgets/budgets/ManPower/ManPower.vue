@@ -1,11 +1,11 @@
 <template>
-	<div class="card">
+	<Card class="card">
 		<div class="card-header">
 			{{ $t('manpower') }}
 		</div>
 		<div class="card-body" v-if="this.show">
 			<div class="row">
-				<div class="col-sm-3" v-for="(field, i) in this.manpowers" :key="i">
+				<div class="col-sm-2" v-for="(field, i) in this.manpowers" :key="i">
 					<div class="form-group" v-if="field != 'art'">
 						<label :for="field">{{ $t(field) }}</label>
 						<input class="form-control" :id="field" type="text" v-model="form[field]" disabled />
@@ -17,16 +17,17 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</Card>
 </template>
 
 <script>
+import Card from '../../../components/Card/Card.vue'
 	import messages from '../BudgetForm/messages'
 	import Layouts from '../data/layouts'
 
 	export default {
 		name: 'ManPower',
-		components: {},
+		components: { Card },
 		props: { form: Object, layout: String, logist: Object },
 		i18n: { messages },
 		data() {
