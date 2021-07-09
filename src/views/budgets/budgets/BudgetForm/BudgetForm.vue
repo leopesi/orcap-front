@@ -26,24 +26,6 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
-					<div class="form-group mb-3 row align-items-md-end">
-						<div class="col-sm-9">
-							<label for="client_id">{{ $t('client') }}</label>
-							<div class="input-group mb-3">
-								<select class="form-control custom-select" id="client_id" v-model="form.client_id">
-									<!-- <option selected>{{ $t('choose') }}</option> -->
-									<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
-										{{ client.name }}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-sm-3 mb-3">
-							<button class="btn btn-primary" for="client">{{ $t('new_client') }}</button>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6">
 					<div class="form-group mb-3">
 						<label for="seller_id">{{ $t('seller') }}</label>
 						<div class="input-group mb-3">
@@ -90,6 +72,28 @@
 						<input class="form-control" id="expiration_date" v-model="form.expiration_date" type="date" />
 					</div>
 				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 pt-2">
+					<Client :form="this.form" @changed="changedClient" />
+				</div>
+				<!-- <div class="col-sm-6">
+					<div class="form-group mb-3 row align-items-md-end">
+						<div class="col-sm-9">
+							<label for="client_id">{{ $t('client') }}</label>
+							<div class="input-group mb-3">
+								<select class="form-control custom-select" id="client_id" v-model="form.client_id">
+									<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
+										{{ client.name }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-3 mb-3">
+							<button class="btn btn-primary" for="client">{{ $t('new_client') }}</button>
+						</div>
+					</div>
+				</div> -->
 			</div>
 			<div class="row" v-if="this.id">
 				<div class="col-sm-12 pt-2">
@@ -277,6 +281,7 @@
 	import Card from '../../../components/Card/Card'
 	import FloatCard from '../../../components/FloatCard/FloatCard'
 	// BUDGET COMPONENTS
+	import Client from '../Client/Client.vue'
 	import Dimensions from '../Dimenions/Dimension'
 	import Filters from '../Equipments/Filters'
 	import Engines from '../Equipments/Engines'
@@ -297,7 +302,7 @@
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Card, FloatCard, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
+		components: { Form, Alert, Card, FloatCard, Client, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
 		data() {
 			return {
 				form: {
@@ -397,6 +402,7 @@
 				}
 				this.reloadEquipments()
 			},
+			changedClient() {},
 			changeEquipment(equipment) {
 				if (equipment && equipment.engine && equipment.lid) {
 					// 	const index = this.form.equipments[equipment.index].index

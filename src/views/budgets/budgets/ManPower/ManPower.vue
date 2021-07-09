@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Card from '../../../components/Card/Card.vue'
+	import Card from '../../../components/Card/Card.vue'
 	import messages from '../BudgetForm/messages'
 	import Layouts from '../data/layouts'
 
@@ -33,7 +33,7 @@ import Card from '../../../components/Card/Card.vue'
 		data() {
 			return {
 				manpowers: [],
-				show: true
+				show: true,
 			}
 		},
 		mounted() {},

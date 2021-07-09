@@ -93,5 +93,15 @@ export default {
 
 		total: 'Total',
 		totals: 'Totais',
+
+		// FORM CLIENTE CAMPOS
+		document: 'CPF / CNPJ',
+		phone: 'Telefone',
+		mail: 'Email',
+		name: 'Nome',
+		address: 'Endereço',
+		complement: 'Complemento',
+		city: 'Cidade',
+		state: 'Estado',
 	},
 }
