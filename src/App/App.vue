@@ -2,7 +2,6 @@
 	<div id="app">
 		<Header v-if="this.logged" />
 		<div class="body">
-			<Menu v-if="this.logged" />
 			<router-view class="views"></router-view>
 		</div>
 		<Footer v-if="this.logged" />
@@ -14,7 +13,6 @@
 
 	import Header from '../views/components/Header/Header'
 	import Footer from '../views/components/Footer/Footer'
-	import Menu from '../views/components/Menu/Menu'
 
 	import messages from './messages'
 	import './style.css'
@@ -22,7 +20,7 @@
 
 	export default {
 		name: 'App',
-		components: { Header, Footer, Menu },
+		components: { Header, Footer },
 		i18n: { messages },
 		data() {
 			return {

@@ -5,10 +5,16 @@
 				{{ $t('title') }}
 			</div>
 			<div class="row" v-if="this.form.id">
-				<div class="col-sm-6">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="id">{{ $t('id') }}</label>
 						<input class="form-control" id="id" v-model="form.id" type="text" disabled />
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="document">{{ $t('document') }}</label>
+						<input class="form-control" id="document" v-model="form.document" type="text" />
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -20,7 +26,13 @@
 				<div class="col-sm-6"></div>
 			</div>
 			<div class="row" v-if="!this.form.id">
-				<div class="col-sm-12">
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="document">{{ $t('document') }}</label>
+						<input class="form-control" id="document" v-model="form.document" type="text" />
+					</div>
+				</div>
+				<div class="col-sm-9">
 					<div class="form-group">
 						<label for="name">{{ $t('name') }}</label>
 						<input class="form-control" id="name" v-model="form.name" type="text" />
@@ -76,6 +88,7 @@
 						this.form = {
 							id: this.id && this.id != 0 ? this.id : null,
 							mail: result.data.sessions ? result.data.sessions.mail : '',
+							document: result.data.document,
 							name: result.data.name,
 							phone: result.data.phone,
 						}

@@ -1,19 +1,31 @@
 <template>
-	<div class="menu" v-if="this.show">
-		<div class="menu-header" @click="open('home')">
-			{{ $t('home') }}
-		</div>
-		<div class="menu-item" v-for="(header, i) in this.menus" :key="i">
-			<div class="menu-header" @click="changeMenu(i)" v-if="typeof header === 'object'">
-				{{ $t(i) }}
+	<div class="menu navbar-expand-lg navbar-dark" v-if="this.show">
+		<div class="container-fluid">
+			<div class="navbar-toggler">
+				<span class="navbar-toggler-icon"></span>
 			</div>
-			<div class="menu-header" @click="open(i)" v-if="typeof header === 'string'">
-				{{ $t(i) }}
-			</div>
-			<div class="menu-body" v-if="actual == i && typeof header === 'object'">
-				<div class="link" @click="open(menu)" v-for="(menu, j) in header" :key="j">
-					{{ $t(j) }}
-				</div>
+			<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+				<ul class="navbar-nav">
+					<li class="nav-item dropdown" @click="open('home')">
+						<div class="nav-link" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ $t('home') }}
+						</div>
+					</li>
+					<li class="nav-item dropdown" v-for="(header, i) in this.menus" :key="i">
+						<div class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ $t(i) }}
+							<div>
+								<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+									<li @click="open(menu)" v-for="(menu, j) in header" :key="j">
+										<a class="dropdown-item">
+											{{ $t(j) }}
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>

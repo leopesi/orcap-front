@@ -16,4 +16,8 @@ export default {
 	update(data, callback) {
 		Cruds.update('/clients/', data, (result) => callback(result))
 	},
+
+	getClientByDocument(document, callback) {
+		Cruds.get('/clients-by-documents/', document, (result) => callback(result))
+	},
 }

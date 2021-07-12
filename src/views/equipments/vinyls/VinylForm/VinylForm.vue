@@ -23,7 +23,7 @@
 					<div class="form-group">
 						<label for="provider">{{ $t('provider') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="provider" v-model="form.provider_id">
+							<select class="form-control custom-select" id="provider" v-model="form.provider_id">
 								<option selected>{{ $t('choose') }}</option>
 								<option :value="provider.id" v-for="(provider, i) in this.providers" :key="i">
 									{{ provider.name }}
@@ -36,7 +36,7 @@
 					<div class="form-group">
 						<label for="brand">{{ $t('brand') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="brand" v-model="form.brand_id">
+							<select class="form-control custom-select" id="brand" v-model="form.brand_id">
 								<option selected>{{ $t('choose') }}</option>
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}

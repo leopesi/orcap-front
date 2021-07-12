@@ -9,7 +9,7 @@
 					<div class="form-group mb-3">
 						<label for="brand_filter_id">{{ $t('brand_filter_id') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="brand_filter_id" v-model="form.brand_filter_id">
+							<select class="form-control custom-select" id="brand_filter_id" v-model="form.brand_filter_id">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}
@@ -22,7 +22,7 @@
 					<div class="form-group mb-3">
 						<label for="brand_blanket_id">{{ $t('brand_blanket_id') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="brand_blanket_id" v-model="form.brand_blanket_id">
+							<select class="form-control custom-select" id="brand_blanket_id" v-model="form.brand_blanket_id">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}
@@ -37,7 +37,7 @@
 					<div class="form-group mb-3">
 						<label for="brand_profile_id">{{ $t('brand_profile_id') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="brand_profile_id" v-model="form.brand_profile_id">
+							<select class="form-control custom-select" id="brand_profile_id" v-model="form.brand_profile_id">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}
@@ -50,7 +50,7 @@
 					<div class="form-group mb-3">
 						<label for="brand_vinyl_id">{{ $t('brand_vinyl_id') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="brand_vinyl_id" v-model="form.brand_vinyl_id">
+							<select class="form-control custom-select" id="brand_vinyl_id" v-model="form.brand_vinyl_id">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}

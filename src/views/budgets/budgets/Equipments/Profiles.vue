@@ -1,11 +1,11 @@
 <template>
-	<div class="card">
-		<div class="card-body" v-if="this.show">
+	<div class="card" v-if="this.show">
+		<div class="card-header">{{ $t('profile') }}</div>
+		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="form-group">
-						<label>{{ $t('profile') }}</label>
-						<select class="custom-select" v-model="form.equipments[index].equipment_id" @change="change">
+						<select class="form-control custom-select" v-model="form.equipments[index].equipment_id" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="profile.equipment_id" v-for="(profile, i) in this.profiles" :key="i">
 								<span v-if="profile && profile.equipments">

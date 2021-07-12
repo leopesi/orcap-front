@@ -3,21 +3,38 @@
 }
 
 .card-visibility .card-visibility-button {
-    content: 'X';
+    content: '';
 	position: absolute;
 	top: 0px;
 	right: 0px;
-	width: 32px;
+	width: 100%;
 	height: 32px;
 	margin: 8px;
     border: 0;
     background-color: transparent;
 	z-index: 1;
+	text-align: right;
 }
-.card-visibility.show-body .card-body, .card-visibility.show-body .card-footer {
+
+.card-visibility .card-header {
+	cursor: pointer;
+	width: 100%;
+}
+
+.card-visibility.hide-body  .card-header {
+	border-bottom: 1px solid #eee;
+	padding-bottom: 8px;
+	margin-bottom: 0px;
+}
+
+.card-visibility.show-body > div + div, .card-visibility.show-body .card-footer {
 	display: block;
 }
 
-.card-visibility.hide-body .card-body, .card-visibility.hide-body .card-footer {
+.card-visibility.hide-body > div + div, .card-visibility.hide-body .card-footer {
 	display: none;
+}
+
+.card-visibility.hide-body {
+	margin-bottom: 0px;
 }

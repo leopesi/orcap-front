@@ -1,32 +1,33 @@
-
 .menu {
-	width: 300px;
-	background: #f9f9f9;
-	padding: 18px 10px;
+	margin-top: -24px;
+	padding: 16px;
 }
 
-.menu .menu-header {
-	padding: 10px 16px;
-	font-size: 18px;
-	font-weight: 600;
-	display: flex;
-	flex: 1;
-	flex-direction: row;
-	align-items: flex-start;
-	cursor: pointer;
+.menu .nav-item {
+	padding-left: 16px;
 }
 
-.menu .menu-body {
-	padding-left: 18px;
+.menu .nav-link > div {
+	display: none;
 }
 
-.menu .link {
-	padding: 10px 16px;
-	font-size: 14px;
-	font-weight: 600;
-	display: flex;
-	flex: 1;
-	flex-direction: row;
-	align-items: flex-start;
-	cursor: pointer;
+.menu .nav-link:hover > div {
+	display: inline-block !important;
+	box-shadow: 0 2px 20px 0 rgb(0 0 0 / 10%);
+	transition: all 0.2s ease-in-out;
+}
+
+.menu .nav-link > div ul {
+	margin-top: -5px;
+	display: block !important;
+}
+
+.menu .nav-link:hover > div ul {
+	box-shadow: 0 2px 20px 0 rgb(0 0 0 / 10%);
+	transition: all 0.2s ease-in-out;
+	border: 0px;
+}
+
+.menu .nav-link:hover > div ul a {
+	padding: 12px 16px;
 }

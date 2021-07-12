@@ -27,25 +27,9 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group mb-3">
-						<label for="client_id">{{ $t('client') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="client_id" v-model="form.client_id">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
-								<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
-									{{ client.name }}
-								</option>
-							</select>
-							<div class="input-group-append">
-								<label class="input-group-text" for="client">{{ $t('new_client') }}</label>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group mb-3">
 						<label for="seller_id">{{ $t('seller') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="seller_id" v-model="form.seller_id">
+							<select class="form-control custom-select" id="seller_id" v-model="form.seller_id">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="seller.id" v-for="(seller, i) in this.sellers" :key="i">
 									{{ seller.name }}
@@ -56,11 +40,24 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="layout">{{ $t('layout') }}</label>
+						<div class="input-group">
+							<select class="form-control custom-select" id="layout" v-model="form.layout" @change="changeLayout">
+								<!-- <option selected>{{ $t('choose') }}</option> -->
+								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
+									{{ layout.name }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
 				<div class="col-sm-3">
-					<div class="form-group mb-3">
+					<div class="form-group">
 						<label for="status">{{ $t('status') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="status" v-model="form.status">
+						<div class="input-group">
+							<select class="form-control custom-select" id="status" v-model="form.status">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(s, i) in this.status" :key="i">
 									{{ s }}
@@ -70,33 +67,31 @@
 					</div>
 				</div>
 				<div class="col-sm-3">
-					<div class="form-group mb-3">
-						<label for="layout">{{ $t('layout') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="layout" v-model="form.layout" @change="changeLayout">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
-								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
-									{{ layout.name }}
-								</option>
-							</select>
-						</div>
+					<div class="form-group">
+						<label for="expiration_date">{{ $t('expiration_date') }}</label>
+						<input class="form-control" id="expiration_date" v-model="form.expiration_date" type="date" />
 					</div>
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-2">
+					<Client :form="this.form" @changed="changedClient" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 pt-4">
 					<Dimensions :form="this.form" @changed="changedDimension" />
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-4">
 					<Card class="card" v-if="this.form">
 						<div class="card-header">
 							{{ $t('equipments') }}
 						</div>
-						<div class="card-body">
+						<div class="">
 							<div class="row" v-if="this.form">
-								<div class="col-sm-6 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
+								<div class="col-sm-4 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
 									<Filters :index="equipment.index" :form="form" :dimension="form.dimension" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
 									<Engines :index="equipment.index" :form="form" :dimension="form.dimension" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
 									<Lids :index="equipment.index" :form="form" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
@@ -138,24 +133,24 @@
 					</Card>
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-4">
 					<ManPower :form="this.form" :layout="this.form.layout" :logist="this.logist" v-if="this.form" @change="changedValues" />
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-4">
 					<div class="card" v-if="this.form">
 						<div class="card-header">
 							{{ $t('totals') }}
 						</div>
-						<div class="card-body">
+						<div class="">
 							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-4">
 									<div class="form-group mb-3">
 										<label for="payment">{{ $t('payment') }}</label>
 										<div class="input-group mb-3">
-											<select class="custom-select" id="payment" v-model="form.payment" @change="changeTax">
+											<select class="form-control custom-select" id="payment" v-model="form.payment" @change="changeTax">
 												<!-- <option selected>{{ $t('choose') }}</option> -->
 												<option :value="i" v-for="(payment, i) in this.payments" :key="i">
 													{{ payment }}
@@ -164,70 +159,61 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="installment_number">{{ $t('installment_number') }}</label>
 										<input class="form-control" id="installment_number" v-model="form.installment_number" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="down_payment">{{ $t('down_payment') }}</label>
 										<input class="form-control" id="down_payment" v-model="form.down_payment" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="cash_price">{{ $t('cash_price') }}</label>
-										<input class="form-control" id="cash_price" type="text" :value="this.form.cash_price" disabled />
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="forward_price">{{ $t('forward_price') }}</label>
-										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
-									</div>
-								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="installment_tax">{{ $t('installment_tax') }}</label>
 										<input class="form-control" id="installment_tax" v-model="form.installment_tax" type="number" disabled />
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="installment_value">{{ $t('installment_value') }}</label>
 										<input class="form-control" id="installment_value" :value="parseFloat(form.forward_price_total / form.installment_number).toFixed(2)" type="number" disabled />
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<div class="form-group">
-										<label for="expiration_date">{{ $t('expiration_date') }}</label>
-										<input class="form-control" id="expiration_date" v-model="form.expiration_date" type="datetime-local" />
+										<label for="art">{{ $t('art') }}</label>
+										<input class="form-control" v-model="form.art" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="discount">{{ $t('discount') }}</label>
 										<input class="form-control" v-model="form.discount" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="cash_price">{{ $t('cash_price') }}</label>
+										<input class="form-control" id="cash_price" type="text" :value="this.form.cash_price" disabled />
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="forward_price">{{ $t('forward_price') }}</label>
+										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
+									</div>
+								</div>
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="cash_price_total">{{ $t('cash_price_total') }}</label>
 										<input class="form-control" id="cash_price_total" type="text" :value="this.form.cash_price_total" disabled />
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="forward_price_total">{{ $t('forward_price_total') }}</label>
 										<input class="form-control" id="forward_price_total" type="text" :value="this.form.forward_price_total" disabled />
@@ -245,7 +231,7 @@
 					<div class="form-group mb-3">
 						<label for="new_equipment">{{ $t('equipment') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="new_equipment" v-model="newEquipment">
+							<select class="form-control custom-select" id="new_equipment" v-model="newEquipment">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(equipment, i) in this.equipments" :key="i">
 									{{ equipment }}
@@ -278,6 +264,7 @@
 	import Card from '../../../components/Card/Card'
 	import FloatCard from '../../../components/FloatCard/FloatCard'
 	// BUDGET COMPONENTS
+	import Client from '../Client/Client.vue'
 	import Dimensions from '../Dimenions/Dimension'
 	import Filters from '../Equipments/Filters'
 	import Engines from '../Equipments/Engines'
@@ -298,7 +285,7 @@
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Card, FloatCard, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
+		components: { Form, Alert, Card, FloatCard, Client, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
 		data() {
 			return {
 				form: {
@@ -342,7 +329,8 @@
 					Budgets.getBudget(this.id, (result) => {
 						this.form = Object.assign({}, result.data)
 						if (result.data) {
-							this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
+							this.form.expiration_date = Methods.fixSequelizeOnlyDate(this.form.expiration_date)
+							console.log(this.form.expiration_date)
 							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
 							this.changedDimension()
@@ -355,6 +343,9 @@
 					this.form.payment = Object.keys(this.payments)[0]
 					this.form.status = Object.keys(this.status)[0]
 					this.form.layout = Object.keys(this.layouts)[0]
+					setTimeout(() => {
+						this.changeLayout()
+					}, 500)
 				}
 				Logists.getByToken((result) => {
 					this.logist = result.data
@@ -397,6 +388,7 @@
 				}
 				this.reloadEquipments()
 			},
+			changedClient() {},
 			changeEquipment(equipment) {
 				if (equipment && equipment.engine && equipment.lid) {
 					// 	const index = this.form.equipments[equipment.index].index
