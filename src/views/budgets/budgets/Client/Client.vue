@@ -94,7 +94,8 @@
 				this.reload()
 			} else {
 				if (this.form.clients.sessions) {
-					this.form.clients.mail = this.form.clients.sessions.mail
+					const mail = Object.assign({}, { mail: this.form.clients.sessions.mail })
+					this.form.clients.mail = mail.mail
 				}
 			}
 		},
