@@ -41,9 +41,9 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
-					<div class="form-group mb-3">
+					<div class="form-group">
 						<label for="layout">{{ $t('layout') }}</label>
-						<div class="input-group mb-3">
+						<div class="input-group">
 							<select class="form-control custom-select" id="layout" v-model="form.layout" @change="changeLayout">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
@@ -54,9 +54,9 @@
 					</div>
 				</div>
 				<div class="col-sm-3">
-					<div class="form-group mb-3">
+					<div class="form-group">
 						<label for="status">{{ $t('status') }}</label>
-						<div class="input-group mb-3">
+						<div class="input-group">
 							<select class="form-control custom-select" id="status" v-model="form.status">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(s, i) in this.status" :key="i">
@@ -77,30 +77,13 @@
 				<div class="col-sm-12 pt-2">
 					<Client :form="this.form" @changed="changedClient" />
 				</div>
-				<!-- <div class="col-sm-6">
-					<div class="form-group mb-3 row align-items-md-end">
-						<div class="col-sm-9">
-							<label for="client_id">{{ $t('client') }}</label>
-							<div class="input-group mb-3">
-								<select class="form-control custom-select" id="client_id" v-model="form.client_id">
-									<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
-										{{ client.name }}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-sm-3 mb-3">
-							<button class="btn btn-primary" for="client">{{ $t('new_client') }}</button>
-						</div>
-					</div>
-				</div> -->
 			</div>
-			<div class="row" v-if="this.id">
-				<div class="col-sm-12 pt-2">
+			<div class="row">
+				<div class="col-sm-12 pt-4">
 					<Dimensions :form="this.form" @changed="changedDimension" />
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-4">
 					<Card class="card" v-if="this.form">
 						<div class="card-header">
@@ -150,12 +133,12 @@
 					</Card>
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-4">
 					<ManPower :form="this.form" :layout="this.form.layout" :logist="this.logist" v-if="this.form" @change="changedValues" />
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-4">
 					<div class="card" v-if="this.form">
 						<div class="card-header">
@@ -360,6 +343,9 @@
 					this.form.payment = Object.keys(this.payments)[0]
 					this.form.status = Object.keys(this.status)[0]
 					this.form.layout = Object.keys(this.layouts)[0]
+					setTimeout(() => {
+						this.changeLayout()
+					}, 500)
 				}
 				Logists.getByToken((result) => {
 					this.logist = result.data

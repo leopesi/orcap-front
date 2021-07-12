@@ -47,8 +47,10 @@
 				this.manpowers = Layouts[this.layout] ? Layouts[this.layout].manpowers : []
 				for (const i in this.manpowers) {
 					if (this.manpowers[i] != 'art') {
-						const value = parseFloat(this.form[this.manpowers[i]])
-						if (isNaN(value) || value <= 0) this.form[this.manpowers[i]] = this.logist[this.manpowers[i]]
+						if (this.form[this.manpowers[i]]) {
+							const value = parseFloat(this.form[this.manpowers[i]])
+							if (isNaN(value) || value <= 0) this.form[this.manpowers[i]] = this.logist[this.manpowers[i]]
+						}
 					}
 				}
 			},
