@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<Form @save="save" v-if="this.token">
+		<Form @save="save" v-if="this.token || this.form">
 			<div slot="title" v-if="!this.token">
 				{{ $t('title') }}
 			</div>
@@ -78,20 +78,28 @@
 			load() {
 				if (this.token) {
 					Logists.getByToken((result) => {
-						this.form = {
-							id: result.data.id,
-							name: result.data.name,
-							document: result.data.document,
-							phone: result.data.phone,
+						if (result && result.data) {
+							this.form = {
+								id: result.data.id,
+								name: result.data.name,
+								document: result.data.document,
+								phone: result.data.phone,
+							}
+						} else {
+							this.form = {}
 						}
 					})
 				} else {
 					Logists.get(this.id, (result) => {
-						this.form = {
-							id: result.data.id,
-							mail: result.data.sessions ? result.data.sessions.mail : '',
-							name: result.data.name,
-							phone: result.data.phone,
+						if (result && result.data) {
+							this.form = {
+								id: result.data.id,
+								mail: result.data.sessions ? result.data.sessions.mail : '',
+								name: result.data.name,
+								phone: result.data.phone,
+							}
+						} else {
+							this.form = {}
 						}
 					})
 				}
