@@ -11,12 +11,6 @@
 						<input class="form-control" id="id" v-model="form.clients.id" type="text" disabled />
 					</div>
 				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="name">{{ $t('name') }}</label>
-						<input class="form-control" id="name" v-model="form.clients.name" type="text" />
-					</div>
-				</div>
 				<div class="col-sm-6"></div>
 			</div>
 			<div class="row">
@@ -38,13 +32,13 @@
 						<input class="form-control" id="mail" v-model="form.clients.mail" type="text" />
 					</div>
 				</div>
-				<div class="col-sm-6" v-if="this.form.client_id">
+				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="name">{{ $t('name') }}</label>
 						<input class="form-control" id="name" v-model="form.clients.name" type="text" />
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<!-- <div class="col-sm-6">
 					<div class="form-group">
 						<label for="address">{{ $t('address') }}</label>
 						<input class="form-control" id="address" v-model="form.clients.address" type="text" />
@@ -67,7 +61,7 @@
 						<label for="state">{{ $t('state') }}</label>
 						<input class="form-control" id="state" v-model="form.clients.state" type="text" />
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</Card>
@@ -107,6 +101,7 @@
 			getClientByDocument(e) {
 				if (this.form.clients) {
 					Clients.getClientByDocument(this.form.clients.document, (result) => {
+						console.log(result)
 						const oldValue = Object.assign({}, { value: e.target.value })
 						if (result.data && result.data[0]) {
 							this.form.clients = Object.assign({}, result.data[0])

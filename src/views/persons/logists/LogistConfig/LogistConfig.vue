@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<Form @save="save" v-if="this.token">
+		<Form @save="save" v-if="this.token && this.form">
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
@@ -10,7 +10,7 @@
 						<label for="brand_filter_id">{{ $t('brand_filter_id') }}</label>
 						<div class="input-group mb-3">
 							<select class="form-control custom-select" id="brand_filter_id" v-model="form.brand_filter_id">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
+								{{ this.brands }}
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}
 								</option>
@@ -338,7 +338,7 @@
 				number_by_financial_down_payment: 0,
 				by_financial_down_payment: [],
 				token: localStorage.token,
-				brands: {},
+				brands: null,
 				alert: {},
 			}
 		},
@@ -351,7 +351,6 @@
 				Brands.list((brands) => {
 					Logists.getByToken((result) => {
 						this.form = result.data
-
 						this.installment_credit_card = JSON.parse(result.data.installment_credit_card)
 						if (!this.installment_credit_card) this.installment_credit_card = []
 						this.number_installment_credit_card = this.installment_credit_card.length
@@ -367,9 +366,8 @@
 						this.by_financial_down_payment = JSON.parse(result.data.by_financial_down_payment)
 						if (!this.by_financial_down_payment) this.by_financial_down_payment = []
 						this.number_by_financial_down_payment = this.by_financial_down_payment.length
-
-						this.brands = brands.data
 					})
+					this.brands = brands.data
 				})
 			},
 			save() {
