@@ -28,7 +28,6 @@ export default {
 		axios.post('/budgets/', data)
 		.then(response => {
 			if (response && response.data) {
-				console.log(response.data)
 				callback(response.data)
 			} else {
 				callback({})

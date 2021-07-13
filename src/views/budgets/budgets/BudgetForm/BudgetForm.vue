@@ -330,7 +330,6 @@
 						this.form = Object.assign({}, result.data)
 						if (result.data) {
 							this.form.expiration_date = Methods.fixSequelizeOnlyDate(this.form.expiration_date)
-							console.log(this.form.expiration_date)
 							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
 							this.changedDimension()
