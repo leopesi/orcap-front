@@ -66,14 +66,14 @@
 					Providers.update(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Marca',
-							message: result.status,
+							message: result.status + '<br/>' + result.error,
 						}
 					})
 				} else {
 					Providers.insert(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Marca',
-							message: result.status,
+							message: result.status + '<br/>' + result.error,
 						}
 						this.id = result.data.id
 						this.form.id = result.data.id
