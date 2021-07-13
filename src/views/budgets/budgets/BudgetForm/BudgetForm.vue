@@ -325,6 +325,7 @@
 		},
 		methods: {
 			load() {
+				this.form.clients = {}
 				if (this.id) {
 					Budgets.getBudget(this.id, (result) => {
 						this.form = Object.assign({}, result.data)
@@ -361,7 +362,7 @@
 					Budgets.updateBudget(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Orçamento',
-							message: result.status,
+							message: JSON.stringify(result),
 						}
 					})
 				} else {
@@ -374,6 +375,10 @@
 						this.form.createdAt = Methods.fixSequelizeDate(result.data.createdAt)
 						this.changedDimension()
 						this.changeLayout()
+						this.alert = {
+							title: 'Novo Orçamento',
+							message: result.status,
+						}
 					})
 				}
 			},
