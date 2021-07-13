@@ -44,7 +44,7 @@
 					</div>
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="perimeter">{{ $t('perimeter') }}</label>
+							<label for="perimeter">{{ $t('perimeter') }} *</label>
 							<input class="form-control" id="perimeter" v-model="form.perimeter" step="0.01" type="number" />
 						</div>
 					</div>
@@ -56,25 +56,25 @@
 					</div>
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="m2_wall">{{ $t('m2_wall') }}</label>
+							<label for="m2_wall">{{ $t('m2_wall') }} *</label>
 							<input class="form-control" id="m2_wall" v-model="form.m2_wall" type="number" step="0.01" />
 						</div>
 					</div>
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="m2_facial">{{ $t('m2_facial') }}</label>
+							<label for="m2_facial">{{ $t('m2_facial') }} *</label>
 							<input class="form-control" id="m2_facial" v-model="form.m2_facial" type="number" step="0.01" />
 						</div>
 					</div>
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="m2_total">{{ $t('m2_total') }}</label>
+							<label for="m2_total">{{ $t('m2_total') }} *</label>
 							<input class="form-control" id="m2_total" v-model="form.m2_total" type="number" step="0.01" />
 						</div>
 					</div>
 					<div class="col-sm-2">
 						<div class="form-group">
-							<label for="m3_total">{{ $t('m3_total') }}</label>
+							<label for="m3_total">{{ $t('m3_total') }} *</label>
 							<input class="form-control" id="m3_total" v-model="form.m3_total" type="number" step="0.01" />
 						</div>
 					</div>
@@ -133,13 +133,13 @@
 					</div>
 					<div class="col-sm-2" v-if="form.beach">
 						<div class="form-group">
-							<label for="beach_m2_wall">{{ $t('beach_m2_wall') }}</label>
+							<label for="beach_m2_wall">{{ $t('beach_m2_wall') }} *</label>
 							<input class="form-control" id="beach_m2_wall" v-model="form.beach_m2_wall" type="number" step="0.01" @keyup="calculate" />
 						</div>
 					</div>
 					<div class="col-sm-2" v-if="form.beach">
 						<div class="form-group">
-							<label for="beach_perimeter">{{ $t('beach_perimeter') }}</label>
+							<label for="beach_perimeter">{{ $t('beach_perimeter') }} *</label>
 							<input class="form-control" id="beach_perimeter" v-model="form.beach_perimeter" type="number" step="0.01" @keyup="calculate" />
 						</div>
 					</div>
@@ -175,6 +175,8 @@
 			calculate() {
 				const length = parseFloat(this.form.length)
 				const width = parseFloat(this.form.width)
+				const initial_depth = isNaN(parseFloat(this.form.initial_depth)) ? 0 : parseFloat(this.form.initial_depth)
+				const final_depth = isNaN(parseFloat(this.form.final_depth)) ? 0 : parseFloat(this.form.final_depth)
 				const medium_depth = parseFloat(this.form.medium_depth)
 				const beach_length = isNaN(parseFloat(this.form.beach_length)) ? 0 : parseFloat(this.form.beach_length)
 				const beach_width = isNaN(parseFloat(this.form.beach_width)) ? 0 : parseFloat(this.form.beach_width)
@@ -186,6 +188,7 @@
 				const m2_facial = length * width + beach_length * beach_width
 				const m2_total = m2_wall + beach_m2_wall + m2_facial
 				const m3_total = length * width * medium_depth + beach_length * beach_width * beach_medium_depth
+				this.form.medium_depth = parseFloat((initial_depth + final_depth) / 2).toFixed(2)
 				this.form.perimeter = parseFloat(perimeter).toFixed(2)
 				this.form.m2_wall = parseFloat(m2_wall).toFixed(2)
 				this.form.beach_perimeter = parseFloat(beach_perimeter).toFixed(2)
