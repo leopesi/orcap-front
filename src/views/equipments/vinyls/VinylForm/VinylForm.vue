@@ -83,11 +83,12 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
+		<Alert :title="this.alert.title" :message="this.alert.message" @close="closeAlert" />
 	</div>
 </template>
 
 <script>
+	// import Methods from '../../../../helpers/methods'
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Vinyls from '../../../../controllers/equipments/vinyls'
@@ -159,6 +160,11 @@
 						window.location.hash = 'vinyls/' + result.data.id
 					})
 				}
+			},
+			closeAlert() {
+				// FAZER DEPOIS, QUANDO TIVER TRATADO O STATUS COMO SUCCESS
+				// Methods.openPage(this, 'vinyls')
+				this.alert = {}
 			},
 		},
 	}
