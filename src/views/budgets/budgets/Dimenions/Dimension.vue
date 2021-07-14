@@ -101,7 +101,7 @@
 					<div class="col-sm-2" v-if="this.showSteps == 'true'">
 						<div class="form-group">
 							<label for="number_steps">{{ $t('number_steps') }}</label>
-							<input class="form-control" id="number_steps" v-model="form.number_steps" type="number"  step="1"/>
+							<input class="form-control" id="number_steps" v-model="form.number_steps" type="number" step="1" />
 						</div>
 					</div>
 				</div>
@@ -182,6 +182,7 @@
 				const beach_width = isNaN(parseFloat(this.form.beach_width)) ? 0 : parseFloat(this.form.beach_width)
 				const beach_medium_depth = isNaN(parseFloat(this.form.beach_medium_depth)) ? 0 : parseFloat(this.form.beach_medium_depth)
 				const perimeter = length * 2 + width * 2 - beach_length
+				const sidewalk_width = isNaN(parseFloat(this.form.sidewalk_width)) ? 0 : parseFloat(this.form.sidewalk_width)
 				const m2_wall = perimeter * medium_depth + (medium_depth - beach_medium_depth) * beach_length
 				const beach_perimeter = beach_length + beach_width * 2
 				const beach_m2_wall = beach_perimeter * beach_medium_depth
@@ -190,6 +191,8 @@
 				const m3_total = length * width * medium_depth + beach_length * beach_width * beach_medium_depth
 				this.form.medium_depth = parseFloat((initial_depth + final_depth) / 2).toFixed(2)
 				this.form.perimeter = parseFloat(perimeter).toFixed(2)
+				// (Perimetro * Largura da Calçada) + ((Largura da Calçada * Largura da Calçada) * 4)
+				this.form.sidewalk_area = (perimeter + beach_perimeter) * sidewalk_width + sidewalk_width * sidewalk_width * 4
 				this.form.m2_wall = parseFloat(m2_wall).toFixed(2)
 				this.form.beach_perimeter = parseFloat(beach_perimeter).toFixed(2)
 				this.form.beach_m2_wall = parseFloat(beach_m2_wall).toFixed(2)
