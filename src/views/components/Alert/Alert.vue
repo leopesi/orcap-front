@@ -19,11 +19,11 @@
 				<div class="modal-body">
 					{{ this.message }}
 				</div>
-				<div class="modal-footer">
+				<!-- <div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close">
 						{{ $t('close') }}
 					</button>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 	import './style.css'
 	export default {
 		name: 'Alert',
-		props: { title: String, message: String },
+		props: { title: String, message: String, status: String },
 		i18n: { messages },
 		data() {
 			return {
@@ -51,6 +51,10 @@
 						this.keyUp(e)
 					}
 					document.addEventListener('keyup', this.eventListener)
+					setTimeout(() => {
+						// FAZER DEPOIS, QUANDO TIVER TRATADO O STATUS COMO SUCCESS
+						// if (this.status == 'success') this.$emit('close')
+					}, 1000)
 				} else {
 					this.show = false
 					document.removeEventListener('keyup', this.eventListener)

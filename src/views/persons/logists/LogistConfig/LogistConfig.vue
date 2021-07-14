@@ -10,7 +10,9 @@
 						<label for="brand_filter_id">{{ $t('brand_filter_id') }}</label>
 						<div class="input-group mb-3">
 							<select class="form-control custom-select" id="brand_filter_id" v-model="form.brand_filter_id">
-								{{ this.brands }}
+								{{
+									this.brands
+								}}
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}
 								</option>
@@ -148,28 +150,25 @@
 											v-model="number_installment_credit_card"
 											type="number"
 											@keyup="installment_credit_card = changeInstallment($event, installment_credit_card)"
+											@change="installment_credit_card = changeInstallment($event, installment_credit_card)"
 										/>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
-									<table class="table">
-										<tr v-for="i in parseInt(installment_credit_card.length / 2)" :key="i">
-											<td>
-												{{ parseInt(i * 2) - 1 }}
-											</td>
-											<td>
-												<input class="form-control" v-model="installment_credit_card[parseInt(i * 2) - 2]" type="number" />
-											</td>
-											<td>
-												{{ parseInt(i * 2) }}
-											</td>
-											<td>
-												<input class="form-control" v-model="installment_credit_card[parseInt(i * 2) - 1]" type="number" />
-											</td>
-										</tr>
-									</table>
+									<div class="row">
+										<div class="col-sm-3" v-for="i in parseInt(installment_credit_card.length)" :key="i">
+											<div class="row pb-4 align-items-center">
+												<div class="col-sm-2 text-right px-0">
+													<span class="">{{ parseInt(i) }}°</span>
+												</div>
+												<div class="col-sm-8">
+													<input class="form-control" v-model="installment_credit_card[parseInt(i)]" type="number" />
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -188,28 +187,31 @@
 								<div class="col-sm-6">
 									<div class="form-group mb-3">
 										<label for="number_by_logist">{{ $t('number_installments') }}</label>
-										<input class="form-control" id="number_by_logist" type="number" v-model="number_by_logist" @keyup="by_logist = changeInstallment($event, by_logist)" />
+										<input
+											class="form-control"
+											id="number_by_logist"
+											type="number"
+											v-model="number_by_logist"
+											@keyup="by_logist = changeInstallment($event, by_logist)"
+											@change="by_logist = changeInstallment($event, by_logist)"
+										/>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
-									<table class="table">
-										<tr v-for="i in parseInt(by_logist.length / 2)" :key="i">
-											<td>
-												{{ parseInt(i * 2) - 1 }}
-											</td>
-											<td>
-												<input class="form-control" type="number" v-model="by_logist[parseInt(i * 2) - 2]" />
-											</td>
-											<td>
-												{{ parseInt(i * 2) }}
-											</td>
-											<td>
-												<input class="form-control" type="number" v-model="by_logist[parseInt(i * 2) - 1]" />
-											</td>
-										</tr>
-									</table>
+									<div class="row">
+										<div class="col-sm-3" v-for="i in parseInt(by_logist.length)" :key="i">
+											<div class="row pb-4 align-items-center">
+												<div class="col-sm-2 text-right px-0">
+													<span class="">{{ parseInt(i) }}°</span>
+												</div>
+												<div class="col-sm-8">
+													<input class="form-control" v-model="by_logist[parseInt(i)]" type="number" />
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -228,28 +230,31 @@
 								<div class="col-sm-6">
 									<div class="form-group mb-3">
 										<label for="number_by_financial">{{ $t('number_installments') }}</label>
-										<input class="form-control" id="number_by_financial" type="number" v-model="number_by_financial" @keyup="by_financial = changeInstallment($event, by_financial)" />
+										<input
+											class="form-control"
+											id="number_by_financial"
+											type="number"
+											v-model="number_by_financial"
+											@keyup="by_financial = changeInstallment($event, by_financial)"
+											@change="by_financial = changeInstallment($event, by_financial)"
+										/>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
-									<table class="table">
-										<tr v-for="i in parseInt(by_financial.length / 2)" :key="i">
-											<td>
-												{{ parseInt(i * 2) - 1 }}
-											</td>
-											<td>
-												<input class="form-control" type="number" v-model="by_financial[parseInt(i * 2) - 2]" />
-											</td>
-											<td>
-												{{ parseInt(i * 2) }}
-											</td>
-											<td>
-												<input class="form-control" type="number" v-model="by_financial[parseInt(i * 2) - 1]" />
-											</td>
-										</tr>
-									</table>
+									<div class="row">
+										<div class="col-sm-3" v-for="i in parseInt(by_financial.length)" :key="i">
+											<div class="row pb-4 align-items-center">
+												<div class="col-sm-2 text-right px-0">
+													<span class="">{{ parseInt(i) }}°</span>
+												</div>
+												<div class="col-sm-8">
+													<input class="form-control" v-model="by_financial[parseInt(i)]" type="number" />
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -274,28 +279,25 @@
 											type="number"
 											v-model="number_by_financial_down_payment"
 											@keyup="by_financial_down_payment = changeInstallment($event, by_financial_down_payment)"
+											@change="by_financial_down_payment = changeInstallment($event, by_financial_down_payment)"
 										/>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
-									<table class="table">
-										<tr v-for="i in parseInt(by_financial_down_payment.length / 2)" :key="i">
-											<td>
-												{{ parseInt(i * 2) - 1 }}
-											</td>
-											<td>
-												<input class="form-control" type="number" v-model="by_financial_down_payment[parseInt(i * 2) - 2]" />
-											</td>
-											<td>
-												{{ parseInt(i * 2) }}
-											</td>
-											<td>
-												<input class="form-control" type="number" v-model="by_financial_down_payment[parseInt(i * 2) - 1]" />
-											</td>
-										</tr>
-									</table>
+									<div class="row">
+										<div class="col-sm-3" v-for="i in parseInt(by_financial_down_payment.length)" :key="i">
+											<div class="row pb-4 align-items-center">
+												<div class="col-sm-2 text-right px-0">
+													<span class="">{{ parseInt(i) }}°</span>
+												</div>
+												<div class="col-sm-8">
+													<input class="form-control" v-model="by_financial_down_payment[parseInt(i)]" type="number" />
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
