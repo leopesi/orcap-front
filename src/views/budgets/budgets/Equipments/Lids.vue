@@ -1,6 +1,15 @@
 <template>
 	<div class="card" v-if="this.show">
-		<div class="card-header">{{ $t('lid') }}</div>
+		<div class="card-header">
+			<div class="row">
+				<div class="col-sm-11">
+					{{ $t('lid') }}
+				</div>
+				<div class="btn col-sm-1 text-right" @click="$emit('delete')">
+					X
+				</div>
+			</div>
+		</div>
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-12">

@@ -8,7 +8,7 @@
 	top: 0px;
 	right: 0px;
 	width: 100%;
-	height: 32px;
+	height: 50px;
 	margin: 8px;
     border: 0;
     background-color: transparent;
@@ -16,7 +16,7 @@
 	text-align: right;
 }
 
-.card-visibility .card-header {
+.card-visibility .card-header:has(.card-visibility-button) * {
 	cursor: pointer;
 	width: 100%;
 }
