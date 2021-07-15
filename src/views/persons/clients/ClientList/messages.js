@@ -1,9 +1,10 @@
-
 export default {
-	'pt-br': {
-		title: 'Lista de Clientes',
-		name: 'Cliente',
-		sessions: 'Email',
-		phone: 'Telefone',
-	}
+  'pt-br': {
+    title: 'Lista de Clientes',
+    name: 'Cliente',
+    sessions: 'Email',
+    phone: 'Telefone',
+    city: 'Cidade',
+    neighborhood: 'Bairro',
+  },
 }
