@@ -1,6 +1,7 @@
 export default {
 	'pt-br': {
 		title: 'Configurações da Loja',
+		brands: 'Marcas Padrões',
 		brand_filter_id: 'Marca do Filtro',
 		brand_blanket_id: 'Marca da Manta',
 		brand_profile_id: 'Marca do Perfil',

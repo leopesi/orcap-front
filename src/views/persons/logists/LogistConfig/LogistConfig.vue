@@ -1,10 +1,23 @@
 <template>
 	<div class="home">
-		<Form @save="save" v-if="this.token && this.form">
-			<div slot="title">
-				{{ $t('title') }}
+		<div @save="save" v-if="this.token && this.form">
+			<div class="card">
+				<div class="card-header">{{ $t('title') }}</div>
+				<ul class="nav nav-pills pt-2">
+					<li class="nav-item">
+						<a :class="'nav-link ' + (this.actualTab == 'brands' ? ' active' : '')" aria-current="page" @click="actualTab = 'brands'">{{ $t('brands') }}</a>
+					</li>
+					<li class="nav-item">
+						<a :class="'nav-link ' + (this.actualTab == 'manpower' ? ' active' : '')" aria-current="page" @click="actualTab = 'manpower'">{{ $t('man_power') }}</a>
+					</li>
+				</ul>
 			</div>
 			<div class="row">
+				<div class="col-sm-12">
+					<BrandsTab :token="this.token" :form="this.form" :brands="this.brands" v-if="this.actualTab == 'brands'" />
+				</div>
+			</div>
+			<!-- <div class="row">
 				<div class="col-sm-6">
 					<div class="form-group mb-3">
 						<label for="brand_filter_id">{{ $t('brand_filter_id') }}</label>
@@ -25,7 +38,6 @@
 						<label for="brand_blanket_id">{{ $t('brand_blanket_id') }}</label>
 						<div class="input-group mb-3">
 							<select class="form-control custom-select" id="brand_blanket_id" v-model="form.brand_blanket_id">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}
 								</option>
@@ -40,7 +52,6 @@
 						<label for="brand_profile_id">{{ $t('brand_profile_id') }}</label>
 						<div class="input-group mb-3">
 							<select class="form-control custom-select" id="brand_profile_id" v-model="form.brand_profile_id">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}
 								</option>
@@ -53,7 +64,6 @@
 						<label for="brand_vinyl_id">{{ $t('brand_vinyl_id') }}</label>
 						<div class="input-group mb-3">
 							<select class="form-control custom-select" id="brand_vinyl_id" v-model="form.brand_vinyl_id">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="brand.id" v-for="(brand, i) in this.brands" :key="i">
 									{{ brand.name }}
 								</option>
@@ -302,27 +312,24 @@
 							</div>
 						</div>
 					</Card>
-				</div>
-			</div>
-		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
+				</div> 
+			</div>-->
+		</div>
 	</div>
 </template>
 
 <script>
-	import Global from '../../../../helpers/global'
-	import Form from '../../../components/Form/Form'
-	import Card from '../../../components/Card/Card'
-	import Alert from '../../../components/Alert/Alert'
 	import Logists from '../../../../controllers/persons/logists'
 	import Brands from '../../../../controllers/basics/brands'
+
+	import BrandsTab from './Tabs/Brands.vue'
 
 	import messages from './messages'
 	export default {
 		name: 'LogistForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Card },
+		components: { BrandsTab },
 		data() {
 			return {
 				form: {
@@ -341,7 +348,7 @@
 				by_financial_down_payment: [],
 				token: localStorage.token,
 				brands: null,
-				alert: {},
+				actualTab: 'brands',
 			}
 		},
 		mounted() {
@@ -377,14 +384,12 @@
 				this.form.by_logist = JSON.stringify(this.by_logist)
 				this.form.by_financial = JSON.stringify(this.by_financial)
 				this.form.by_financial_down_payment = JSON.stringify(this.by_financial_down_payment)
-				Logists.update(this.form, (result) => {
-					this.alert = {
-						title: 'Alteração dos Meus Dados',
-						message: result.status,
-					}
-					localStorage.userName = result.data.name
-					Global.$emit('change-header-name', result.data.name)
-				})
+				// Logists.update(this.form, (result) => {
+				// 	this.alert = {
+				// 		title: 'Alteração dos Meus Dados',
+				// 		message: result.status,
+				// 	}
+				// })
 			},
 			changeInstallment(e, installment) {
 				installment = installment.slice(0, parseInt(e.target.value))
