@@ -1,5 +1,6 @@
 <template>
 	<div class="card" v-if="this.show">
+		SDSADSA
 		<div class="card-header">
 			<div class="row">
 				<div class="col-sm-11">

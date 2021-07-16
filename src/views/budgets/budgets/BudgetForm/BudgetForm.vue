@@ -520,6 +520,7 @@
 					this.form.equipments[equipment.index].discount = isNaN(parseFloat(equipment.discount)) ? 0 : parseFloat(equipment.discount)
 					this.form.equipments[equipment.index].final_price = isNaN(parseFloat(equipment.final_price)) ? 0 : parseFloat(equipment.final_price)
 				}
+				console.log(this.form.equipments)
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
