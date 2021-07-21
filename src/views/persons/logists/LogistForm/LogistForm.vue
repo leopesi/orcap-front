@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<Form @save="save" v-if="this.token || this.form">
+		<Form @save="save">
 			<div slot="title" v-if="!this.token">
 				{{ $t('title') }}
 			</div>
@@ -30,16 +30,22 @@
 				</div>
 			</div>
 			<div class="row" v-if="!this.token">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label for="mail">{{ $t('mail') }}</label>
+						<input class="form-control" id="mail" v-model="form.mail" type="text" />
+					</div>
+				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="password">{{ $t('password') }}</label>
-						<input class="form-control" id="password" v-model="form.password" type="text" />
+						<input class="form-control" id="password" v-model="form.password" type="password" />
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="repeat_password">{{ $t('repeat_password') }}</label>
-						<input class="form-control" id="repeat_password" v-model="form.repeat_password" type="text" />
+						<input class="form-control" id="repeat_password" v-model="form.repeat_password" type="password" />
 					</div>
 				</div>
 			</div>
@@ -76,51 +82,49 @@
 		},
 		methods: {
 			load() {
-				if (this.token) {
-					Logists.getByToken((result) => {
-						if (result && result.data) {
-							this.form = {
-								id: result.data.id,
-								name: result.data.name,
-								document: result.data.document,
-								phone: result.data.phone,
-							}
-						} else {
-							this.form = {}
-						}
-					})
-				} else {
+				if (this.id) {
 					Logists.get(this.id, (result) => {
-						if (result && result.data) {
+						if (result.data) {
 							this.form = {
 								id: result.data.id,
 								mail: result.data.sessions ? result.data.sessions.mail : '',
 								name: result.data.name,
 								phone: result.data.phone,
 							}
-						} else {
-							this.form = {}
+						}
+					})
+				} else if (this.token) {
+					Logists.getByToken((result) => {
+						if (result.data) {
+							this.form = {
+								id: result.data.id,
+								name: result.data.name,
+								document: result.data.document,
+								phone: result.data.phone,
+							}
 						}
 					})
 				}
 			},
 			save() {
-				if (this.form.id) {
-					Logists.update(this.form, (result) => {
-						this.alert = {
-							title: 'Alteração dos Meus Dados',
-							message: result.status,
-						}
-						localStorage.userName = result.data.name
-						Global.$emit('change-header-name', result.data.name)
-					})
-				} else {
-					Logists.insert(this.form, (result) => {
-						this.alert = {
-							title: 'Cadastro de Logista',
-							message: result.status,
-						}
-					})
+				if (this.form) {
+					if (this.form.id) {
+						Logists.update(this.form, (result) => {
+							this.alert = {
+								title: 'Alteração dos Meus Dados',
+								message: result.status,
+							}
+							localStorage.userName = result.data.name
+							Global.$emit('change-header-name', result.data.name)
+						})
+					} else if (!this.token) {
+						Logists.insert(this.form, (result) => {
+							this.alert = {
+								title: 'Cadastro de Logista',
+								message: result.status,
+							}
+						})
+					}
 				}
 			},
 		},

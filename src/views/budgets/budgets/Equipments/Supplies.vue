@@ -3,7 +3,7 @@
 		<div class="card-header">
 			<div class="row">
 				<div class="col-sm-11">
-					{{ $t('blanket') }}
+					{{ $t('supplies') }}
 				</div>
 				<div class="btn col-sm-1 text-right" @click="$emit('delete')">
 					X
@@ -14,15 +14,7 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="form-group">
-						<select class="form-control custom-select" v-model="form.equipments[index].equipment_id" @change="change">
-							<option selected>{{ $t('choose') }}</option>
-							<option :value="blanket.equipment_id" v-for="(blanket, i) in this.blankets" :key="i">
-								<span v-if="blanket && blanket.equipments">
-									{{ blanket.equipments.name }}
-								</span>
-								<span v-if="blanket && blanket.brands"> / {{ blanket.brands.name }} </span>
-							</option>
-						</select>
+						<input class="form-control" v-model="form.equipments[index].text" @change="change" />
 					</div>
 				</div>
 			</div>
@@ -42,13 +34,13 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label>{{ $t('price') }}</label>
-						<input class="form-control" type="number" v-model="form.equipments[index].price" disabled />
+						<input class="form-control" type="number" v-model="form.equipments[index].price" @change="change" />
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label>{{ $t('manpower') }}</label>
-						<input class="form-control" type="number" v-model="form.equipments[index].man_power" disabled />
+						<input class="form-control" type="number" v-model="form.equipments[index].man_power" @change="change" />
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -74,7 +66,7 @@
 
 	export default {
 		name: 'Blankets',
-		props: { index: Number, form: Object, m2_facial: Number, tax: Number },
+		props: { index: Number, form: Object, tax: Number },
 		i18n: { messages },
 		data() {
 			return {
@@ -111,30 +103,18 @@
 				this.change()
 			},
 			setData() {
-				const id = this.form.equipments[this.index].equipment_id
-				if (this.blankets[id] && this.blankets[id].equipments) {
-					const profit_margin = parseFloat(this.blankets[id].equipments.profit_margin)
-					const cost = parseFloat(this.blankets[id].equipments.cost)
-					const price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
-					const discount = parseFloat(this.form.equipments[this.index].discount)
-					const price_with_discount = price
+				const price = parseFloat(this.form.equipments[this.index].price)
+				const discount = parseFloat(this.form.equipments[this.index].discount)
+				const price_with_discount = isNaN(price) ? discount : isNaN(discount) ? price : price - discount
+				const man_power = parseFloat(this.form.equipments[this.index].man_power)
 
-					const man_power_profit_margin = parseFloat(this.blankets[id].equipments.man_power_profit_margin)
-					const man_power_cost = parseFloat(this.blankets[id].equipments.man_power_cost)
-					const man_power_price = isNaN(man_power_cost) ? 0 : man_power_cost + (man_power_cost * (isNaN(man_power_profit_margin) ? 0 : man_power_profit_margin)) / 100
-
-					this.form.equipments[this.index].cost = cost
-					this.form.equipments[this.index].profit_margin = profit_margin
-					this.form.equipments[this.index].price = price_with_discount
-					this.form.equipments[this.index].final_price = price_with_discount * this.m2_facial + (isNaN(man_power_price) ? 0 : man_power_price) - (isNaN(discount) ? 0 : discount)
-					this.form.equipments[this.index].man_power = man_power_price
-
-					this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
-					this.show = false
-					setTimeout(() => {
-						this.show = true
-					})
-				}
+				this.form.equipments[this.index].final_price = (isNaN(price_with_discount) ? 0 : price_with_discount) + (isNaN(man_power) ? 0 : man_power)
+				this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
+				
+				this.show = false
+				setTimeout(() => {
+					this.show = true
+				})
 			},
 		},
 	}

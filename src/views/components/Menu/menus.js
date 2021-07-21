@@ -21,6 +21,5 @@ export default {
 		lids: 'lids',
 		profiles: 'profiles',
 		vinyls: 'vinyls',
-	},
-	logout: 'logout',
+	}
 }

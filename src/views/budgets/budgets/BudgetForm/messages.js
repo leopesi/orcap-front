@@ -2,7 +2,7 @@ export default {
 	'pt-br': {
 		title: 'Criar um Orçamento',
 		id: 'Id',
-		new_client: 'Novo Cliente',
+		new_client: 'Novo',
 		client: 'Cliente',
 		seller: 'Vendedor',
 		payment: 'Formas de pagamento',
@@ -26,8 +26,8 @@ export default {
 		beach_width: 'Largura da Prainha',
 		beach_medium_depth: 'Profundidade Média da Prainha',
 		beach_m2_wall: 'M2 da Parede Prainha',
-		steps: 'Degraus',
-		number_steps: 'Quantidade de Degraus',
+		steps: 'Patamares',
+		number_steps: 'Quantidade de Patamares',
 		no: 'Não',
 		yes: 'Sim',
 
@@ -61,6 +61,8 @@ export default {
 		blankets: 'Mantas',
 		blanket: 'Manta',
 
+		supplies: 'Insumos',
+
 		profiles: 'Perfis',
 		profile: 'Perfil',
 
@@ -93,5 +95,15 @@ export default {
 
 		total: 'Total',
 		totals: 'Totais',
+
+		// FORM CLIENTE CAMPOS
+		document: 'CPF / CNPJ',
+		phone: 'Telefone',
+		mail: 'Email',
+		name: 'Nome',
+		address: 'Endereço',
+		complement: 'Complemento',
+		city: 'Cidade',
+		state: 'Estado',
 	},
 }

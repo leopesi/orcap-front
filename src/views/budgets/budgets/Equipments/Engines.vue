@@ -1,11 +1,20 @@
 <template>
-	<div class="card">
-		<div class="card-body" v-if="this.show">
+	<div class="card" v-if="this.show">
+		<div class="card-header">
+			<div class="row">
+				<div class="col-sm-11">
+					{{ $t('engine') }}
+				</div>
+				<div class="btn col-sm-1 text-right" @click="$emit('delete')">
+					X
+				</div>
+			</div>
+		</div>
+		<div class="card-body" v-if="form.equipments[index]">
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="form-group">
-						<label>{{ $t('engine') }}</label>
-						<select class="custom-select" v-model="form.equipments[index].equipment_id" @change="change">
+						<select class="form-control custom-select" v-model="form.equipments[index].equipment_id" @change="change">
 							<option selected>{{ $t('choose') }}</option>
 							<option :value="engine.equipment_id" v-for="(engine, i) in this.engines" :key="i">
 								<span v-if="engine && engine.equipments">
@@ -83,7 +92,9 @@
 				Equipments.getEnginesByDimension(this.dimension, (result) => {
 					this.engines = {}
 					for (const i in result.data) {
-						this.engines[result.data[i].equipment_id] = result.data[i]
+						if (result.data[i]) {
+							this.engines[result.data[i].equipment_id] = result.data[i]
+						}
 					}
 					this.change()
 					this.setData()
@@ -102,29 +113,31 @@
 				this.change()
 			},
 			setData() {
-				const id = this.form.equipments[this.index].equipment_id
-				if (this.engines[id] && this.engines[id].equipments) {
-					const profit_margin = parseFloat(this.engines[id].equipments.profit_margin)
-					const cost = parseFloat(this.engines[id].equipments.cost)
-					const price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
-					const discount = parseFloat(this.form.equipments[this.index].discount)
-					const price_with_discount = price
+				if (this.form.equipments[this.index]) {
+					const id = this.form.equipments[this.index].equipment_id
+					if (this.engines[id] && this.engines[id].equipments) {
+						const profit_margin = parseFloat(this.engines[id].equipments.profit_margin)
+						const cost = parseFloat(this.engines[id].equipments.cost)
+						const price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
+						const discount = parseFloat(this.form.equipments[this.index].discount)
+						const price_with_discount = price
 
-					const man_power_profit_margin = parseFloat(this.engines[id].equipments.man_power_profit_margin)
-					const man_power_cost = parseFloat(this.engines[id].equipments.man_power_cost)
-					const man_power_price = isNaN(man_power_cost) ? 0 : man_power_cost + (man_power_cost * (isNaN(man_power_profit_margin) ? 0 : man_power_profit_margin)) / 100
+						const man_power_profit_margin = parseFloat(this.engines[id].equipments.man_power_profit_margin)
+						const man_power_cost = parseFloat(this.engines[id].equipments.man_power_cost)
+						const man_power_price = isNaN(man_power_cost) ? 0 : man_power_cost + (man_power_cost * (isNaN(man_power_profit_margin) ? 0 : man_power_profit_margin)) / 100
 
-					this.form.equipments[this.index].cost = cost
-					this.form.equipments[this.index].profit_margin = profit_margin
-					this.form.equipments[this.index].price = price_with_discount
-					this.form.equipments[this.index].final_price = price_with_discount + (isNaN(man_power_price) ? 0 : man_power_price) - (isNaN(discount) ? 0 : discount)
-					this.form.equipments[this.index].man_power = man_power_price
+						this.form.equipments[this.index].cost = cost
+						this.form.equipments[this.index].profit_margin = profit_margin
+						this.form.equipments[this.index].price = price_with_discount
+						this.form.equipments[this.index].final_price = price_with_discount + (isNaN(man_power_price) ? 0 : man_power_price) - (isNaN(discount) ? 0 : discount)
+						this.form.equipments[this.index].man_power = man_power_price
 
-					this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
-					this.show = false
-					setTimeout(() => {
-						this.show = true
-					})
+						this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
+						this.show = false
+						setTimeout(() => {
+							this.show = true
+						})
+					}
 				}
 			},
 		},

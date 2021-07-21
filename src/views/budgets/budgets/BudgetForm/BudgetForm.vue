@@ -27,25 +27,9 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group mb-3">
-						<label for="client_id">{{ $t('client') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="client_id" v-model="form.client_id">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
-								<option :value="client.id" v-for="(client, i) in this.clients" :key="i">
-									{{ client.name }}
-								</option>
-							</select>
-							<div class="input-group-append">
-								<label class="input-group-text" for="client">{{ $t('new_client') }}</label>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group mb-3">
 						<label for="seller_id">{{ $t('seller') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="seller_id" v-model="form.seller_id">
+							<select class="form-control custom-select" id="seller_id" v-model="form.seller_id">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="seller.id" v-for="(seller, i) in this.sellers" :key="i">
 									{{ seller.name }}
@@ -56,11 +40,24 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="layout">{{ $t('layout') }}</label>
+						<div class="input-group">
+							<select class="form-control custom-select" id="layout" v-model="form.layout" @change="changeLayout">
+								<!-- <option selected>{{ $t('choose') }}</option> -->
+								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
+									{{ layout.name }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
 				<div class="col-sm-3">
-					<div class="form-group mb-3">
+					<div class="form-group">
 						<label for="status">{{ $t('status') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="status" v-model="form.status">
+						<div class="input-group">
+							<select class="form-control custom-select" id="status" v-model="form.status">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(s, i) in this.status" :key="i">
 									{{ s }}
@@ -70,42 +67,64 @@
 					</div>
 				</div>
 				<div class="col-sm-3">
-					<div class="form-group mb-3">
-						<label for="layout">{{ $t('layout') }}</label>
-						<div class="input-group mb-3">
-							<select class="custom-select" id="layout" v-model="form.layout" @change="changeLayout">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
-								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
-									{{ layout.name }}
-								</option>
-							</select>
-						</div>
+					<div class="form-group">
+						<label for="expiration_date">{{ $t('expiration_date') }}</label>
+						<input class="form-control" id="expiration_date" v-model="form.expiration_date" type="date" />
 					</div>
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-2">
+					<Client :form="this.form" @changed="changedClient" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 pt-4">
 					<Dimensions :form="this.form" @changed="changedDimension" />
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-4">
 					<Card class="card" v-if="this.form">
 						<div class="card-header">
 							{{ $t('equipments') }}
 						</div>
-						<div class="card-body">
+						<div class="">
 							<div class="row" v-if="this.form">
-								<div class="col-sm-6 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
-									<Filters :index="equipment.index" :form="form" :dimension="form.dimension" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'filters'" />
-									<Engines :index="equipment.index" :form="form" :dimension="form.dimension" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'engines'" />
-									<Lids :index="equipment.index" :form="form" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" v-if="equipment.type == 'lids'" />
+								<div class="col-sm-4 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
+									<Filters
+										:index="equipment.index"
+										:form="form"
+										:dimension="form.dimension"
+										:tax="parseFloat(form.installment_tax)"
+										@changed="changeEquipment"
+										@delete="deleteEquipment(equipment.index)"
+										v-if="equipment.type == 'filters'"
+									/>
+									<Engines
+										:index="equipment.index"
+										:form="form"
+										:dimension="form.dimension"
+										:tax="parseFloat(form.installment_tax)"
+										@changed="changeEquipment"
+										@delete="deleteEquipment(equipment.index)"
+										v-if="equipment.type == 'engines'"
+									/>
+									<Lids
+										:index="equipment.index"
+										:form="form"
+										:tax="parseFloat(form.installment_tax)"
+										@changed="changeEquipment"
+										@delete="deleteEquipment(equipment.index)"
+										v-if="equipment.type == 'lids'"
+									/>
 									<Blankets
 										:index="equipment.index"
 										:form="form"
 										:m2_facial="parseFloat(form.m2_facial)"
 										:tax="parseFloat(form.installment_tax)"
 										@changed="changeEquipment"
+										@delete="deleteEquipment(equipment.index)"
 										v-if="equipment.type == 'blankets'"
 									/>
 									<Profiles
@@ -114,6 +133,7 @@
 										:perimeter="parseFloat(form.perimeter)"
 										:tax="parseFloat(form.installment_tax)"
 										@changed="changeEquipment"
+										@delete="deleteEquipment(equipment.index)"
 										v-if="equipment.type == 'profiles'"
 									/>
 									<Vinyls
@@ -122,7 +142,17 @@
 										:m2_total="parseFloat(form.m2_total)"
 										:tax="parseFloat(form.installment_tax)"
 										@changed="changeEquipment"
+										@delete="deleteEquipment(equipment.index)"
 										v-if="equipment.type == 'vinyls'"
+									/>
+									<Supplies
+										:index="equipment.index"
+										:form="form"
+										:m2_total="parseFloat(form.m2_total)"
+										:tax="parseFloat(form.installment_tax)"
+										@changed="changeEquipment"
+										@delete="deleteEquipment(equipment.index)"
+										v-if="equipment.type == 'supplies'"
 									/>
 								</div>
 							</div>
@@ -138,24 +168,24 @@
 					</Card>
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-4">
 					<ManPower :form="this.form" :layout="this.form.layout" :logist="this.logist" v-if="this.form" @change="changedValues" />
 				</div>
 			</div>
-			<div class="row" v-if="this.id">
+			<div class="row">
 				<div class="col-sm-12 pt-4">
 					<div class="card" v-if="this.form">
 						<div class="card-header">
 							{{ $t('totals') }}
 						</div>
-						<div class="card-body">
+						<div class="">
 							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-4">
 									<div class="form-group mb-3">
 										<label for="payment">{{ $t('payment') }}</label>
 										<div class="input-group mb-3">
-											<select class="custom-select" id="payment" v-model="form.payment" @change="changeTax">
+											<select class="form-control custom-select" id="payment" v-model="form.payment" @change="changeTax">
 												<!-- <option selected>{{ $t('choose') }}</option> -->
 												<option :value="i" v-for="(payment, i) in this.payments" :key="i">
 													{{ payment }}
@@ -164,70 +194,61 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="installment_number">{{ $t('installment_number') }}</label>
 										<input class="form-control" id="installment_number" v-model="form.installment_number" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="down_payment">{{ $t('down_payment') }}</label>
 										<input class="form-control" id="down_payment" v-model="form.down_payment" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="cash_price">{{ $t('cash_price') }}</label>
-										<input class="form-control" id="cash_price" type="text" :value="this.form.cash_price" disabled />
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="form-group">
-										<label for="forward_price">{{ $t('forward_price') }}</label>
-										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
-									</div>
-								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="installment_tax">{{ $t('installment_tax') }}</label>
 										<input class="form-control" id="installment_tax" v-model="form.installment_tax" type="number" disabled />
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="installment_value">{{ $t('installment_value') }}</label>
 										<input class="form-control" id="installment_value" :value="parseFloat(form.forward_price_total / form.installment_number).toFixed(2)" type="number" disabled />
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<div class="form-group">
-										<label for="expiration_date">{{ $t('expiration_date') }}</label>
-										<input class="form-control" id="expiration_date" v-model="form.expiration_date" type="datetime-local" />
+										<label for="art">{{ $t('art') }}</label>
+										<input class="form-control" v-model="form.art" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="discount">{{ $t('discount') }}</label>
 										<input class="form-control" v-model="form.discount" type="number" @keyup="changeTax" />
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="cash_price">{{ $t('cash_price') }}</label>
+										<input class="form-control" id="cash_price" type="text" :value="this.form.cash_price" disabled />
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="forward_price">{{ $t('forward_price') }}</label>
+										<input class="form-control" id="forward_price" type="text" :value="this.form.forward_price" disabled />
+									</div>
+								</div>
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="cash_price_total">{{ $t('cash_price_total') }}</label>
 										<input class="form-control" id="cash_price_total" type="text" :value="this.form.cash_price_total" disabled />
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="forward_price_total">{{ $t('forward_price_total') }}</label>
 										<input class="form-control" id="forward_price_total" type="text" :value="this.form.forward_price_total" disabled />
@@ -245,7 +266,7 @@
 					<div class="form-group mb-3">
 						<label for="new_equipment">{{ $t('equipment') }}</label>
 						<div class="input-group mb-3">
-							<select class="custom-select" id="new_equipment" v-model="newEquipment">
+							<select class="form-control custom-select" id="new_equipment" v-model="newEquipment">
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(equipment, i) in this.equipments" :key="i">
 									{{ equipment }}
@@ -278,6 +299,7 @@
 	import Card from '../../../components/Card/Card'
 	import FloatCard from '../../../components/FloatCard/FloatCard'
 	// BUDGET COMPONENTS
+	import Client from '../Client/Client.vue'
 	import Dimensions from '../Dimenions/Dimension'
 	import Filters from '../Equipments/Filters'
 	import Engines from '../Equipments/Engines'
@@ -285,6 +307,7 @@
 	import Blankets from '../Equipments/Blankets'
 	import Profiles from '../Equipments/Profiles'
 	import Vinyls from '../Equipments/Vinyls'
+	import Supplies from '../Equipments/Supplies'
 	import ManPower from '../ManPower/ManPower'
 
 	import Layouts from '../data/layouts'
@@ -298,7 +321,7 @@
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Card, FloatCard, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
+		components: { Form, Alert, Card, FloatCard, Client, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, Supplies, ManPower },
 		data() {
 			return {
 				form: {
@@ -336,18 +359,25 @@
 		mounted() {
 			this.load()
 		},
+		watch: {
+			id() {
+				this.load()
+			}	
+		},
 		methods: {
 			load() {
+				this.form.clients = {}
+				this.form.equipments = null
 				if (this.id) {
 					Budgets.getBudget(this.id, (result) => {
 						this.form = Object.assign({}, result.data)
 						if (result.data) {
-							this.form.expiration_date = Methods.fixSequelizeDate(this.form.expiration_date)
+							this.form.expiration_date = Methods.fixSequelizeOnlyDate(this.form.expiration_date)
 							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
 							this.changedDimension()
-							this.loadEquipments(result.data.equipments)
-							this.changeLayout()
+							const equipments = Object.assign({}, result.data.equipments)
+							this.loadEquipments(equipments)
 							this.changeTax()
 						}
 					})
@@ -355,6 +385,9 @@
 					this.form.payment = Object.keys(this.payments)[0]
 					this.form.status = Object.keys(this.status)[0]
 					this.form.layout = Object.keys(this.layouts)[0]
+					setTimeout(() => {
+						this.changeLayout()
+					}, 1)
 				}
 				Logists.getByToken((result) => {
 					this.logist = result.data
@@ -371,7 +404,7 @@
 					Budgets.updateBudget(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Orçamento',
-							message: result.status,
+							message: JSON.stringify(result),
 						}
 					})
 				} else {
@@ -383,7 +416,10 @@
 						this.form.updatedAt = Methods.fixSequelizeDate(result.data.updatedAt)
 						this.form.createdAt = Methods.fixSequelizeDate(result.data.createdAt)
 						this.changedDimension()
-						this.changeLayout()
+						this.alert = {
+							title: 'Novo Orçamento',
+							message: result.status,
+						}
 					})
 				}
 			},
@@ -395,8 +431,8 @@
 					final_depth: this.form.final_depth,
 					sidewalk_width: this.form.sidewalk_width,
 				}
-				this.reloadEquipments()
 			},
+			changedClient() {},
 			changeEquipment(equipment) {
 				if (equipment && equipment.engine && equipment.lid) {
 					// 	const index = this.form.equipments[equipment.index].index
@@ -417,12 +453,6 @@
 				// this.form.equipments[equipment.index].discount = equipment.discount
 				// this.form.equipments[equipment.index].final_price = equipment.final_price
 				// this.form = Object.assign({}, this.form)
-			},
-			reloadEquipments() {
-				this.showEquipments = false
-				setTimeout(() => {
-					this.showEquipments = true
-				}, 100)
 			},
 			changedValues() {
 				this.form.cash_price = 0
@@ -448,10 +478,10 @@
 				this.form.cash_price += isNaN(reserve) ? 0 : reserve
 				this.form.cash_price += isNaN(job_monitoring_fee) ? 0 : job_monitoring_fee
 
-				this.form.cash_price_total = this.form.cash_price - (isNaN(this.form.discount) ? 0 : this.form.discount) + (this.form.cash_price * (isNaN(this.form.art) ? 0 : this.form.art)) / 100
+				this.form.cash_price_total = parseFloat(this.form.cash_price - (isNaN(this.form.discount) ? 0 : this.form.discount) + (this.form.cash_price * (isNaN(this.form.art) ? 0 : this.form.art)) / 100)
 
-				this.form.cash_price = this.form.cash_price.toFixed(2)
-				this.form.cash_price_total = this.form.cash_price_total.toFixed(2)
+				this.form.cash_price = isNaN(this.form.cash_price) ? 0 : parseFloat(this.form.cash_price).toFixed(2)
+				this.form.cash_price_total = isNaN(this.form.cash_price_total) ? 0 : parseFloat(this.form.cash_price_total).toFixed(2)
 			},
 			changeTax() {
 				try {
@@ -493,18 +523,17 @@
 				}
 			},
 			loadEquipments(equipments) {
-				if (!this.form.equipments) this.form.equipments = {}
+				this.form.equipments = {}
 				for (const i in equipments) {
 					const equipment = equipments[i]
 					this.form.equipments[equipment.index] = equipment
 					this.form.equipments[equipment.index].discount = isNaN(parseFloat(equipment.discount)) ? 0 : parseFloat(equipment.discount)
 					this.form.equipments[equipment.index].final_price = isNaN(parseFloat(equipment.final_price)) ? 0 : parseFloat(equipment.final_price)
 				}
-				this.form = Object.assign({}, this.form)
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
-				if (!this.form.equipments) this.form.equipments = {}
+				this.form.equipments = {}
 				for (const i in this.layout.equipments) {
 					const type = this.layout.equipments[i]
 					let finded = false
@@ -518,7 +547,6 @@
 						this.form.equipments[index] = { type, index }
 					}
 				}
-				this.loadEquipments()
 				this.changedValues()
 			},
 			showEquipment() {
@@ -526,14 +554,19 @@
 				this.newEquipment = Object.keys(this.equipments)[0]
 			},
 			addEquipment() {
-				const index = Object.keys(this.form.equipments).length
+				const lastIndex = Object.keys(this.form.equipments)[Object.keys(this.form.equipments).length - 1]
+				const index = parseInt(lastIndex) + 1
 				const type = this.newEquipment
 				this.form.equipments[index] = { type, index }
 				if (type == 'filters') {
-					this.form.equipments[index + 1] = { type: 'engines', index: index + 1 }
-					this.form.equipments[index + 2] = { type: 'lids', index: index + 2 }
+					this.form.equipments[parseInt(index) + 1] = { type: 'engines', index: parseInt(index) + 1 }
+					this.form.equipments[parseInt(index) + 2] = { type: 'lids', index: parseInt(index) + 2 }
 				}
 				this.showAddEquipment = false
+			},
+			deleteEquipment(index) {
+				delete this.form.equipments[index]
+				this.form = Object.assign({}, this.form)
 			},
 		},
 	}
