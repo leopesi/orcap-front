@@ -145,6 +145,15 @@
 										@delete="deleteEquipment(equipment.index)"
 										v-if="equipment.type == 'vinyls'"
 									/>
+									<Supplies
+										:index="equipment.index"
+										:form="form"
+										:m2_total="parseFloat(form.m2_total)"
+										:tax="parseFloat(form.installment_tax)"
+										@changed="changeEquipment"
+										@delete="deleteEquipment(equipment.index)"
+										v-if="equipment.type == 'supplies'"
+									/>
 								</div>
 							</div>
 							<div class="row">
@@ -298,6 +307,7 @@
 	import Blankets from '../Equipments/Blankets'
 	import Profiles from '../Equipments/Profiles'
 	import Vinyls from '../Equipments/Vinyls'
+	import Supplies from '../Equipments/Supplies'
 	import ManPower from '../ManPower/ManPower'
 
 	import Layouts from '../data/layouts'
@@ -311,7 +321,7 @@
 		name: 'BudgetForm',
 		props: { id: String },
 		i18n: { messages },
-		components: { Form, Alert, Card, FloatCard, Client, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, ManPower },
+		components: { Form, Alert, Card, FloatCard, Client, Dimensions, Filters, Engines, Lids, Blankets, Profiles, Vinyls, Supplies, ManPower },
 		data() {
 			return {
 				form: {
@@ -520,7 +530,6 @@
 					this.form.equipments[equipment.index].discount = isNaN(parseFloat(equipment.discount)) ? 0 : parseFloat(equipment.discount)
 					this.form.equipments[equipment.index].final_price = isNaN(parseFloat(equipment.final_price)) ? 0 : parseFloat(equipment.final_price)
 				}
-				console.log(this.form.equipments)
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]

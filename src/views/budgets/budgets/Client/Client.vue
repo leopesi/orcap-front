@@ -101,7 +101,6 @@
 			getClientByDocument(e) {
 				if (this.form.clients) {
 					Clients.getClientByDocument(this.form.clients.document, (result) => {
-						console.log(result)
 						const oldValue = Object.assign({}, { value: e.target.value })
 						if (result.data && result.data[0]) {
 							this.form.clients = Object.assign({}, result.data[0])

@@ -100,7 +100,7 @@
 					})
 				} else {
 					Clients.insertClient(this.form, (result) => {
-						console.log(result)
+						
 					})
 				}
 			},

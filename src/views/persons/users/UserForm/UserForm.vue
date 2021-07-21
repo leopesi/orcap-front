@@ -96,7 +96,7 @@
 					})
 				} else {
 					Users.insertUser(this.form, (result) => {
-						console.log(result)
+						
 					})
 				}
 			},

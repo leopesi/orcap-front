@@ -61,6 +61,8 @@ export default {
 		blankets: 'Mantas',
 		blanket: 'Manta',
 
+		supplies: 'Insumos',
+
 		profiles: 'Perfis',
 		profile: 'Perfil',
 
