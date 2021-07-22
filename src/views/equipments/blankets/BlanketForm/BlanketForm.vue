@@ -83,7 +83,7 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback"  />
 	</div>
 </template>
 
@@ -146,6 +146,7 @@
 						this.alert = {
 							title: 'Salvar Manta de Revestimento',
 							message: result.status,
+							pageback: '/blankets'
 						}
 					})
 				} else {

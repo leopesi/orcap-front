@@ -169,8 +169,8 @@
     </Form>
     <Alert
       :title="this.alert.title"
-      :message="this.alert.message"
-      @close="alert = {}"
+      :message="this.alert.message" :pageback="this.alert.pageback"
+      
     />
   </div>
 </template>
@@ -224,6 +224,7 @@ export default {
           this.alert = {
             title: 'Salvar Cliente',
             message: result.status,
+            pageback: '/clients'
           }
         })
       } else {

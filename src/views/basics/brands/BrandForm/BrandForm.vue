@@ -34,7 +34,7 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback"  />
 	</div>
 </template>
 
@@ -85,13 +85,14 @@
 						this.alert = {
 							title: 'Salvar Marca',
 							message: result.status,
+							pageback: '/brands'
 						}
 					})
 				} else {
 					Brands.insert(this.form, (result) => {
 						this.alert = {
 							title: 'Salvar Marca',
-							message: result.status,
+							message: result.status
 						}
 						this.id = result.data.id
 						this.form.id = result.data.id

@@ -56,8 +56,8 @@ select:focus {
 }
 
 button.btn {
-    background-color: #313740!important;
-	border: 1px solid #313740!important;
+    background-color: #313740;
+	border: 1px solid #313740;
 	border-radius: 30px!important;
     font-size: 14px!important;
 	-webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -70,4 +70,21 @@ button.btn {
 	height: auto;
     padding: 8px 24px!important;
     text-transform: uppercase;
+}
+
+button.btn:hover {
+	background-color: #666;
+	border: 1px solid #666;
+}
+
+button.btn.btn-secondary {
+	background-color: #f9f9f9;
+	border: 1px solid #313740;
+	color: #313740;
+}
+
+button.btn.btn-secondary:hover {
+	background-color: #ddd;
+	border: 1px solid #999;
+	color: #000;
 }

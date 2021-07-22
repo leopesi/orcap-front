@@ -34,7 +34,7 @@
 	import './style.css'
 	export default {
 		name: 'Alert',
-		props: { title: String, message: String, status: String },
+		props: { title: String, message: String, status: String, pageback: String },
 		i18n: { messages },
 		data() {
 			return {
@@ -51,10 +51,6 @@
 						this.keyUp(e)
 					}
 					document.addEventListener('keyup', this.eventListener)
-					setTimeout(() => {
-						// FAZER DEPOIS, QUANDO TIVER TRATADO O STATUS COMO SUCCESS
-						// if (this.status == 'success') this.$emit('close')
-					}, 1000)
 				} else {
 					this.show = false
 					document.removeEventListener('keyup', this.eventListener)
@@ -63,7 +59,13 @@
 		},
 		methods: {
 			close() {
-				this.$emit('close')
+				console.log(this.pageback)
+				if (this.pageback) {
+					this.$router.push(this.pageback)
+				} else {
+					this.message = null
+				}
+				document.removeEventListener('keyup', this.eventListener)
 			},
 			keyUp(e) {
 				if (e.code == 'Escape') {

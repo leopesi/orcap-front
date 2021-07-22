@@ -83,7 +83,7 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="closeAlert" />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback"  />
 	</div>
 </template>
 
@@ -147,6 +147,7 @@
 						this.alert = {
 							title: 'Salvar Vinil',
 							message: result.status,
+							pageback: '/vinyls'
 						}
 					})
 				} else {
@@ -160,11 +161,6 @@
 						window.location.hash = 'vinyls/' + result.data.id
 					})
 				}
-			},
-			closeAlert() {
-				// FAZER DEPOIS, QUANDO TIVER TRATADO O STATUS COMO SUCCESS
-				// Methods.openPage(this, 'vinyls')
-				this.alert = {}
 			},
 		},
 	}

@@ -193,8 +193,8 @@
     </Form>
     <Alert
       :title="this.alert.title"
-      :message="this.alert.message"
-      @close="alert = {}"
+      :message="this.alert.message" :pageback="this.alert.pageback"
+      
     />
   </div>
 </template>
@@ -251,14 +251,15 @@ export default {
         Providers.update(this.form, (result) => {
           this.alert = {
             title: 'Salvar Marca',
-            message: result.status + '<br/>' + result.error,
+            message: result.status,
+            pageback: '/providers'
           }
         })
       } else {
         Providers.insert(this.form, (result) => {
           this.alert = {
             title: 'Salvar Marca',
-            message: result.status + '<br/>' + result.error,
+            message: result.status,
           }
           this.id = result.data.id
           this.form.id = result.data.id
