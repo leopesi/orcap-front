@@ -34,7 +34,7 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback"  />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
 </template>
 
@@ -43,6 +43,8 @@
 	import Alert from '../../../components/Alert/Alert'
 	import Providers from '../../../../controllers/basics/providers'
 	import Brands from '../../../../controllers/basics/brands'
+
+	import MessageError from '../../../../helpers/messages-errors'
 
 	import messages from './messages'
 	export default {
@@ -82,21 +84,16 @@
 			save() {
 				if (this.id && this.id != 0) {
 					Brands.update(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Marca',
-							message: result.status,
-							pageback: '/brands'
-						}
+						this.alert = MessageError.getMessage(this, result, 'title', 'brands')
 					})
 				} else {
 					Brands.insert(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Marca',
-							message: result.status
+						this.alert = MessageError.getMessage(this, result, 'title')
+						if (result.data) {
+							this.id = result.data.id
+							this.form.id = result.data.id
+							window.location.hash = 'brands/' + result.data.id
 						}
-						this.id = result.data.id
-						this.form.id = result.data.id
-						window.location.hash = 'brands/' + result.data.id
 					})
 				}
 			},

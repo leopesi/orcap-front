@@ -83,12 +83,14 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback"  />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
 	// import Methods from '../../../../helpers/methods'
+	import MessageError from '../../../../helpers/messages-errors'
+
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Vinyls from '../../../../controllers/equipments/vinyls'
@@ -144,21 +146,16 @@
 			save() {
 				if (this.id && this.id != 0) {
 					Vinyls.update(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Vinil',
-							message: result.status,
-							pageback: '/vinyls'
-						}
+						this.alert = MessageError.getMessage(this, result, 'title', 'vinyls')
 					})
 				} else {
 					Vinyls.insert(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Vinil',
-							message: result.status,
+						this.alert = MessageError.getMessage(this, result, 'title')
+						if (result.data) {
+							this.id = result.data.id
+							this.form.id = result.data.id
+							window.location.hash = 'vinyls/' + result.data.id
 						}
-						this.id = result.data.id
-						this.form.id = result.data.id
-						window.location.hash = 'vinyls/' + result.data.id
 					})
 				}
 			},

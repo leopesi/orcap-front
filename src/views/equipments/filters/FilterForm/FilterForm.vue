@@ -111,11 +111,13 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback"  />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
+	import MessageError from '../../../../helpers/messages-errors'
+
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Filters from '../../../../controllers/equipments/filters'
@@ -183,21 +185,16 @@
 			save() {
 				if (this.id && this.id != 0) {
 					Filters.update(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Filtro',
-							message: result.status,
-							pageback: '/filters'
-						}
+						this.alert = MessageError.getMessage(this, result, 'title', 'filters')
 					})
 				} else {
 					Filters.insert(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Filtro',
-							message: result.status,
+						this.alert = MessageError.getMessage(this, result, 'title')
+						if (result.data) {
+							this.id = result.data.id
+							this.form.id = result.data.id
+							window.location.hash = 'filters/' + result.data.id
 						}
-						this.id = result.data.id
-						this.form.id = result.data.id
-						window.location.hash = 'filters/' + result.data.id
 					})
 				}
 			},

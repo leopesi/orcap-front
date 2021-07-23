@@ -159,7 +159,7 @@
 							<div class="row">
 								<div class="col-sm-6"></div>
 								<div class="col-sm-6 text-right">
-									<button type="button" class="btn btn-secondary small" @click="showEquipment">
+									<button type="button" class="btn btn-primary small" @click="showEquipment">
 										{{ $t('add_equipment') }}
 									</button>
 								</div>
@@ -282,12 +282,13 @@
 				</button>
 			</div>
 		</FloatCard>
-		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback"  />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
 	import Methods from '../../../../helpers/methods'
+	import MessageError from '../../../../helpers/messages-errors'
 
 	import Budgets from '../../../../controllers/budgets/budgets'
 	import Logists from '../../../../controllers/persons/logists'
@@ -402,10 +403,7 @@
 			save() {
 				if (this.id && this.id != 0) {
 					Budgets.updateBudget(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Orçamento',
-							message: JSON.stringify(result),
-						}
+						this.alert = MessageError.getMessage(this, result, 'title', 'budgets')
 					})
 				} else {
 					if (this.form) delete this.form.id
@@ -416,10 +414,7 @@
 						this.form.updatedAt = Methods.fixSequelizeDate(result.data.updatedAt)
 						this.form.createdAt = Methods.fixSequelizeDate(result.data.createdAt)
 						this.changedDimension()
-						this.alert = {
-							title: 'Novo Orçamento',
-							message: result.status,
-						}
+						this.alert = MessageError.getMessage(this, result, 'title')
 					})
 				}
 			},

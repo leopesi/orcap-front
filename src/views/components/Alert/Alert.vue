@@ -59,12 +59,10 @@
 		},
 		methods: {
 			close() {
-				console.log(this.pageback)
 				if (this.pageback) {
 					this.$router.push(this.pageback)
-				} else {
-					this.message = null
 				}
+				this.$emit('close')
 				document.removeEventListener('keyup', this.eventListener)
 			},
 			keyUp(e) {
