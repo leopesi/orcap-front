@@ -83,11 +83,13 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
+	import MessageError from '../../../../helpers/messages-errors'
+
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Engines from '../../../../controllers/equipments/engines'
@@ -143,20 +145,16 @@
 			save() {
 				if (this.id && this.id != 0) {
 					Engines.update(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Motor',
-							message: result.status,
-						}
+						this.alert = MessageError.getMessage(this, result, 'title', 'engines')
 					})
 				} else {
 					Engines.insert(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Motor',
-							message: result.status,
+						this.alert = MessageError.getMessage(this, result, 'title')
+						if (result.data) {
+							this.id = result.data.id
+							this.form.id = result.data.id
+							window.location.hash = 'engines/' + result.data.id
 						}
-						this.id = result.data.id
-						this.form.id = result.data.id
-						window.location.hash = 'engines/' + result.data.id
 					})
 				}
 			},

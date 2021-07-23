@@ -305,11 +305,13 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
+	import MessageError from '../../../../helpers/messages-errors'
+	
 	import Global from '../../../../helpers/global'
 	import Form from '../../../components/Form/Form'
 	import Card from '../../../components/Card/Card'
@@ -378,10 +380,7 @@
 				this.form.by_financial = JSON.stringify(this.by_financial)
 				this.form.by_financial_down_payment = JSON.stringify(this.by_financial_down_payment)
 				Logists.update(this.form, (result) => {
-					this.alert = {
-						title: 'Alteração dos Meus Dados',
-						message: result.status,
-					}
+					this.alert = MessageError.getMessage(this, result, 'title')
 					localStorage.userName = result.data.name
 					Global.$emit('change-header-name', result.data.name)
 				})

@@ -48,11 +48,13 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
+	import MessageError from '../../../../helpers/messages-errors'
+	
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Users from '../../../../controllers/persons/users'
@@ -89,14 +91,11 @@
 			save() {
 				if (this.form.id) {
 					Users.updateUser(this.form, (result) => {
-						this.alert = {
-							title: 'Salvar Usuário',
-							message: result.status,
-						}
+						this.alert = MessageError.getMessage(this, result, 'title')
 					})
 				} else {
 					Users.insertUser(this.form, (result) => {
-						
+						this.alert = MessageError.getMessage(this, result, 'title')
 					})
 				}
 			},

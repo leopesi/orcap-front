@@ -12,7 +12,7 @@
       >
         <thead class="thead-dark">
           <tr>
-            <th v-for="(col, i) in this.cols" :key="i">
+            <th v-for="(col, i) in this.columns" :key="i">
               <div v-if="typeof col === 'string'">{{ $t(col) }}</div>
               <div v-if="typeof col === 'object'">
                 <div v-for="(rels, j) in col" :key="j">
@@ -62,11 +62,16 @@ export default {
   name: 'List',
   props: { cols: Array, itens: Array, messages: Object },
   i18n: { messages },
+  data() {
+    return {
+      columns: []
+    }
+  },
   beforeMount() {
     const cols = this.cols
-    this.cols = []
+    this.columns = []
     for (const i in cols) {
-      if (cols[i] != 'id') this.cols.push(cols[i])
+      if (cols[i] != 'id') this.columns.push(cols[i])
     }
     Methods.setLocaleMessage(this, messages, this.messages)
   },

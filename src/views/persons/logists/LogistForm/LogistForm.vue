@@ -50,11 +50,13 @@
 				</div>
 			</div>
 		</Form>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
+		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
+	import MessageError from '../../../../helpers/messages-errors'
+
 	import Global from '../../../../helpers/global'
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
@@ -110,19 +112,13 @@
 				if (this.form) {
 					if (this.form.id) {
 						Logists.update(this.form, (result) => {
-							this.alert = {
-								title: 'Alteração dos Meus Dados',
-								message: result.status,
-							}
+							this.alert = MessageError.getMessage(this, result, 'title')
 							localStorage.userName = result.data.name
 							Global.$emit('change-header-name', result.data.name)
 						})
 					} else if (!this.token) {
 						Logists.insert(this.form, (result) => {
-							this.alert = {
-								title: 'Cadastro de Logista',
-								message: result.status,
-							}
+							this.alert = MessageError.getMessage(this, result, 'title')
 						})
 					}
 				}
