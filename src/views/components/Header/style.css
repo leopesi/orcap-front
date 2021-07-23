@@ -1,0 +1,22 @@
+
+.header {
+	background: #212121;
+	color: #fff;
+	max-height: 60px;
+}
+
+.header .link {
+	color: #fff;
+	padding: 16px;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.header .logist-name {
+	overflow: hidden;
+    width: 200px;
+    height: 25px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	display: inline-block;
+}

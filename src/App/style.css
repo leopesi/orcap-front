@@ -1,0 +1,19 @@
+
+#app .header{
+	grid-area: Header;
+}
+#app .footer {
+	grid-area: Footer;
+}
+
+#app .body {
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+	grid-area: Body;
+}
+
+#app .views {
+	padding: 24px 48px;
+	width: 100%;
+}

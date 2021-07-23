@@ -1,37 +1,90 @@
-
-.form {
-	box-shadow: 0px 0px 10px -6px #000;
+label {
 	display: inline-block;
-	padding: 32px;
+	margin-bottom: 0.5rem;
+	font-size: 13px;
+    font-weight: 500;
 }
 
-.form .form-control {
-	text-align: left;
-	padding: 8px 0;
+.form-group .form-control,
+.input-group .form-control {
+	padding: 10px 18px 10px 18px;
 }
 
-.form .form-control label {
-	display: block;
-	padding-bottom: 4px;
+.form-control {
+	background-color: rgba(0, 0, 0, 0);
+	border: 1px solid #e3e3e3;
+	border-radius: 30px;
+	color: #2c2c2c;
+	line-height: normal;
+	font-size: 0.93em;
+	-webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	-moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	-o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	-ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	height: auto;
 }
 
-.form .form-control input {
-	display: block;
-	 padding: 12px 8px;
-	width: calc(100% - 16px);
-	font-size: 16px;
-	border: 0px;
-	box-shadow: 0px 0px 10px -6px #000;
+textarea,
+input,
+select,
+textarea:focus,
+input:focus,
+select:focus {
+    box-shadow: none!important;
+	outline: 0!important;
 }
 
-.form .form-control button {
-	display: block;
-	width: 100%;
-	padding: 16px;
-	background: #2c3e50;
-	color: #f9f9f9;
-	font-size: 16px;
-	font-weight: 900;
-	border: 0px;
-	box-shadow: 0px 0px 10px -6px #000;
+textarea:focus,
+input:focus,
+select:focus {
+    box-shadow: none!important;
+	outline: 0!important;
+    border: 1px solid #2c2c2c!important;
+}
+
+.form-small {
+	width: 400px;
+}
+.form-medium {
+	width: 600px;
+}
+.form-large {
+	width: 800px;
+}
+
+button.btn {
+    background-color: #313740;
+	border: 1px solid #313740;
+	border-radius: 30px!important;
+    font-size: 14px!important;
+	-webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	-moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	-o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	-ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	height: auto;
+    padding: 8px 24px!important;
+    text-transform: uppercase;
+}
+
+button.btn:hover {
+	background-color: #666;
+	border: 1px solid #666;
+}
+
+button.btn.btn-secondary {
+	background-color: #f9f9f9;
+	border: 1px solid #313740;
+	color: #313740;
+}
+
+button.btn.btn-secondary:hover {
+	background-color: #ddd;
+	border: 1px solid #999;
+	color: #000;
 }
