@@ -33,7 +33,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="row">
-										<div class="col-sm-3" v-for="i in parseInt(installment_credit_card.length)" :key="i">
+										<div class="col-sm-3" v-for="i in parseInt(this.number_installment_credit_card)" :key="i">
 											<div class="row pb-4 align-items-center">
 												<div class="col-sm-2 text-right px-0">
 													<span class="">{{ parseInt(i) }}°</span>
@@ -80,7 +80,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="row">
-										<div class="col-sm-3" v-for="i in parseInt(by_logist.length)" :key="i">
+										<div class="col-sm-3" v-for="i in parseInt(this.number_by_logist)" :key="i">
 											<div class="row pb-4 align-items-center">
 												<div class="col-sm-2 text-right px-0">
 													<span class="">{{ parseInt(i) }}°</span>
@@ -127,7 +127,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="row">
-										<div class="col-sm-3" v-for="i in parseInt(by_financial.length)" :key="i">
+										<div class="col-sm-3" v-for="i in parseInt(this.number_by_financial)" :key="i">
 											<div class="row pb-4 align-items-center">
 												<div class="col-sm-2 text-right px-0">
 													<span class="">{{ parseInt(i) }}°</span>
@@ -174,7 +174,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="row">
-										<div class="col-sm-3" v-for="i in parseInt(by_financial_down_payment.length)" :key="i">
+										<div class="col-sm-3" v-for="i in parseInt(this.number_by_financial_down_payment)" :key="i">
 											<div class="row pb-4 align-items-center">
 												<div class="col-sm-2 text-right px-0">
 													<span class="">{{ parseInt(i) }}°</span>
