@@ -1,0 +1,32 @@
+.nav.nav-pills .nav-item a {
+    border: 1px solid #999;
+    border-radius: 50px;
+    background: transparent;
+    color: #999;
+    font-size: 11pt;
+    margin: 0px 4px;
+    padding: 8px 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.nav.nav-pills .nav-item a:hover {
+    border: 1px solid #ccc;
+    color: #ccc;
+}
+
+.nav.nav-pills .nav-item a.active {
+    border: 1px solid #333;
+    border-radius: 50px;
+    background: #333;
+    color: #FFF;
+    font-size: 11pt;
+    margin: 0px 4px;
+    padding: 8px 16px;
+    text-transform: uppercase;
+}
+
+.nav.nav-pills .nav-item a.active:hover {
+    border: 1px solid #666;
+    background: #666;
+}

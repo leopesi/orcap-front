@@ -98,14 +98,22 @@ export default {
         brand_profile_id: null,
         brand_vinyl_id: null,
       },
-      /* number_installment_credit_card: 0,
+      //Cartão de crédito*
+      number_installment_credit_card: 0,
       installment_credit_card: [],
+
+      //Parcelamento pela Loja**
       number_by_logist: 0,
       by_logist: [],
+
+      //Parcelamento pela Financeira***
       number_by_financial: 0,
       by_financial: [],
+
+      //Financeira com Entrada****
       number_by_financial_down_payment: 0,
-      by_financial_down_payment: [],*/
+      by_financial_down_payment: [],
+
       token: localStorage.token,
       brands: null,
       actualTab: 'brands',
@@ -120,47 +128,47 @@ export default {
       Brands.list((brands) => {
         Logists.getByToken((result) => {
           this.form = result.data
-          //this.installment_credit_card = JSON.parse(
-          //  result.data.installment_credit_card,
-          //)
-          //if (!this.installment_credit_card) this.installment_credit_card = []
-          //this.number_installment_credit_card = this.installment_credit_card.length
+          this.installment_credit_card = JSON.parse(
+            result.data.installment_credit_card,
+          )
+          if (!this.installment_credit_card) this.installment_credit_card = []
+          this.number_installment_credit_card = this.installment_credit_card.length
 
-          //this.by_logist = JSON.parse(result.data.by_logist)
-          //if (!this.by_logist) this.by_logist = []
-          //this.number_by_logist = this.by_logist.length
+          this.by_logist = JSON.parse(result.data.by_logist)
+          if (!this.by_logist) this.by_logist = []
+          this.number_by_logist = this.by_logist.length
 
-          //this.by_financial = JSON.parse(result.data.by_financial)
-          //if (!this.by_financial) this.by_financial = []
-          //this.number_by_financial = this.by_financial.length
+          this.by_financial = JSON.parse(result.data.by_financial)
+          if (!this.by_financial) this.by_financial = []
+          this.number_by_financial = this.by_financial.length
 
-          //this.by_financial_down_payment = JSON.parse(
-          //  result.data.by_financial_down_payment,
-          //)
-          //if (!this.by_financial_down_payment)
-          //  this.by_financial_down_payment = []
-          //this.number_by_financial_down_payment = this.by_financial_down_payment.length
+          this.by_financial_down_payment = JSON.parse(
+            result.data.by_financial_down_payment,
+          )
+          if (!this.by_financial_down_payment)
+            this.by_financial_down_payment = []
+          this.number_by_financial_down_payment = this.by_financial_down_payment.length
         })
         this.brands = brands.data
       })
     },
     save() {
-      //this.form.installment_credit_card = JSON.stringify(
-      //  this.installment_credit_card,
-      //)
-      //this.form.by_logist = JSON.stringify(this.by_logist)
-      //this.form.by_financial = JSON.stringify(this.by_financial)
-      //this.form.by_financial_down_payment = JSON.stringify(
-      //  this.by_financial_down_payment,
-      //)
-      // Logists.update(this.form, (result) => {
-      // 	this.alert = {
-      // 		title: 'Alteração dos Meus Dados',
-      // 		message: result.status,
-      // 	}
-      // })
+      Logists.update(this.form, (result) => {
+        this.alert = {
+          title: 'Alteração dos Meus Dados',
+          message: result.status,
+        }
+      })
+      this.form.installment_credit_card = JSON.stringify(
+        this.installment_credit_card,
+      )
+      this.form.by_logist = JSON.stringify(this.by_logist)
+      this.form.by_financial = JSON.stringify(this.by_financial)
+      this.form.by_financial_down_payment = JSON.stringify(
+        this.by_financial_down_payment,
+      )
     },
-    /*changeInstallment(e, installment) {
+    changeInstallment(e, installment) {
       installment = installment.slice(0, parseInt(e.target.value))
       for (let i = 0; i < parseInt(e.target.value); i++) {
         if (i >= installment.length) {
@@ -168,7 +176,7 @@ export default {
         }
       }
       return installment
-    },*/
+    },
   },
 }
 </script>
