@@ -5,6 +5,7 @@
       :itens="this.itens"
       @new="create"
       @edit="edit"
+      @delete="del"
       :messages="this.messages"
     >
       <div slot="title">
@@ -45,6 +46,11 @@ export default {
     },
     edit(id) {
       Methods.openPage(this, 'clients/' + id)
+    },
+    del(id) {
+      Clients.delete(id, (result) => {
+        console.log(result)
+      })
     },
   },
 }
