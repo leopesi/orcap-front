@@ -21,6 +21,6 @@ export default {
     Cruds.get('/clients-by-documents/', document, (result) => callback(result))
   },
   delete(data, callback) {
-    Cruds.delete('/sellers/', data, (result) => callback(result))
+    Cruds.delete('/clients/', data, (result) => callback(result))
   },
 }
