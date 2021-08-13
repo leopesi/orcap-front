@@ -25,11 +25,7 @@
           </tr>
         </thead>
         <tbody slot="body">
-          <tr
-            v-for="(item, i) in this.itens"
-            :key="i"
-            @click="buttonEdit(item.id)"
-          >
+          <tr v-for="(item, i) in this.itens" :key="i">
             <td v-for="(col, c) in cols" :key="c">
               <div v-if="typeof col === 'string'">{{ item[col] }}</div>
               <div v-if="typeof col === 'object'">
@@ -40,8 +36,8 @@
                 </div>
               </div>
             </td>
-            <td>{{ $t('edit') }}</td>
-            <td>{{ $t('delete') }}</td>
+            <td @click="buttonEdit(item.id)">{{ $t('edit') }}</td>
+            <td @click="buttonDelete(item.id)">{{ $t('delete') }}</td>
           </tr>
         </tbody>
       </table>
@@ -64,7 +60,7 @@ export default {
   i18n: { messages },
   data() {
     return {
-      columns: []
+      columns: [],
     }
   },
   beforeMount() {
@@ -81,6 +77,9 @@ export default {
     },
     buttonEdit(id) {
       this.$emit('edit', id)
+    },
+    buttonDelete(id) {
+      this.$emit('delete', id)
     },
   },
 }

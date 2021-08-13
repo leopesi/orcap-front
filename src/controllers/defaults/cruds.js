@@ -59,4 +59,13 @@ export default {
       }
     })
   },
+  delete(url, data, callback) {
+    axios.delete(url + data).then((response) => {
+      if (response && response.data) {
+        callback(response.data)
+      } else {
+        callback({})
+      }
+    })
+  },
 }
