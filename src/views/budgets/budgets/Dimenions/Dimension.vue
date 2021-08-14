@@ -151,6 +151,7 @@
 
 <script>
 	// import Dimensions from '../../../../controllers/budgets/dimensions'
+	import Methods from '../../../../helpers/methods'
 	import Card from '../../../components/Card/Card'
 	import messages from '../BudgetForm/messages'
 
@@ -173,32 +174,32 @@
 		},
 		methods: {
 			calculate() {
-				const length = parseFloat(this.form.length)
-				const width = parseFloat(this.form.width)
-				const initial_depth = isNaN(parseFloat(this.form.initial_depth)) ? 0 : parseFloat(this.form.initial_depth)
-				const final_depth = isNaN(parseFloat(this.form.final_depth)) ? 0 : parseFloat(this.form.final_depth)
-				const medium_depth = parseFloat(this.form.medium_depth)
-				const beach_length = isNaN(parseFloat(this.form.beach_length)) ? 0 : parseFloat(this.form.beach_length)
-				const beach_width = isNaN(parseFloat(this.form.beach_width)) ? 0 : parseFloat(this.form.beach_width)
-				const beach_medium_depth = isNaN(parseFloat(this.form.beach_medium_depth)) ? 0 : parseFloat(this.form.beach_medium_depth)
+				const length = Methods.fixNumber(this.form.length)
+				const width = Methods.fixNumber(this.form.width)
+				const initial_depth = Methods.fixNumber(this.form.initial_depth)
+				const final_depth = Methods.fixNumber(this.form.final_depth)
+				const medium_depth = Methods.fixNumber(this.form.medium_depth)
+				const beach_length = Methods.fixNumber(this.form.beach_length)
+				const beach_width = Methods.fixNumber(this.form.beach_width)
+				const beach_medium_depth = Methods.fixNumber(this.form.beach_medium_depth)
 				const perimeter = length * 2 + width * 2 - beach_length
-				const sidewalk_width = isNaN(parseFloat(this.form.sidewalk_width)) ? 0 : parseFloat(this.form.sidewalk_width)
+				const sidewalk_width = Methods.fixNumber(this.form.sidewalk_width)
 				const m2_wall = perimeter * medium_depth + (medium_depth - beach_medium_depth) * beach_length
 				const beach_perimeter = beach_length + beach_width * 2
 				const beach_m2_wall = beach_perimeter * beach_medium_depth
 				const m2_facial = length * width + beach_length * beach_width
 				const m2_total = m2_wall + beach_m2_wall + m2_facial
 				const m3_total = length * width * medium_depth + beach_length * beach_width * beach_medium_depth
-				this.form.medium_depth = parseFloat((initial_depth + final_depth) / 2).toFixed(2)
-				this.form.perimeter = parseFloat(perimeter).toFixed(2)
+				this.form.medium_depth = Methods.fixNumber((initial_depth + final_depth) / 2).toFixed(2)
+				this.form.perimeter = Methods.fixNumber(perimeter).toFixed(2)
 				// (Perimetro * Largura da Calçada) + ((Largura da Calçada * Largura da Calçada) * 4)
 				this.form.sidewalk_area = (perimeter + beach_perimeter) * sidewalk_width + sidewalk_width * sidewalk_width * 4
-				this.form.m2_wall = parseFloat(m2_wall).toFixed(2)
-				this.form.beach_perimeter = parseFloat(beach_perimeter).toFixed(2)
-				this.form.beach_m2_wall = parseFloat(beach_m2_wall).toFixed(2)
-				this.form.m2_facial = parseFloat(m2_facial).toFixed(2)
-				this.form.m2_total = parseFloat(m2_total).toFixed(2)
-				this.form.m3_total = parseFloat(m3_total).toFixed(2)
+				this.form.m2_wall = Methods.fixNumber(m2_wall).toFixed(2)
+				this.form.beach_perimeter = Methods.fixNumber(beach_perimeter).toFixed(2)
+				this.form.beach_m2_wall = Methods.fixNumber(beach_m2_wall).toFixed(2)
+				this.form.m2_facial = Methods.fixNumber(m2_facial).toFixed(2)
+				this.form.m2_total = Methods.fixNumber(m2_total).toFixed(2)
+				this.form.m3_total = Methods.fixNumber(m3_total).toFixed(2)
 			},
 			clearBeach() {
 				this.form.beach_perimeter = 0

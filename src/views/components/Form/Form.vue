@@ -29,12 +29,13 @@
 </template>
 
 <script>
+	import Methods from '../../../helpers/methods'
 	import messages from './messages'
 	import './style.css'
 	export default {
 		name: 'List',
 		i18n: { messages },
-		props: { size: String },
+		props: { size: String, newURL: String },
 		mounted() {},
 		beforeDestroy() {},
 		methods: {
@@ -44,7 +45,11 @@
 			newForm() {
 				this.$router.back()
 				setTimeout(() => {
-					this.$router.push(this.$router.history.current.path + '/0')
+					if (this.newURL) {
+						Methods.openPage(this, this.newURL)
+					} else {
+						this.$router.push(this.$router.history.current.path + '/0')
+					}
 				}, 10)
 			},
 			back() {
