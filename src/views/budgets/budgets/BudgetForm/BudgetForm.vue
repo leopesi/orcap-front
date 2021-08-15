@@ -92,61 +92,63 @@
 						<div class="">
 							<div class="row" v-if="this.form">
 								<div class="col-sm-4 pb-4" v-for="(equipment, i) in this.form.equipments" :key="i">
-									<Filters
-										:index="equipment.index"
-										:form="form"
-										:dimension="form.dimension"
-										:tax="form.installment_tax"
-										@changed="changeEquipment"
-										@delete="deleteEquipment(equipment.index)"
-										v-if="equipment.type == 'filters'"
-									/>
-									<Engines
-										:index="equipment.index"
-										:form="form"
-										:dimension="form.dimension"
-										:tax="form.installment_tax"
-										@changed="changeEquipment"
-										@delete="deleteEquipment(equipment.index)"
-										v-if="equipment.type == 'engines'"
-									/>
-									<Lids :index="equipment.index" :form="form" :tax="form.installment_tax" @changed="changeEquipment" @delete="deleteEquipment(equipment.index)" v-if="equipment.type == 'lids'" />
-									<Blankets
-										:index="equipment.index"
-										:form="form"
-										:m2_facial="parseFloat(form.m2_facial)"
-										:tax="form.installment_tax"
-										@changed="changeEquipment"
-										@delete="deleteEquipment(equipment.index)"
-										v-if="equipment.type == 'blankets'"
-									/>
-									<Profiles
-										:index="equipment.index"
-										:form="form"
-										:perimeter="parseFloat(form.perimeter)"
-										:tax="form.installment_tax"
-										@changed="changeEquipment"
-										@delete="deleteEquipment(equipment.index)"
-										v-if="equipment.type == 'profiles'"
-									/>
-									<Vinyls
-										:index="equipment.index"
-										:form="form"
-										:m2_total="parseFloat(form.m2_total)"
-										:tax="form.installment_tax"
-										@changed="changeEquipment"
-										@delete="deleteEquipment(equipment.index)"
-										v-if="equipment.type == 'vinyls'"
-									/>
-									<Supplies
-										:index="equipment.index"
-										:form="form"
-										:m2_total="parseFloat(form.m2_total)"
-										:tax="form.installment_tax"
-										@changed="changeEquipment"
-										@delete="deleteEquipment(equipment.index)"
-										v-if="equipment.type == 'supplies'"
-									/>
+									<div v-if="equipment">
+										<Filters
+											:index="equipment.index"
+											:form="form"
+											:dimension="form.dimension"
+											:tax="form.installment_tax"
+											@changed="changeEquipment"
+											@delete="deleteEquipment(equipment.index)"
+											v-if="equipment.type == 'filters'"
+										/>
+										<Engines
+											:index="equipment.index"
+											:form="form"
+											:dimension="form.dimension"
+											:tax="form.installment_tax"
+											@changed="changeEquipment"
+											@delete="deleteEquipment(equipment.index)"
+											v-if="equipment.type == 'engines'"
+										/>
+										<Lids :index="equipment.index" :form="form" :tax="form.installment_tax" @changed="changeEquipment" @delete="deleteEquipment(equipment.index)" v-if="equipment.type == 'lids'" />
+										<Blankets
+											:index="equipment.index"
+											:form="form"
+											:m2_facial="parseFloat(form.m2_facial)"
+											:tax="form.installment_tax"
+											@changed="changeEquipment"
+											@delete="deleteEquipment(equipment.index)"
+											v-if="equipment.type == 'blankets'"
+										/>
+										<Profiles
+											:index="equipment.index"
+											:form="form"
+											:perimeter="parseFloat(form.perimeter)"
+											:tax="form.installment_tax"
+											@changed="changeEquipment"
+											@delete="deleteEquipment(equipment.index)"
+											v-if="equipment.type == 'profiles'"
+										/>
+										<Vinyls
+											:index="equipment.index"
+											:form="form"
+											:m2_total="parseFloat(form.m2_total)"
+											:tax="form.installment_tax"
+											@changed="changeEquipment"
+											@delete="deleteEquipment(equipment.index)"
+											v-if="equipment.type == 'vinyls'"
+										/>
+										<Supplies
+											:index="equipment.index"
+											:form="form"
+											:m2_total="parseFloat(form.m2_total)"
+											:tax="form.installment_tax"
+											@changed="changeEquipment"
+											@delete="deleteEquipment(equipment.index)"
+											v-if="equipment.type == 'supplies'"
+										/>
+									</div>
 								</div>
 							</div>
 							<div class="row">
@@ -285,7 +287,7 @@
 				</button>
 			</div>
 		</FloatCard>
-		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
+		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
 </template>
 
@@ -564,8 +566,8 @@
 
 					const cash_price_total = Methods.fixNumber(this.form.cash_price_total)
 					const installment_tax = Methods.fixNumber(this.form.installment_tax)
-          
-          this.form.cash_price_total = (cash_price_total - down_payment).toFixed(2)
+
+					this.form.cash_price_total = (cash_price_total - down_payment).toFixed(2)
 					this.form.forward_price = (cash_price - down_payment + ((cash_price - down_payment) * installment_tax) / 100).toFixed(2)
 					this.form.forward_price_total = (cash_price_total - down_payment + ((cash_price_total - down_payment) * installment_tax) / 100).toFixed(2)
 				} catch (e) {
@@ -573,7 +575,6 @@
 				}
 			},
 			loadEquipments(equipments) {
-				this.form.equipments = {}
 				for (const i in equipments) {
 					const equipment = equipments[i]
 					this.form.equipments[equipment.index] = equipment
@@ -583,17 +584,16 @@
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
-				this.form.equipments = {}
 				for (const i in this.layout.equipments) {
 					const type = this.layout.equipments[i]
 					let finded = false
 					for (const j in this.form.equipments) {
-						if (this.form.equipments[j].type == type) {
+						if (this.form.equipments[j] && this.form.equipments[j].type == type) {
 							finded = true
 						}
 					}
 					if (!finded) {
-						const index = Object.keys(this.form.equipments).length
+						const index = Object.keys(this.form.equipments).length - 1
 						this.form.equipments[index] = { type, index }
 					}
 				}

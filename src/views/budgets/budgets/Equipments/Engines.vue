@@ -123,7 +123,7 @@
 						const discount = Methods.fixNumber(this.form.equipments[this.index].discount)
 						const price_with_discount = price
 
-						const man_power_profit_margin = Methods.fixNumbereFloat(this.engines[id].equipments.man_power_profit_margin)
+						const man_power_profit_margin = Methods.fixNumber(this.engines[id].equipments.man_power_profit_margin)
 						const man_power_cost = Methods.fixNumber(this.engines[id].equipments.man_power_cost)
 						const man_power_price = man_power_cost + (man_power_cost * man_power_profit_margin) / 100
 

@@ -2,7 +2,7 @@ export default {
 	'pt-br': {
 		title: 'Criar um Orçamento',
 		id: 'Id',
-		new_client: 'Novo',
+		new_client: 'Novo Cliente',
 		client: 'Cliente',
 		seller: 'Vendedor',
 		payment: 'Formas de pagamento',
