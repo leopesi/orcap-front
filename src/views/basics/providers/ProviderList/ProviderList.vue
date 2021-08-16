@@ -32,8 +32,6 @@
 		computed: {
 			filteredItens() {
 				return this.itens.filter((item) => {
-          console.log(this.filters.name)
-          console.log(this.filters.phone)
           if (!this.filters.name) this.filters.name = ''
           if (!this.filters.phone) this.filters.phone = ''
           if (!item.name) item.name = ''
