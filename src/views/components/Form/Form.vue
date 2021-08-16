@@ -43,17 +43,25 @@
 				this.$emit('save')
 			},
 			newForm() {
-				this.$router.back()
+				const path = this.$router.history.current.path.split('/')[1]
+				Methods.openPage(this, '')
 				setTimeout(() => {
 					if (this.newURL) {
-						Methods.openPage(this, this.newURL)
+						setTimeout(() => {
+							Methods.openPage(this, this.newURL)
+						}, 10)
 					} else {
-						this.$router.push(this.$router.history.current.path + '/0')
+						setTimeout(() => {
+							Methods.openPage(this, path + '/0')
+						}, 10)
 					}
 				}, 10)
 			},
 			back() {
-				this.$router.back()
+				const path = this.$router.history.current.path.split('/')[1]
+				setTimeout(() => {
+					Methods.openPage(this, path)
+				}, 10)
 			},
 			keyUp(e) {
 				if (e.key == 'Enter') {
