@@ -104,6 +104,11 @@
 							<input class="form-control" id="number_steps" v-model="form.number_steps" type="number" step="1" />
 						</div>
 					</div>
+					<div class="col-sm-4 pt-4">
+						<button type="button" class="btn btn-primary small" @click="showFormats = true">
+							{{ $t('default_formats') }}
+						</button>
+					</div>
 				</div>
 			</div>
 		</Card>
@@ -146,24 +151,26 @@
 				</div>
 			</div>
 		</Card>
+		<Formats :show="this.showFormats" @close="showFormats = false" @selected="selectedFormat" />
 	</div>
 </template>
 
 <script>
-	// import Dimensions from '../../../../controllers/budgets/dimensions'
+	import Formats from './Formats'
 	import Methods from '../../../../helpers/methods'
 	import Card from '../../../components/Card/Card'
 	import messages from '../BudgetForm/messages'
 
 	export default {
 		name: 'Dimensions',
-		components: { Card },
+		components: { Card, Formats },
 		props: { form: Object, beach: Boolean },
 		i18n: { messages },
 		data() {
 			return {
 				interval: null,
 				showSteps: null,
+				showFormats: false,
 			}
 		},
 		mounted() {
@@ -184,10 +191,10 @@
 				const beach_medium_depth = Methods.fixNumber(this.form.beach_medium_depth)
 				const perimeter = length * 2 + width * 2 - beach_length
 				const sidewalk_width = Methods.fixNumber(this.form.sidewalk_width)
-				const m2_wall = perimeter * medium_depth + (medium_depth - beach_medium_depth) * beach_length
 				const beach_perimeter = beach_length + beach_width * 2
 				const beach_m2_wall = beach_perimeter * beach_medium_depth
 				const m2_facial = length * width + beach_length * beach_width
+				const m2_wall = perimeter * medium_depth + (medium_depth - beach_medium_depth) * beach_length
 				const m2_total = m2_wall + beach_m2_wall + m2_facial
 				const m3_total = length * width * medium_depth + beach_length * beach_width * beach_medium_depth
 				this.form.medium_depth = Methods.fixNumber((initial_depth + final_depth) / 2).toFixed(2)
@@ -208,6 +215,24 @@
 				this.form.beach_width = 0
 				this.form.beach_medium_depth = 0
 				this.calculate()
+			},
+			selectedFormat(format) {
+				this.form.length = format.length
+				this.form.width = format.width
+				this.form.initial_depth = format.initial_depth
+				this.form.final_depth = format.final_depth
+				this.form.beach = false
+				if (format.beach_length && !isNaN(parseFloat(format.beach_length)) && parseFloat(format.beach_length) > 0) {
+					this.form.beach_length = format.beach_length
+					this.form.beach_width = format.beach_width
+					this.form.beach_medium_depth = format.beach_medium_depth
+					this.form.beach = true
+				}
+				this.calculate()
+				this.showFormats = false
+				setTimeout(() => {
+					this.calculate()
+				}, 100)
 			},
 		},
 	}

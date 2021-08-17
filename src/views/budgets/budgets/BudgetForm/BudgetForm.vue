@@ -80,7 +80,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<Dimensions :form="this.form" @changed="changedDimension" />
+					<Dimensions :form="this.form"/>
 				</div>
 			</div>
 			<div class="row">
@@ -265,6 +265,7 @@
 				</div>
 			</div>
 		</Form>
+    
 		<FloatCard :title="$t('add_equipment')" :show="this.showAddEquipment" @close="showAddEquipment = false">
 			<div class="row">
 				<div class="col-sm-12">
@@ -405,7 +406,6 @@
 							this.form.expiration_date = Methods.fixSequelizeOnlyDate(this.form.expiration_date)
 							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
-							this.changedDimension()
 							const equipments = Object.assign({}, result.data.equipments)
 							this.loadEquipments(equipments)
 							this.changeTax()
@@ -456,18 +456,8 @@
 						this.form.expiration_date = Methods.fixSequelizeDate(result.data.expiration_date)
 						this.form.updatedAt = Methods.fixSequelizeDate(result.data.updatedAt)
 						this.form.createdAt = Methods.fixSequelizeDate(result.data.createdAt)
-						this.changedDimension()
 						this.alert = MessageError.getMessage(this, result, 'title')
 					})
-				}
-			},
-			changedDimension() {
-				this.form.dimension = {
-					width: this.form.width,
-					length: this.form.length,
-					initial_depth: this.form.initial_depth,
-					final_depth: this.form.final_depth,
-					sidewalk_width: this.form.sidewalk_width,
 				}
 			},
 			changedClient() {},
@@ -584,6 +574,9 @@
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
+				if (!this.form.equipments || typeof this.form.equipments !== 'object') {
+					this.form.equipments = {}
+				}
 				for (const i in this.layout.equipments) {
 					const type = this.layout.equipments[i]
 					let finded = false

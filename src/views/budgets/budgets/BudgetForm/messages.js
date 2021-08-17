@@ -12,6 +12,8 @@ export default {
 		status: 'Status',
 		layout: 'Tipo de Orçamento',
 
+		default_formats: 'Formatos padrões',
+
 		updatedAt: 'Última Atualização',
 		createdAt: 'Data de Criação',
 
