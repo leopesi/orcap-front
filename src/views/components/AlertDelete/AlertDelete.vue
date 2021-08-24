@@ -22,14 +22,28 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <!-- <div class="modal-body">
           {{ this.message }}
-        </div>
-        <!-- <div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal" @click="close">
-						{{ $t('close') }}
-					</button>
-				</div> -->
+        </div> -->
+        <div class="modal-footer">
+
+			<button 
+        type="button" 
+        class="btn btn-secondary" 
+        data-dismiss="modal" 
+        @click="yes">
+          {{ $t('yes') }}
+			</button>
+
+			<button 
+        type="button" 
+        class="btn btn-secondary" 
+        data-dismiss="modal" 
+        @click="close">
+          {{ $t('no') }}
+			</button>
+      
+		</div>
       </div>
     </div>
   </div>
@@ -40,7 +54,7 @@ import messages from './messages'
 import './style.css'
 export default {
   name: 'Alert',
-  props: { title: String, message: String, status: String, pageback: String },
+  props: { title: String, message: String, status: String, pageback: String, positive: Boolean },
   i18n: { messages },
   data() {
     return {
@@ -71,11 +85,16 @@ export default {
       this.$emit('close')
       document.removeEventListener('keyup', this.eventListener)
     },
-    keyUp(e) {
+     keyUp(e) {
       if (e.code == 'Escape') {
         this.close()
       }
+	},
+    yes() {
+      this.$emit("yes")
     },
+    
+    
   },
 }
 </script>

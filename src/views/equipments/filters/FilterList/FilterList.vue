@@ -55,6 +55,7 @@ export default {
     del(id) {
       Filters.delete(id, (result) => {
         console.log(result)
+        this.load()
       })
     },
   },
