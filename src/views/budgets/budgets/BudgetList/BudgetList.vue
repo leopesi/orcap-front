@@ -1,6 +1,13 @@
 <template>
 	<div class="home">
-		<List :cols="this.cols" :filters="this.filters" :itens="this.filteredItens" @edit="edit" @new="create" :messages="this.messages" @delete="del">
+		<List 
+		:cols="this.cols" 
+		:filters="this.filters" 
+		:itens="this.filteredItens"
+		@edit="edit" 
+		@new="create" 
+		:messages="this.messages" 
+		@delete="del">
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
@@ -22,10 +29,10 @@
 			return {
 				cols: [
 					// 'id',
-					{ clients: ['name', 'document'] },
+					{ clients: ['name'] },
 					{ sellers: ['name'] },
 				],
-				filters: { clients: { name: '', document: '' }, sellers: { name: '' } },
+				filters: { clients: { name: '', neighborhood: '' }, /*sellers: { name: '' }*/ },
 				itens: [],
 				messages,
 			}
@@ -37,28 +44,24 @@
 			filteredItens() {
 				return this.itens.filter((item) => {
 					if (!this.filters.clients) this.filters.clients = {}
-					if (!this.filters.sellers) this.filters.sellers = {}
+					//if (!this.filters.sellers) this.filters.sellers = {}
 					if (!this.filters.clients.name) this.filters.clients.name = ''
-					if (!this.filters.clients.document) this.filters.clients.document = ''
-					if (!this.filters.sellers.name) this.filters.sellers.name = ''
+					if (!this.filters.clients.neighborhood) this.filters.clients.neighborhood = ''
+					//if (!this.filters.sellers.name) this.filters.sellers.name = ''
 					if (!item.clients) item.clients = {}
-					if (!item.sellers) item.sellers = {}
+					//if (!item.sellers) item.sellers = {}
 					if (!item.clients.name) item.clients.name = ''
-					if (!item.clients.document) item.clients.document = ''
-					if (!item.sellers.name) item.sellers.name = ''
+					if (!item.clients.neighborhood) item.clients.neighborhood = ''
+					//if (!item.sellers.name) item.sellers.name = ''
 					if (
 						item.clients.name
 							.toString()
 							.toLowerCase()
 							.indexOf(this.filters.clients.name.toString().toLowerCase()) !== -1 &&
-						item.clients.document
+						item.clients.neighborhood
 							.toString()
 							.toLowerCase()
-							.indexOf(this.filters.clients.document.toString().toLowerCase()) !== -1 &&	
-						item.sellers.name
-							.toString()
-							.toLowerCase()
-							.indexOf(this.filters.sellers.name.toString().toLowerCase()) !== -1
+							.indexOf(this.filters.clients.neighborhood.toString().toLowerCase()) !== -1 
 					) {
 						return item
 					}
