@@ -11,9 +11,17 @@
 				<div class="">
 					<div class="row border-bottom mb-4 mx-1">
 						<div class="col-sm-3" v-for="(item, i) in this.filters" :key="i">
-							<div class="form-group">
-								<label for="id">{{ $t(i) }}</label>
-								<input class="form-control" :id="i" v-model="filters[i]" type="text" />
+							<div v-if="typeof item === 'object'">
+								<div class="form-group" v-for="(listitem, j) in item" :key="j">
+									<label for="id">{{ $t(j) + ' ' + $t(i) }}</label>
+									<input class="form-control" :id="i" v-model="item[j]" type="text" />
+								</div>
+							</div>
+							<div v-else>
+								<div class="form-group">
+									<label for="id">{{ $t(i) }}</label>
+									<input class="form-control" :id="i" v-model="filters[i]" type="text" />
+								</div>
 							</div>
 						</div>
 					</div>
