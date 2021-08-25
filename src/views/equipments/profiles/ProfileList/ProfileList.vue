@@ -53,6 +53,7 @@ export default {
     del(id) {
       Profiles.delete(id, (result) => {
         console.log(result)
+        this.load()
       })
     },
   },

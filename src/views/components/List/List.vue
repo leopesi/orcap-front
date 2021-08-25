@@ -46,12 +46,8 @@
 								</div>
 							</div>
 						</td>
-						<td>
-							<div class="btn" @click="buttonEdit(item.id)">{{ $t('edit') }}</div>
-						</td>
-						<td>
-							<div class="btn" @click="buttonDelete(item.id)">{{ $t('delete') }}</div>
-						</td>
+						<td @click="buttonEdit(item.id)">{{ $t('edit') }}</td>
+						<td @click="buttonAlert(item.id)">{{ $t('delete') }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -69,22 +65,26 @@
 				Novo
 			</button>
 		</div>
+		<AlertDelete :title="this.alert.title" :message="this.alert.message" @yes="buttonDelete" @close="alert = {}" />
 	</div>
 </template>
 
 <script>
 	import Card from '../Card/Card.vue'
 	import Methods from '../../../helpers/methods'
+	import AlertDelete from '../AlertDelete/AlertDelete'
 	import messages from './messages'
 	import './style.css'
 	export default {
 		name: 'List',
-		components: { Card },
+		components: { Card, AlertDelete },
 		props: { cols: Array, itens: Array, filters: Object, filterFunction: Function, messages: Object },
 		i18n: { messages },
 		data() {
 			return {
 				columns: [],
+				alert: {},
+				actualDelete: null,
 				filter: {},
 				limit: 5,
 				page: 0,
@@ -121,8 +121,17 @@
 			buttonEdit(id) {
 				this.$emit('edit', id)
 			},
-			buttonDelete(id) {
-				this.$emit('delete', id)
+			buttonAlert(id) {
+				//colocar uma condição para inserir os parametros no delete
+				this.alert = {
+					title: 'Deseja deletar?',
+					message: 'result.status',
+				}
+				this.actualDelete = id
+			},
+			buttonDelete() {
+				this.$emit('delete', this.actualDelete)
+				this.alert = {}
 			},
 		},
 	}

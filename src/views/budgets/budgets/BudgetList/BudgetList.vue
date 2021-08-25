@@ -5,13 +5,13 @@
       :itens="this.itens"
       @new="create"
       :messages="this.messages"
-      @edit="edit"
       @delete="del"
     >
       <div slot="title">
         {{ $t('title') }}
       </div>
     </List>
+    
   </div>
 </template>
 
@@ -34,6 +34,7 @@ export default {
       ],
       itens: [],
       messages,
+      
     }
   },
   mounted() {
@@ -54,6 +55,10 @@ export default {
     del(id) {
       Budgets.delete(id, (result) => {
         console.log(result)
+        this.load()
+        /*console.log(result)
+        alert('vai apagar')
+        this.load()*/
       })
     },
   },

@@ -50,6 +50,7 @@ export default {
     del(id) {
       Clients.delete(id, (result) => {
         console.log(result)
+        this.load()
       })
     },
   },

@@ -80,7 +80,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<Dimensions :form="this.form"/>
+					<Dimensions :form="this.form" />
 				</div>
 			</div>
 			<div class="row">
@@ -265,7 +265,7 @@
 				</div>
 			</div>
 		</Form>
-    
+
 		<FloatCard :title="$t('add_equipment')" :show="this.showAddEquipment" @close="showAddEquipment = false">
 			<div class="row">
 				<div class="col-sm-12">

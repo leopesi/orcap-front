@@ -54,6 +54,7 @@ export default {
     del(id) {
       Engines.delete(id, (result) => {
         console.log(result)
+        this.load()
       })
     },
   },
