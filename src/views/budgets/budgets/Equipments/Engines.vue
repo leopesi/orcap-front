@@ -69,6 +69,7 @@
 </template>
 
 <script>
+	import Methods from '../../../../helpers/methods'
 	import Equipments from '../../../../controllers/budgets/equipments'
 	import messages from '../BudgetForm/messages'
 
@@ -106,8 +107,8 @@
 				this.$emit('changed')
 			},
 			changePercent() {
-				const price = this.form.equipments[this.index].price
-				const price_with_discount = isNaN(price) ? 0 : price + (price * (isNaN(this.discountPercent) ? 0 : this.discountPercent)) / 100
+				const price = Methods.fixNumber(this.form.equipments[this.index].price)
+				const price_with_discount = price + (price * Methods.fixNumber(this.discountPercent)) / 100
 				this.form.equipments[this.index].discount = price_with_discount - price
 				this.setData()
 				this.change()
@@ -116,20 +117,20 @@
 				if (this.form.equipments[this.index]) {
 					const id = this.form.equipments[this.index].equipment_id
 					if (this.engines[id] && this.engines[id].equipments) {
-						const profit_margin = parseFloat(this.engines[id].equipments.profit_margin)
-						const cost = parseFloat(this.engines[id].equipments.cost)
-						const price = isNaN(cost) ? 0 : cost + (cost * (isNaN(profit_margin) ? 0 : profit_margin)) / 100
-						const discount = parseFloat(this.form.equipments[this.index].discount)
+						const profit_margin = Methods.fixNumber(this.engines[id].equipments.profit_margin)
+						const cost = Methods.fixNumber(this.engines[id].equipments.cost)
+						const price = cost + (cost * profit_margin) / 100
+						const discount = Methods.fixNumber(this.form.equipments[this.index].discount)
 						const price_with_discount = price
 
-						const man_power_profit_margin = parseFloat(this.engines[id].equipments.man_power_profit_margin)
-						const man_power_cost = parseFloat(this.engines[id].equipments.man_power_cost)
-						const man_power_price = isNaN(man_power_cost) ? 0 : man_power_cost + (man_power_cost * (isNaN(man_power_profit_margin) ? 0 : man_power_profit_margin)) / 100
+						const man_power_profit_margin = Methods.fixNumber(this.engines[id].equipments.man_power_profit_margin)
+						const man_power_cost = Methods.fixNumber(this.engines[id].equipments.man_power_cost)
+						const man_power_price = man_power_cost + (man_power_cost * man_power_profit_margin) / 100
 
 						this.form.equipments[this.index].cost = cost
 						this.form.equipments[this.index].profit_margin = profit_margin
 						this.form.equipments[this.index].price = price_with_discount
-						this.form.equipments[this.index].final_price = price_with_discount + (isNaN(man_power_price) ? 0 : man_power_price) - (isNaN(discount) ? 0 : discount)
+						this.form.equipments[this.index].final_price = price_with_discount + man_power_price - discount
 						this.form.equipments[this.index].man_power = man_power_price
 
 						this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)

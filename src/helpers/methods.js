@@ -47,4 +47,17 @@ export default {
 				.join('.')
 		}
 	},
+
+	fixNumber(number, default_number) {
+		if (!default_number) default_number = 0
+		if (isNaN(parseFloat(default_number))) {
+			default_number = 0
+		}
+		if (!number) number = default_number
+		number = parseFloat(number)
+		if (isNaN(number)) {
+			number = default_number
+		}
+		return parseFloat(number)
+	},
 }

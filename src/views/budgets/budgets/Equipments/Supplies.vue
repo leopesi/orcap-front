@@ -61,6 +61,7 @@
 </template>
 
 <script>
+	import Methods from '../../../../helpers/methods'
 	import Equipments from '../../../../controllers/budgets/equipments'
 	import messages from '../BudgetForm/messages'
 
@@ -96,21 +97,21 @@
 				this.$emit('changed')
 			},
 			changePercent() {
-				const price = this.form.equipments[this.index].price
-				const price_with_discount = isNaN(price) ? 0 : price + (price * (isNaN(this.discountPercent) ? 0 : this.discountPercent)) / 100
+				const price = Methods.fixNumber(this.form.equipments[this.index].price)
+				const price_with_discount = price + (price * Methods.fixNumber(this.discountPercent)) / 100
 				this.form.equipments[this.index].discount = price_with_discount - price
 				this.setData()
 				this.change()
 			},
 			setData() {
-				const price = parseFloat(this.form.equipments[this.index].price)
-				const discount = parseFloat(this.form.equipments[this.index].discount)
-				const price_with_discount = isNaN(price) ? discount : isNaN(discount) ? price : price - discount
-				const man_power = parseFloat(this.form.equipments[this.index].man_power)
+				const price = Methods.fixNumber(this.form.equipments[this.index].price)
+				const discount = Methods.fixNumber(this.form.equipments[this.index].discount)
+				const price_with_discount = price - discount
+				const man_power = Methods.fixNumber(this.form.equipments[this.index].man_power)
 
-				this.form.equipments[this.index].final_price = (isNaN(price_with_discount) ? 0 : price_with_discount) + (isNaN(man_power) ? 0 : man_power)
+				this.form.equipments[this.index].final_price = price_with_discount + man_power
 				this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
-				
+
 				this.show = false
 				setTimeout(() => {
 					this.show = true

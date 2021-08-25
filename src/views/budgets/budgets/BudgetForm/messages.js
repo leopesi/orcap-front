@@ -2,7 +2,7 @@ export default {
 	'pt-br': {
 		title: 'Criar um Orçamento',
 		id: 'Id',
-		new_client: 'Novo',
+		new_client: 'Novo Cliente',
 		client: 'Cliente',
 		seller: 'Vendedor',
 		payment: 'Formas de pagamento',
@@ -11,6 +11,8 @@ export default {
 		installment_tax: 'Taxa Calculada',
 		status: 'Status',
 		layout: 'Tipo de Orçamento',
+
+		default_formats: 'Formatos padrões',
 
 		updatedAt: 'Última Atualização',
 		createdAt: 'Data de Criação',

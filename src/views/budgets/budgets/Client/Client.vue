@@ -29,13 +29,20 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="mail">{{ $t('mail') }}</label>
-						<input class="form-control" id="mail" v-model="form.clients.mail" type="text" />
+						<input class="form-control" id="mail" v-model="form.clients.mail" type="text" @change="getClientByMail" />
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="name">{{ $t('name') }}</label>
 						<input class="form-control" id="name" v-model="form.clients.name" type="text" />
+					</div>
+				</div>
+				<div class="col-sm-6 mt-4">
+					<div class="form-group">
+						<button type="button" class="btn btn-primary small" @click="newClient">
+							{{ $t('new_client') }}
+						</button>
 					</div>
 				</div>
 				<!-- <div class="col-sm-6">
@@ -102,10 +109,10 @@
 				if (this.form.clients) {
 					Clients.getClientByDocument(this.form.clients.document, (result) => {
 						const oldValue = Object.assign({}, { value: e.target.value })
-						if (result.data && result.data[0]) {
-							this.form.clients = Object.assign({}, result.data[0])
-							this.form.client_id = result.data[0].id
-							this.form.clients.mail = result.data[0].sessions.mail
+						if (result.data) {
+							this.form.clients = Object.assign({}, result.data)
+							this.form.client_id = result.data.id
+							this.form.clients.mail = result.data.sessions ? result.data.sessions.mail : ''
 							this.show = false
 						} else {
 							this.form.clients = Object.assign({}, null)
@@ -115,6 +122,27 @@
 						this.reload()
 					})
 				}
+			},
+			getClientByMail(e) {
+				if (this.form.clients && !this.form.clients.document) {
+					Clients.getClientByMail(this.form.clients.mail, (result) => {
+						const oldValue = Object.assign({}, { value: e.target.value })
+						if (result.data) {
+							this.form.clients = Object.assign({}, result.data)
+							this.form.client_id = result.data.id
+							this.form.clients.document = result.data.document
+							this.show = false
+						} else {
+							this.form.clients = Object.assign({}, null)
+							this.form.client_id = null
+						}
+						this.form.clients.mail = oldValue.value
+						this.reload()
+					})
+				}
+			},
+			newClient() {
+				this.form.clients = Object.assign({})
 			},
 			reload() {
 				setTimeout(() => {

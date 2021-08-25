@@ -29,12 +29,13 @@
 </template>
 
 <script>
+	import Methods from '../../../helpers/methods'
 	import messages from './messages'
 	import './style.css'
 	export default {
 		name: 'List',
 		i18n: { messages },
-		props: { size: String },
+		props: { size: String, newURL: String },
 		mounted() {},
 		beforeDestroy() {},
 		methods: {
@@ -42,13 +43,25 @@
 				this.$emit('save')
 			},
 			newForm() {
-				this.$router.back()
+				const path = this.$router.history.current.path.split('/')[1]
+				Methods.openPage(this, '')
 				setTimeout(() => {
-					this.$router.push(this.$router.history.current.path + '/0')
+					if (this.newURL) {
+						setTimeout(() => {
+							Methods.openPage(this, this.newURL)
+						}, 10)
+					} else {
+						setTimeout(() => {
+							Methods.openPage(this, path + '/0')
+						}, 10)
+					}
 				}, 10)
 			},
 			back() {
-				this.$router.back()
+				const path = this.$router.history.current.path.split('/')[1]
+				setTimeout(() => {
+					Methods.openPage(this, path)
+				}, 10)
 			},
 			keyUp(e) {
 				if (e.key == 'Enter') {

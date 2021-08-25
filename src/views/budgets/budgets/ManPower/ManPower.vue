@@ -12,7 +12,7 @@
 					</div>
 					<div class="form-group" v-else>
 						<label :for="field">{{ $t(field) }}</label>
-						<input class="form-control" :id="field" type="text" v-model="form[field]" @keyup="$emit('change')" />
+						<input class="form-control" :id="field" type="text" v-model="form[field]" @keyup="$emit('changed')" />
 					</div>
 				</div>
 			</div>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+	import Methods from '../../../../helpers/methods'
 	import Card from '../../../components/Card/Card.vue'
 	import messages from '../BudgetForm/messages'
 	import Layouts from '../data/layouts'
@@ -36,7 +37,9 @@
 				show: true,
 			}
 		},
-		mounted() {},
+		mounted() {
+			this.changeLayout()
+		},
 		watch: {
 			layout() {
 				this.changeLayout()
@@ -48,11 +51,14 @@
 				for (const i in this.manpowers) {
 					if (this.manpowers[i] != 'art') {
 						if (this.form[this.manpowers[i]]) {
-							const value = parseFloat(this.form[this.manpowers[i]])
-							if (isNaN(value) || value <= 0) this.form[this.manpowers[i]] = this.logist[this.manpowers[i]]
+							const value = Methods.fixNumber(this.form[this.manpowers[i]])
+							if (value <= 0) this.form[this.manpowers[i]] = this.logist[this.manpowers[i]]
+						} else {
+							this.form[this.manpowers[i]] = this.logist[this.manpowers[i]]
 						}
 					}
 				}
+				this.$emit('changed')
 			},
 		},
 	}

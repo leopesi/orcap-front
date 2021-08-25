@@ -17,6 +17,6 @@ export default {
     Cruds.update('/brands/', data, (result) => callback(result))
   },
   delete(data, callback) {
-    Cruds.delete('/sellers/', data, (result) => callback(result))
+    Cruds.delete('/brands/', data, (result) => callback(result))
   },
 }
