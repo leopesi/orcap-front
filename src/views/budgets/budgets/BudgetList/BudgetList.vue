@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<List :cols="this.cols" :filters="this.filters" :itens="this.filteredItens" @new="create" :messages="this.messages" @delete="del">
+		<List :cols="this.cols" :filters="this.filters" :itens="this.filteredItens" @edit="edit" @new="create" :messages="this.messages" @delete="del">
 			<div slot="title">
 				{{ $t('title') }}
 			</div>
@@ -22,10 +22,10 @@
 			return {
 				cols: [
 					// 'id',
-					{ clients: ['name'] },
+					{ clients: ['name', 'document'] },
 					{ sellers: ['name'] },
 				],
-				filters: { clients: { name: '' }, sellers: { name: '' } },
+				filters: { clients: { name: '', document: '' }, sellers: { name: '' } },
 				itens: [],
 				messages,
 			}
@@ -39,16 +39,22 @@
 					if (!this.filters.clients) this.filters.clients = {}
 					if (!this.filters.sellers) this.filters.sellers = {}
 					if (!this.filters.clients.name) this.filters.clients.name = ''
+					if (!this.filters.clients.document) this.filters.clients.document = ''
 					if (!this.filters.sellers.name) this.filters.sellers.name = ''
 					if (!item.clients) item.clients = {}
 					if (!item.sellers) item.sellers = {}
 					if (!item.clients.name) item.clients.name = ''
+					if (!item.clients.document) item.clients.document = ''
 					if (!item.sellers.name) item.sellers.name = ''
 					if (
 						item.clients.name
 							.toString()
 							.toLowerCase()
 							.indexOf(this.filters.clients.name.toString().toLowerCase()) !== -1 &&
+						item.clients.document
+							.toString()
+							.toLowerCase()
+							.indexOf(this.filters.clients.document.toString().toLowerCase()) !== -1 &&	
 						item.sellers.name
 							.toString()
 							.toLowerCase()
