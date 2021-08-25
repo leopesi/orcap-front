@@ -50,6 +50,7 @@ export default {
     del(id) {
       Providers.delete(id, (result) => {
         console.log(result)
+        this.load()
       })
     },
   },

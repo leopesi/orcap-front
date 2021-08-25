@@ -18,6 +18,9 @@ export default {
   },
 
   delete(data, callback) {
-    Cruds.delete('/sellers/', data, (result) => callback(result))
+     {
+      Cruds.delete('/sellers/', data, (result) => callback(result))
+    }
+    
   },
 }

@@ -37,7 +37,7 @@
               </div>
             </td>
             <td @click="buttonEdit(item.id)">{{ $t('edit') }}</td>
-            <td @click="buttonDelete(item.id)">{{ $t('delete') }}</td>
+            <td @click="buttonAlert(item.id)">{{ $t('delete') }}</td>
           </tr>
         </tbody>
       </table>
@@ -47,20 +47,34 @@
         Novo
       </button>
     </div>
+    <AlertDelete
+      :title="this.alert.title"
+      :message="this.alert.message"
+      @yes="buttonDelete"
+      @close="alert = {}"
+    />
   </div>
+  
 </template>
 
 <script>
 import Methods from '../../../helpers/methods'
 import messages from './messages'
+import AlertDelete from '../AlertDelete/AlertDelete'
+
+
 import './style.css'
 export default {
   name: 'List',
   props: { cols: Array, itens: Array, messages: Object },
   i18n: { messages },
+  components: { AlertDelete },
+  
   data() {
     return {
       columns: [],
+      alert: {},
+      actualDelete: null
     }
   },
   beforeMount() {
@@ -78,9 +92,20 @@ export default {
     buttonEdit(id) {
       this.$emit('edit', id)
     },
-    buttonDelete(id) {
-      this.$emit('delete', id)
+    buttonAlert(id) {//colocar uma condição para inserir os parametros no delete
+      this.alert = {
+          title: 'Deseja deletar?',
+          message: 'result.status',
+        }
+        this.actualDelete = id
+        
+      //this.$emit('delete', id)
     },
+    buttonDelete() {
+      this.$emit('delete', this.actualDelete)
+      this.alert = {}
+    }
+    
   },
 }
 </script>

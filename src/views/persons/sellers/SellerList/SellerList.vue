@@ -51,6 +51,7 @@ export default {
     del(id) {
       Sellers.delete(id, (result) => {
         console.log(result)
+        this.load()
       })
     },
   },

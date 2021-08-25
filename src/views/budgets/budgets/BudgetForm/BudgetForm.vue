@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    asdasd
     <Form @save="save">
       <div slot="title">
         {{ $t('title') }}
