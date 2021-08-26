@@ -1,6 +1,13 @@
 import axios from 'axios'
 
 export default {
+	refreshPage(view, page, need_login) {
+		view.$router.go(-1)
+		setTimeout(() => {
+			this.openPage(view, page, need_login)
+		}, 100)
+	},
+
 	openPage(view, page, need_login) {
 		if (view.$router.history.current.path != '/' + page) {
 			if (need_login == undefined || need_login == true) localStorage.need_login = true

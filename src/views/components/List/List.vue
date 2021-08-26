@@ -10,15 +10,15 @@
 				</div>
 				<div class="">
 					<div class="row border-bottom mb-4 mx-1">
-						<div class="col-sm-3" v-for="(item, i) in this.filters" :key="i">
+						<div class="float-left" v-for="(item, i) in this.filters" :key="i">
 							<div v-if="typeof item === 'object'">
-								<div class="form-group" v-for="(listitem, j) in item" :key="j">
+								<div class="mr-4 float-left form-group" v-for="(listitem, j) in item" :key="j">
 									<label for="id">{{ $t(j) + ' ' + $t(i) }}</label>
 									<input class="form-control" :id="i" v-model="item[j]" type="text" />
 								</div>
 							</div>
 							<div v-else>
-								<div class="form-group">
+								<div class="mr-4 form-group">
 									<label for="id">{{ $t(i) }}</label>
 									<input class="form-control" :id="i" v-model="filters[i]" type="text" />
 								</div>
@@ -111,7 +111,9 @@
 				})
 			},
 			numberItens() {
-				return parseInt(this.itens.length / 5) + 1
+				let pages = parseInt(this.itens.length / this.limit) + 1
+				if (this.itens.length % this.limit == 0) pages --
+				return pages
 			},
 		},
 		methods: {

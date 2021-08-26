@@ -54,7 +54,8 @@
 
 <script>
 	import MessageError from '../../../../helpers/messages-errors'
-	
+	import Methods from '../../../../helpers/methods'
+
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
 	import Sellers from '../../../../controllers/persons/sellers'
@@ -99,9 +100,7 @@
 					Sellers.insert(this.form, (result) => {
 						this.alert = MessageError.getMessage(this, result, 'title')
 						if (result.data) {
-							this.id = result.data.id
-							this.form.id = result.data.id
-							window.location.hash = 'sellers/' + result.data.id
+							Methods.refreshPage(this, 'sellers/' + result.data.id, true)
 						}
 					})
 				}

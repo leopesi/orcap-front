@@ -117,6 +117,7 @@
 
 <script>
 	import MessageError from '../../../../helpers/messages-errors'
+	import Methods from '../../../../helpers/methods'
 
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
@@ -168,11 +169,9 @@
 				} else {
 					Clients.insert(this.form, (result) => {
 						this.alert = MessageError.getMessage(this, result, 'title')
-            if (result.data) {
-              this.id = result.data.id
-              this.form.id = result.data.id
-              window.location.hash = 'clients/' + result.data.id
-            }
+						if (result.data) {
+							Methods.refreshPage(this, 'clients/' + result.data.id, true)
+						}
 					})
 				}
 			},
