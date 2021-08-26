@@ -20,8 +20,8 @@
 		components: { List },
 		data() {
 			return {
-				cols: ['name', 'phone', 'mail'],
-				filters: { name: '', phone: '' },
+				cols: ['name', 'mail'],
+				filters: { name: '' },
 				itens: [],
 				messages,
 			}
@@ -33,18 +33,12 @@
 			filteredItens() {
 				return this.itens.filter((item) => {
 					if (!this.filters.name) this.filters.name = ''
-					if (!this.filters.phone) this.filters.phone = ''
 					if (!item.name) item.name = ''
-					if (!item.phone) item.phone = ''
 					if (
 						item.name
 							.toString()
 							.toLowerCase()
-							.indexOf(this.filters.name.toString().toLowerCase()) !== -1 &&
-						item.phone
-							.toString()
-							.toLowerCase()
-							.indexOf(this.filters.phone.toString().toLowerCase()) !== -1
+							.indexOf(this.filters.name.toString().toLowerCase()) !== -1 
 					) {
 						return item
 					}

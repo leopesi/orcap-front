@@ -5,6 +5,7 @@ export default {
 		id: 'ID',
 		name: 'Nome',
 		document: 'CPF',
+		neighborhood: 'Bairro/Condomínio',
 		clients: 'Cliente',
 		sellers: 'Vendedor',
 		payments: 'Formas de pagamento',

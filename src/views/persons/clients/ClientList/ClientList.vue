@@ -2,7 +2,8 @@
   <div class="home">
     <List
       :cols="this.cols"
-      :itens="this.itens"
+      :filters="this.filters" 
+      :itens="this.filteredItens"
       @new="create"
       @edit="edit"
       @delete="del"
@@ -28,6 +29,7 @@ export default {
   data() {
     return {
       cols: ['name', 'phone', { sessions: ['mail'] }, 'city', 'neighborhood'],
+      filters:  { name: '', neighborhood: '' } ,
       itens: [],
       messages,
     }
@@ -35,6 +37,28 @@ export default {
   mounted() {
     this.load()
   },
+  computed: {
+			filteredItens() {
+				return this.itens.filter((item) => {
+					if (!this.filters.name) this.filters.name = ''
+          if (!this.filters.neighborhood) this.filters.neighborhood = ''
+					if (!item.name) item.name = ''
+          if (!item.neighborhood) item.neighborhood = ''
+					if (	
+						item.name
+							.toString()
+							.toLowerCase()
+							.indexOf(this.filters.name.toString().toLowerCase()) !== -1 &&
+						item.neighborhood
+							.toString()
+							.toLowerCase()
+							.indexOf(this.filters.neighborhood.toString().toLowerCase()) !== -1  
+					) {
+						return item
+					}
+				})
+			},
+		},
   methods: {
     load() {
       Clients.list((result) => {
