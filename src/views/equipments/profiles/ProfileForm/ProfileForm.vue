@@ -81,6 +81,7 @@
 
 <script>
 	import MessageError from '../../../../helpers/messages-errors'
+	import Methods from '../../../../helpers/methods'
 
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
@@ -142,9 +143,7 @@
 					Profiles.insert(this.form, (result) => {
 						this.alert = MessageError.getMessage(this, result, 'title')
 						if (result.data) {
-							this.id = result.data.id
-							this.form.id = result.data.id
-							window.location.hash = 'profiles/' + result.data.id
+							Methods.refreshPage(this, 'profiles/' + result.data.id, true)
 						}
 					})
 				}

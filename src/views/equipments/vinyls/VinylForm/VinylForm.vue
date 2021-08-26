@@ -88,7 +88,7 @@
 </template>
 
 <script>
-	// import Methods from '../../../../helpers/methods'
+	import Methods from '../../../../helpers/methods'
 	import MessageError from '../../../../helpers/messages-errors'
 
 	import Form from '../../../components/Form/Form'
@@ -152,9 +152,7 @@
 					Vinyls.insert(this.form, (result) => {
 						this.alert = MessageError.getMessage(this, result, 'title')
 						if (result.data) {
-							this.id = result.data.id
-							this.form.id = result.data.id
-							window.location.hash = 'vinyls/' + result.data.id
+							Methods.refreshPage(this, 'vinyls/' + result.data.id, true)
 						}
 					})
 				}

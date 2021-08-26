@@ -45,6 +45,7 @@
 	import Brands from '../../../../controllers/basics/brands'
 
 	import MessageError from '../../../../helpers/messages-errors'
+	import Methods from '../../../../helpers/methods'
 
 	import messages from './messages'
 	export default {
@@ -90,9 +91,7 @@
 					Brands.insert(this.form, (result) => {
 						this.alert = MessageError.getMessage(this, result, 'title')
 						if (result.data) {
-							this.id = result.data.id
-							this.form.id = result.data.id
-							window.location.hash = 'brands/' + result.data.id
+							Methods.refreshPage(this, 'brands/' + result.data.id, true)
 						}
 					})
 				}
