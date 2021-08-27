@@ -50,6 +50,8 @@ export default {
       BRAND_PROFILE_IS_EMPTY: 'Marca não pode estar em branco',
       BRAND_BLANKET_IS_EMPTY: 'Marca não pode estar em branco',
       BRAND_VINYL_IS_EMPTY: 'Marca não pode estar em branco',
+      MAIL_LOGIST_EXISTS: 'Lojista já cadastrado com este email',
+      MAIL_EXISTS: 'Email já cadastrado'
     },
     models: {
       _INSERT_SUCCESS: '$table inserido com sucesso',
