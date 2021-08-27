@@ -75,7 +75,7 @@
 
 	export default {
 		name: 'Blankets',
-		props: { index: Number, form: Object, m2_facial: Number, tax: Number },
+		props: { index: Number, logist: Object, form: Object, m2_facial: Number, tax: Number },
 		i18n: { messages },
 		data() {
 			return {
@@ -94,6 +94,13 @@
 					this.blankets = {}
 					for (const i in result.data) {
 						this.blankets[result.data[i].equipment_id] = result.data[i]
+					}
+					if (!this.form.equipments[this.index].equipment_id) {
+						for (const i in this.blankets) {
+							if (this.blankets[i].equipments.brand_id == this.logist.brand_blanket_id){
+								this.form.equipments[this.index].equipment_id = this.blankets[i].equipment_id
+							}
+						}
 					}
 					this.change()
 					this.setData()

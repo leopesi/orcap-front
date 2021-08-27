@@ -95,6 +95,7 @@
 									<div v-if="equipment">
 										<Filters
 											:index="equipment.index"
+											:logist="logist"
 											:form="form"
 											:dimension="form.dimension"
 											:tax="form.installment_tax"
@@ -114,6 +115,7 @@
 										<Lids :index="equipment.index" :form="form" :tax="form.installment_tax" @changed="changeEquipment" @delete="deleteEquipment(equipment.index)" v-if="equipment.type == 'lids'" />
 										<Blankets
 											:index="equipment.index"
+											:logist="logist"
 											:form="form"
 											:m2_facial="parseFloat(form.m2_facial)"
 											:tax="form.installment_tax"
@@ -123,6 +125,7 @@
 										/>
 										<Profiles
 											:index="equipment.index"
+											:logist="logist"
 											:form="form"
 											:perimeter="parseFloat(form.perimeter)"
 											:tax="form.installment_tax"
@@ -132,6 +135,7 @@
 										/>
 										<Vinyls
 											:index="equipment.index"
+											:logist="logist"
 											:form="form"
 											:m2_total="parseFloat(form.m2_total)"
 											:tax="form.installment_tax"
@@ -462,18 +466,20 @@
 			},
 			changedClient() {},
 			changeEquipment(equipment) {
+				console.log(equipment)
 				if (equipment && equipment.engine && equipment.lid) {
-					// 	const index = this.form.equipments[equipment.index].index
-					// 	for (const i in this.form.equipments) {
-					// 		if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
-					// 			this.form.equipments[i].id = equipment.engine.id
-					// 			this.form.equipments[i].equipment_id = equipment.engine.equipment_id
-					// 		}
-					// 		if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
-					// 			this.form.equipments[i].id = equipment.lid.id
-					// 			this.form.equipments[i].equipment_id = equipment.lid.equipment_id
-					// 		}
-					// 	}
+					
+						const index = this.form.equipments[equipment.index].index
+						for (const i in this.form.equipments) {
+							if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
+								this.form.equipments[i].id = equipment.engine.id
+								this.form.equipments[i].equipment_id = equipment.engine.equipment_id
+							}
+							if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
+								this.form.equipments[i].id = equipment.lid.id
+								this.form.equipments[i].equipment_id = equipment.lid.equipment_id
+							}
+						}
 				}
 
 				// this.form.equipments[equipment.index].id = equipment.id
@@ -586,7 +592,7 @@
 						}
 					}
 					if (!finded) {
-						const index = Object.keys(this.form.equipments).length - 1
+						const index = Object.keys(this.form.equipments).length
 						this.form.equipments[index] = { type, index }
 					}
 				}

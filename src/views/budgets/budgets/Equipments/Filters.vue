@@ -75,7 +75,7 @@
 
 	export default {
 		name: 'Filters',
-		props: { index: Number, form: Object, dimension: Object, tax: Number },
+		props: { index: Number, logist: Object, form: Object, dimension: Object, tax: Number },
 		i18n: { messages },
 		data() {
 			return {
@@ -95,6 +95,13 @@
 					for (const i in result.data) {
 						this.filters[result.data[i].equipment_id] = result.data[i]
 					}
+					if (!this.form.equipments[this.index].equipment_id) {
+						for (const i in this.filters) {
+							if (this.filters[i].equipments.brand_id == this.logist.brand_filter_id){
+								this.form.equipments[this.index].equipment_id = this.filters[i].equipment_id
+							}
+						}
+					}
 					this.change()
 					this.setData()
 					this.show = true
@@ -102,28 +109,29 @@
 			},
 			change() {
 				this.setData()
-				this.$emit('changed')
-				// if (this.filters[this.value]) {
-				// 	this.setData()
-				// 	const data = {
-				// 		id: this.value,
-				// 		type: 'filters',
-				// 		index: this.equipment.index,
-				// 		engine: {
-				// 			id: this.filters[this.value].engines.id,
-				// 			equipment_id: this.filters[this.value].engines.equipment_id,
-				// 		},
-				// 		lid: {
-				// 			id: this.filters[this.value].lids.id,
-				// 			equipment_id: this.filters[this.value].lids.equipment_id,
-				// 		},
-				// 		equipment_id: this.filters[this.value].equipment_id,
-				// 		discount: this.discountValue,
-				// 		price: this.price,
-				// 		final_price: this.final_price,
-				// 	}
-				// 	this.$emit('changed', data)
-				// }
+				const id = this.form.equipments[this.index].equipment_id
+				if (this.filters[id]) {
+					this.setData()
+					const data = {
+						id: this.value,
+						type: 'filters',
+						index: this.index,
+						engine: {
+							id: this.filters[id].engines.id,
+							equipment_id: this.filters[id].engines.equipment_id,
+						},
+						lid: {
+							id: this.filters[id].lids.id,
+							equipment_id: this.filters[id].lids.equipment_id,
+						},
+						equipment_id: this.filters[id].equipment_id,
+						discount: this.discountValue,
+						price: this.price,
+						final_price: this.final_price,
+					}
+					console.log(data)
+					this.$emit('changed', data)
+				}
 			},
 			changePercent() {
 				const price = Methods.fixNumber(this.form.equipments[this.index].price)
