@@ -131,8 +131,8 @@ export default {
           }
         })
       } else {
-        Clients.insertClient(this.form, (result) => {
-          console.log(result)
+        Clients.insertClient(this.form, () => {
+          
         })
       }
     },

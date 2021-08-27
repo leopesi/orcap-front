@@ -51,8 +51,7 @@ export default {
       Methods.openPage(this, 'profiles/' + id)
     },
     del(id) {
-      Profiles.delete(id, (result) => {
-        console.log(result)
+      Profiles.delete(id, () => {
         this.load()
       })
     },

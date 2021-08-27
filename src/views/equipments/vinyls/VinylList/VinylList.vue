@@ -52,8 +52,7 @@ export default {
       Methods.openPage(this, 'vinyls/' + id)
     },
     del(id) {
-      Vinyls.delete(id, (result) => {
-        console.log(result)
+      Vinyls.delete(id, () => {
         this.load()
       })
     },

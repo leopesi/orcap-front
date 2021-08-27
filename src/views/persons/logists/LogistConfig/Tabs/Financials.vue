@@ -235,7 +235,6 @@
 		methods: {
 			load() {
 				Logists.getByToken((result) => {
-					console.log(result.data)
 					//Cartão de crédito*
 					this.installment_credit_card = JSON.parse(result.data.installment_credit_card)
 					if (!this.installment_credit_card) this.installment_credit_card = []

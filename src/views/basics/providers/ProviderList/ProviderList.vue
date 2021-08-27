@@ -58,8 +58,7 @@
 				Methods.openPage(this, 'providers/' + id)
 			},
 			del(id) {
-				Providers.delete(id, (result) => {
-					console.log(result)
+				Providers.delete(id, () => {
 					this.load()
 				})
 			},

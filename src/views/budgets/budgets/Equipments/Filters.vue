@@ -129,7 +129,6 @@
 						price: this.price,
 						final_price: this.final_price,
 					}
-					console.log(data)
 					this.$emit('changed', data)
 				}
 			},

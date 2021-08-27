@@ -52,8 +52,7 @@ export default {
       Methods.openPage(this, 'blankets/' + id)
     },
     del(id) {
-      Blankets.delete(id, (result) => {
-        console.log(result)
+      Blankets.delete(id, () => {
         this.load()
       })
     },

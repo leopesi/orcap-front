@@ -72,8 +72,7 @@ export default {
       Methods.openPage(this, 'clients/' + id)
     },
     del(id) {
-      Clients.delete(id, (result) => {
-        console.log(result)
+      Clients.delete(id, () => {
         this.load()
       })
     },

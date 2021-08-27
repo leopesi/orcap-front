@@ -68,8 +68,7 @@ export default {
       Methods.openPage(this, 'brands/' + id)
     },
     del(id) {
-      Brands.delete(id, (result) => {
-        console.log(result)
+      Brands.delete(id, () => {
         this.load()
       })
     },

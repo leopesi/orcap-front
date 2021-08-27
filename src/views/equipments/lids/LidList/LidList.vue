@@ -52,8 +52,7 @@ export default {
       Methods.openPage(this, 'lids/' + id)
     },
     del(id) {
-      Lids.delete(id, (result) => {
-        console.log(result)
+      Lids.delete(id, () => {
         this.load()
       })
     },

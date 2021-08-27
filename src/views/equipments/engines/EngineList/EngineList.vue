@@ -52,8 +52,7 @@ export default {
       Methods.openPage(this, 'engines/' + id)
     },
     del(id) {
-      Engines.delete(id, (result) => {
-        console.log(result)
+      Engines.delete(id, () => {
         this.load()
       })
     },
