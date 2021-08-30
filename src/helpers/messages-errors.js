@@ -51,6 +51,7 @@ export default {
       BRAND_BLANKET_IS_EMPTY: 'Marca não pode estar em branco',
       BRAND_VINYL_IS_EMPTY: 'Marca não pode estar em branco',
       MAIL_LOGIST_EXISTS: 'Lojista já cadastrado com este email',
+      MAIL_SELLER_EXISTS: 'Vendedor já cadastrado com este email',
       MAIL_EXISTS: 'Email já cadastrado'
     },
     models: {
