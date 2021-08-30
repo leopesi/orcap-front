@@ -222,7 +222,7 @@
 				this.form.initial_depth = format.initial_depth
 				this.form.final_depth = format.final_depth
 				this.form.beach = false
-				if (format.beach_length && !isNaN(parseFloat(format.beach_length)) && parseFloat(format.beach_length) > 0) {
+				if (format.beach_length && !isNaN(format.beach_length) && parseFloat(format.beach_length) > 0) {
 					this.form.beach_length = format.beach_length
 					this.form.beach_width = format.beach_width
 					this.form.beach_medium_depth = format.beach_medium_depth

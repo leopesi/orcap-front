@@ -117,7 +117,7 @@
 											:index="equipment.index"
 											:logist="logist"
 											:form="form"
-											:m2_facial="parseFloat(form.m2_facial)"
+											:m2_facial="isNaN(form.m2_facial) ? 0 : parseFloat(form.m2_facial)"
 											:tax="form.installment_tax"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
@@ -127,7 +127,7 @@
 											:index="equipment.index"
 											:logist="logist"
 											:form="form"
-											:perimeter="parseFloat(form.perimeter)"
+											:perimeter="isNaN(form.perimeter) ? 0 : parseFloat(form.perimeter)"
 											:tax="form.installment_tax"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
@@ -137,7 +137,7 @@
 											:index="equipment.index"
 											:logist="logist"
 											:form="form"
-											:m2_total="parseFloat(form.m2_total)"
+											:m2_total="isNaN(form.m2_total) ? 0 : parseFloat(form.m2_total)"
 											:tax="form.installment_tax"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
@@ -146,7 +146,7 @@
 										<Supplies
 											:index="equipment.index"
 											:form="form"
-											:m2_total="parseFloat(form.m2_total)"
+											:m2_total="isNaN(form.m2_total) ? 0 : parseFloat(form.m2_total)"
 											:tax="form.installment_tax"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
@@ -466,20 +466,18 @@
 			},
 			changedClient() {},
 			changeEquipment(equipment) {
-				console.log(equipment)
 				if (equipment && equipment.engine && equipment.lid) {
-					
-						const index = this.form.equipments[equipment.index].index
-						for (const i in this.form.equipments) {
-							if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
-								this.form.equipments[i].id = equipment.engine.id
-								this.form.equipments[i].equipment_id = equipment.engine.equipment_id
-							}
-							if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
-								this.form.equipments[i].id = equipment.lid.id
-								this.form.equipments[i].equipment_id = equipment.lid.equipment_id
-							}
+					const index = this.form.equipments[equipment.index].index
+					for (const i in this.form.equipments) {
+						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
+							this.form.equipments[i].id = equipment.engine.id
+							this.form.equipments[i].equipment_id = equipment.engine.equipment_id
 						}
+						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
+							this.form.equipments[i].id = equipment.lid.id
+							this.form.equipments[i].equipment_id = equipment.lid.equipment_id
+						}
+					}
 				}
 
 				// this.form.equipments[equipment.index].id = equipment.id
