@@ -79,6 +79,12 @@
 						</div>
 					</div>
 					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="thickness">{{ $t('thickness') }} *</label>
+							<input class="form-control" id="thickness" v-model="form.thickness" type="number" step="0.01" />
+						</div>
+					</div>
+					<div class="col-sm-2">
 						<div class="form-group mb-3">
 							<label for="beach">{{ $t('beach') }}</label>
 							<div class="input-group mb-3">

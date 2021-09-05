@@ -18,6 +18,7 @@ const i18n = new VueI18n({
 
 axios.defaults.baseURL = 'http://localhost:3333'
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token
+axios.defaults.headers['logisttoken'] = localStorage.logist_token
 
 new Vue({
 	router,

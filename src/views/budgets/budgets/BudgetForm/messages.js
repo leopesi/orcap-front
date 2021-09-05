@@ -28,6 +28,7 @@ export default {
 		beach_width: 'Largura da Prainha',
 		beach_medium_depth: 'Profundidade Média da Prainha',
 		beach_m2_wall: 'M2 da Parede Prainha',
+		thickness: 'Espessura do Vinil',
 		steps: 'Patamares',
 		number_steps: 'Quantidade de Patamares',
 		no: 'Não',

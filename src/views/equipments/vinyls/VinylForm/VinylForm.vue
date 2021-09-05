@@ -74,14 +74,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="thickness">{{ $t('thickness') }}</label>
-						<input class="form-control" id="thickness" v-model="form.thickness" type="number" />
-					</div>
-				</div>
-			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
@@ -132,7 +124,6 @@
 							forward_price: vinyl.data.equipments ? vinyl.data.equipments.forward_price : '',
 							man_power_cost: vinyl.data.equipments ? vinyl.data.equipments.man_power_cost : '',
 							man_power_profit_margin: vinyl.data.equipments ? vinyl.data.equipments.man_power_profit_margin : '',
-							thickness: vinyl.data.thickness,
 						}
 					})
 				}

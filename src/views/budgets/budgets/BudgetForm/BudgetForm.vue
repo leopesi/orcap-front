@@ -472,6 +472,7 @@
 						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
 							this.form.equipments[i].id = equipment.engine.id
 							this.form.equipments[i].equipment_id = equipment.engine.equipment_id
+							this.form.equipments[i]
 						}
 						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
 							this.form.equipments[i].id = equipment.lid.id
@@ -479,12 +480,6 @@
 						}
 					}
 				}
-
-				// this.form.equipments[equipment.index].id = equipment.id
-				// this.form.equipments[equipment.index].equipment_id = equipment.equipment_id
-				// this.form.equipments[equipment.index].discount = equipment.discount
-				// this.form.equipments[equipment.index].final_price = equipment.final_price
-				// this.form = Object.assign({}, this.form)
 				setTimeout(() => {
 					this.changedValues()
 				}, 100)
