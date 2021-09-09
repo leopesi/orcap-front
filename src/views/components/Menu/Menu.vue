@@ -17,7 +17,7 @@
 							<div>
 								<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
 									<li @click="open(menu)" v-for="(menu, j) in header" :key="j">
-										<a class="dropdown-item">
+										<a class="dropdown-item" v-if="permissions[userType] && permissions[userType][i] && permissions[userType][i].indexOf(j) !== -1">
 											{{ $t(j) }}
 										</a>
 									</li>
@@ -34,6 +34,7 @@
 <script>
 	import Methods from '../../../helpers/methods'
 	import Menus from './menus'
+	import Permissions from './permissions'
 	import messages from './messages'
 	import './style.css'
 	export default {
@@ -42,7 +43,9 @@
 		data() {
 			return {
 				menus: Menus,
+				permissions: Permissions,
 				actual: Object.keys(Menus)[0],
+				userType: localStorage.userType,
 				show: localStorage.userType ? true : false,
 			}
 		},

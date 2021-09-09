@@ -6,7 +6,7 @@ export default {
 		axios.get('/login?mail=' + mail + '&password=' + password).then((response) => {
 			if (response && response.data && response.data.token) {
 				localStorage.token = response.data.token
-        localStorage.logist_token = response.data.logist_token
+				localStorage.logist_token = response.data.logist_token
 				localStorage.userType = response.data.type
 				localStorage.userName = response.data.name
 				axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
