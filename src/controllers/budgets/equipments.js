@@ -1,6 +1,8 @@
 import axios from 'axios'
 
 export default {
+	
+	// Seta as rotas do Controller ( back-end - controllers/equipaments/sands.js)
 
 	getFiltersByDimension(data, callback) {
 		axios.post('/filters-by-dimension', data)
@@ -26,6 +28,18 @@ export default {
 
 	getLidsByFilters(data, callback) {
 		axios.post('/lids-by-filters', data)
+		.then(response => {
+			if (response && response.data) {
+				callback(response.data)
+			} else {
+				callback({})
+			}
+		})
+	},
+
+	
+	getSandsByFilters(data, callback) {
+		axios.post('/sands-by-filters', data)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)

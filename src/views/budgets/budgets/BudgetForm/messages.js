@@ -60,6 +60,9 @@ export default {
 		lids: 'Tampas de Casa de Máquina',
 		lid: 'Tampas de Casa de Máquina',
 
+		sands: 'Areias',
+		sand: 'Areia',
+
 		blankets: 'Mantas',
 		blanket: 'Manta',
 

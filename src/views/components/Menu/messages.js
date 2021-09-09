@@ -17,6 +17,7 @@ export default {
 		engines: 'Motores',
 		blankets: 'Mantas de Revestimento',
 		lids: 'Tampas Casa de Máquina',
+		sands: 'Areias',
 		profiles: 'Perfis',
 		vinyls: 'Vinil',
 
