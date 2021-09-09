@@ -9,6 +9,11 @@ export default {
     Cruds.get('/sellers/', id, (result) => callback(result))
   },
 
+  getByToken(callback) {
+    Cruds.get('/sellers-by-token/', null, (result) => callback(result))
+  },
+
+
   insert(data, callback) {
     Cruds.insert('/sellers/', data, (result) => callback(result))
   },

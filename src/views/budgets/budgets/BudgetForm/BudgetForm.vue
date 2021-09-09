@@ -26,7 +26,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
-					<div class="form-group mb-3">
+					<div class="form-group mb-3" v-if="this.userType != 'seller'">
 						<label for="seller_id">{{ $t('seller') }}</label>
 						<div class="input-group mb-3">
 							<select class="form-control custom-select" id="seller_id" v-model="form.seller_id">
@@ -370,6 +370,7 @@
 				},
 				clients: [],
 				sellers: [],
+				userType: localStorage.userType,
 				logist: {},
 				payments: Payments,
 				equipments: Equipments,
@@ -437,12 +438,19 @@
 						this.changeLayout()
 					}, 1)
 				}
-				Logists.getByToken((result) => {
-					this.logist = result.data
-				})
-				Sellers.list((result) => {
-					this.sellers = result.data
-				})
+				if (this.userType == 'seller') {
+					Sellers.getByToken((result) => {
+						this.sellers = result.data
+						this.logist = result.data.logists
+					})
+				} else {
+					Logists.getByToken((result) => {
+						this.logist = result.data
+					})
+					Sellers.list((result) => {
+						this.sellers = result.data
+					})
+				}
 				Clients.list((result) => {
 					this.clients = result.data
 				})
