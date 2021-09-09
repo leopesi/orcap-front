@@ -26,7 +26,10 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
-					<div class="form-group mb-3" v-if="this.userType != 'seller'">
+					<div class="form-group mb-3" v-if="this.userType == 'seller'">
+						<label for="seller_id">{{ $t('seller') }} : {{ this.form.seller_name }}</label>
+					</div>
+					<div class="form-group mb-3" v-else>
 						<label for="seller_id">{{ $t('seller') }}</label>
 						<div class="input-group mb-3">
 							<select class="form-control custom-select" id="seller_id" v-model="form.seller_id">
@@ -442,6 +445,8 @@
 					Sellers.getByToken((result) => {
 						this.sellers = result.data
 						this.logist = result.data.logists
+						this.form.seller_id = result.data.id
+						this.form.seller_name = result.data.name
 					})
 				} else {
 					Logists.getByToken((result) => {
