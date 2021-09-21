@@ -3,5 +3,7 @@ export default {
     filters: 'Filtro',
     blankets: 'Manta',
     profiles: 'Perfil',
-    vinyls: 'Vinil'
+    vinyls: 'Vinil',
+    sands: 'Areia',
+    engine: 'Motor'
 }

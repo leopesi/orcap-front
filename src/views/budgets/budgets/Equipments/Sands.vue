@@ -3,7 +3,7 @@
 		<div class="card-header">
 			<div class="row">
 				<div class="col-sm-11">
-					{{ $t('filter') }}
+					{{ $t('sand') }}
 				</div>
 				<div class="btn col-sm-1 text-right" @click="$emit('delete')">
 					X
@@ -16,11 +16,11 @@
 					<div class="form-group">
 						<select class="form-control custom-select" v-model="form.equipments[index].equipment_id" @change="change">
 							<option selected>{{ $t('choose') }}</option>
-							<option :value="filter.equipment_id" v-for="(filter, i) in this.filters" :key="i">
-								<span v-if="filter && filter.equipments">
-									{{ filter.equipments.name }}
+							<option :value="sand.equipment_id" v-for="(sand, i) in this.sands" :key="i">
+								<span v-if="sand && sand.equipments">
+									{{ sand.equipments.name }}
 								</span>
-								<span v-if="filter && filter.brands"> / {{ filter.brands.name }} </span>
+								<span v-if="sand && sand.brands"> / {{ sand.brands.name }} </span>
 							</option>
 						</select>
 					</div>
@@ -74,12 +74,12 @@
 	import messages from '../BudgetForm/messages'
 
 	export default {
-		name: 'Filters',
-		props: { index: Number, logist: Object, form: Object, dimension: Object, tax: Number },
+		name: 'Sands',
+		props: { index: Number, form: Object, tax: Number },
 		i18n: { messages },
 		data() {
 			return {
-				filters: [],
+				sands: [],
 				forward_price: 0,
 				show: false,
 				discountPercent: 0,
@@ -90,17 +90,10 @@
 		},
 		methods: {
 			load() {
-				Equipments.getFiltersByDimension(this.dimension, (result) => {
-					this.filters = {}
+				Equipments.getSandsByFilters(this.dimension, (result) => {
+					this.sands = {}
 					for (const i in result.data) {
-						this.filters[result.data[i].equipment_id] = result.data[i]
-					}
-					if (!this.form.equipments[this.index].equipment_id) {
-						for (const i in this.filters) {
-							if (this.filters[i].equipments.brand_id == this.logist.brand_filter_id){
-								this.form.equipments[this.index].equipment_id = this.filters[i].equipment_id
-							}
-						}
+						this.sands[result.data[i].equipment_id] = result.data[i]
 					}
 					this.change()
 					this.setData()
@@ -109,28 +102,7 @@
 			},
 			change() {
 				this.setData()
-				const id = this.form.equipments[this.index].equipment_id
-				if (this.filters[id]) {
-					this.setData()
-					const data = {
-						id: this.value,
-						type: 'filters',
-						index: this.index, //índice da lista de equipamentos no orçamento
-						engine: {
-							id: this.filters[id].engines.id,
-							equipment_id: this.filters[id].engines.equipment_id,
-						},
-						lid: {
-							id: this.filters[id].lids.id,
-							equipment_id: this.filters[id].lids.equipment_id,
-						},
-						equipment_id: this.filters[id].equipment_id,
-						discount: this.discountValue,
-						price: this.price,
-						final_price: this.final_price,
-					}
-					this.$emit('changed', data)
-				}
+				this.$emit('changed')
 			},
 			changePercent() {
 				const price = Methods.fixNumber(this.form.equipments[this.index].price)
@@ -141,15 +113,15 @@
 			},
 			setData() {
 				const id = this.form.equipments[this.index].equipment_id
-				if (this.filters[id] && this.filters[id].equipments) {
-					const profit_margin = Methods.fixNumber(this.filters[id].equipments.profit_margin)
-					const cost = Methods.fixNumber(this.filters[id].equipments.cost)
+				if (this.sands[id] && this.sands[id].equipments) {
+					const profit_margin = Methods.fixNumber(this.sands[id].equipments.profit_margin)
+					const cost = Methods.fixNumber(this.sands[id].equipments.cost)
 					const price = cost + (cost * profit_margin) / 100
 					const discount = Methods.fixNumber(this.form.equipments[this.index].discount)
 					const price_with_discount = price
 
-					const man_power_profit_margin = Methods.fixNumber(this.filters[id].equipments.man_power_profit_margin)
-					const man_power_cost = Methods.fixNumber(this.filters[id].equipments.man_power_cost)
+					const man_power_profit_margin = Methods.fixNumber(this.sands[id].equipments.man_power_profit_margin)
+					const man_power_cost = Methods.fixNumber(this.sands[id].equipments.man_power_cost)
 					const man_power_price = man_power_cost + (man_power_cost * man_power_profit_margin) / 100
 
 					this.form.equipments[this.index].cost = cost

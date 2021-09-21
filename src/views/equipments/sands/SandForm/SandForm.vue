@@ -49,47 +49,6 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="engine">{{ $t('engine') }}</label>
-						<div class="input-group mb-3">
-							<select class="form-control custom-select" id="engine" v-model="form.engine_id">
-								<option selected>{{ $t('choose') }}</option>
-								<option :value="engine.id" v-for="(engine, i) in this.engines" :key="i">
-									<span v-if="engine.equipments && engine.brands"> {{ engine.equipments.name }} / {{ engine.brands.name }} </span>
-								</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="lid">{{ $t('lid') }}</label>
-						<div class="input-group mb-3">
-							<select class="form-control custom-select" id="lid" v-model="form.lid_id">
-								<option selected>{{ $t('choose') }}</option>
-								<option :value="lid.id" v-for="(lid, i) in this.lids" :key="i">
-									<span v-if="lid.equipments && lid.brands"> {{ lid.equipments.name }} / {{ lid.brands.name }} </span>
-								</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="sand">{{ $t('sand') }}</label>
-						<div class="input-group mb-3">
-							<select class="form-control custom-select" id="sand" v-model="form.sand_id">
-								<option selected>{{ $t('choose') }}</option>
-								<option :value="sand.id" v-for="(sand, i) in this.sands" :key="i">
-									<span v-if="sand.equipments && sand.brands"> {{ sand.equipments.name }} / {{ sand.brands.name }} </span>
-								</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
 						<label for="cost">{{ $t('cost') }}</label>
 						<input class="form-control" id="cost" v-model="form.cost" type="number" />
 					</div>
@@ -115,14 +74,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="max_capacity">{{ $t('max_capacity') }}</label>
-						<input class="form-control" id="max_capacity" v-model="form.max_capacity" type="number" />
-					</div>
-				</div>
-			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
@@ -134,16 +85,13 @@
 
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
-	import Filters from '../../../../controllers/equipments/filters'
-	import Engines from '../../../../controllers/equipments/engines'
-	import Lids from '../../../../controllers/equipments/lids'
 	import Sands from '../../../../controllers/equipments/sands'
 	import Providers from '../../../../controllers/basics/providers'
 	import Brands from '../../../../controllers/basics/brands'
 
 	import messages from './messages'
 	export default {
-		name: 'FilterForm',
+		name: 'SandForm',
 		props: { id: String },
 		i18n: { messages },
 		components: { Form, Alert },
@@ -155,8 +103,6 @@
 				},
 				providers: [],
 				brands: [],
-				engines: [],
-				lids: [],
 				sands: [],
 				alert: {},
 			}
@@ -167,22 +113,18 @@
 		methods: {
 			load() {
 				if (this.id && this.id != 0) {
-					Filters.get(this.id, (filter) => {
+					Sands.get(this.id, (sand) => {
 						this.form = {
 							id: this.id && this.id != 0 ? this.id : null,
-							name: filter.data.equipments ? filter.data.equipments.name : '',
-							provider_id: filter.data.providers.id,
-							brand_id: filter.data.brands.id,
-							engine_id: filter.data.engine_id,
-							lid_id: filter.data.lid_id,
-							sand_id: filter.data.sand_id,
-							cost: filter.data.equipments ? filter.data.equipments.cost : '',
-							profit_margin: filter.data.equipments ? filter.data.equipments.profit_margin : '',
-							cash_price: filter.data.equipments ? filter.data.equipments.cash_price : '',
-							forward_price: filter.data.equipments ? filter.data.equipments.forward_price : '',
-							man_power_cost: filter.data.equipments ? filter.data.equipments.man_power_cost : '',
-							man_power_profit_margin: filter.data.equipments ? filter.data.equipments.man_power_profit_margin : '',
-							max_capacity: filter.data.max_capacity,
+							name: sand.data.equipments ? sand.data.equipments.name : '',
+							provider_id: sand.data.providers.id,
+							brand_id: sand.data.brands.id,
+							cost: sand.data.equipments ? sand.data.equipments.cost : '',
+							profit_margin: sand.data.equipments ? sand.data.equipments.profit_margin : '',
+							cash_price: sand.data.equipments ? sand.data.equipments.cash_price : '',
+							forward_price: sand.data.equipments ? sand.data.equipments.forward_price : '',
+							man_power_cost: sand.data.equipments ? sand.data.equipments.man_power_cost : '',
+							man_power_profit_margin: sand.data.equipments ? sand.data.equipments.man_power_profit_margin : '',
 						}
 					})
 				}
@@ -190,28 +132,19 @@
 					this.providers = providers.data
 					Brands.list((brands) => {
 						this.brands = brands.data
-						Engines.list((engines) => {
-							this.engines = engines.data
-							Lids.list((lids) => {
-								this.lids = lids.data
-								Sands.list((sands) => {
-									this.sands = sands.data
-								})
-							})
-						})
 					})
 				})
 			},
 			save() {
 				if (this.id && this.id != 0) {
-					Filters.update(this.form, (result) => {
-						this.alert = MessageError.getMessage(this, result, 'title', 'filters')
+					Sands.update(this.form, (result) => {
+						this.alert = MessageError.getMessage(this, result, 'title', 'sands')
 					})
 				} else {
-					Filters.insert(this.form, (result) => {
+					Sands.insert(this.form, (result) => {
 						this.alert = MessageError.getMessage(this, result, 'title')
 						if (result.data) {
-							Methods.refreshPage(this, 'filters/' + result.data.id, true)
+							Methods.refreshPage(this, 'sands/' + result.data.id, true)
 						}
 					})
 				}

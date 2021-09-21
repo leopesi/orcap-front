@@ -19,6 +19,7 @@ export default {
 		engines: 'engines',
 		blankets: 'blankets',
 		lids: 'lids',
+		sands: 'sands',
 		profiles: 'profiles',
 		vinyls: 'vinyls',
 	}

@@ -13,6 +13,9 @@ import EngineList from './engines/EngineList/EngineList'
 import LidForm from './lids/LidForm/LidForm'
 import LidList from './lids/LidList/LidList'
 
+import SandForm from './sands/SandForm/SandForm.vue'
+import SandList from './sands/SandList/SandList.vue'
+
 import ProfileForm from './profiles/ProfileForm/ProfileForm'
 import ProfileList from './profiles/ProfileList/ProfileList'
 
@@ -33,6 +36,9 @@ export default [
 
 	{ path: '/lids', component: LidList },
 	{ path: '/lids/:id', component: LidForm, props: true },
+
+	{ path: '/sands', component: SandList },
+	{ path: '/sands/:id', component: SandForm, props: true },
 
 	{ path: '/profiles', component: ProfileList },
 	{ path: '/profiles/:id', component: ProfileForm, props: true },

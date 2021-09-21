@@ -115,7 +115,22 @@
 											@delete="deleteEquipment(equipment.index)"
 											v-if="equipment.type == 'engines'"
 										/>
-										<Lids :index="equipment.index" :form="form" :tax="form.installment_tax" @changed="changeEquipment" @delete="deleteEquipment(equipment.index)" v-if="equipment.type == 'lids'" />
+										<Lids 
+											:index="equipment.index"
+											:form="form" 
+											:tax="form.installment_tax" 
+											@changed="changeEquipment" 
+											@delete="deleteEquipment(equipment.index)" 
+											v-if="equipment.type == 'lids'" 
+										/>
+										<Sands 
+											:index="equipment.index"
+											:form="form" 
+											:tax="form.installment_tax" 
+											@changed="changeEquipment" 
+											@delete="deleteEquipment(equipment.index)" 
+											v-if="equipment.type == 'sands'" 
+										/>
 										<Blankets
 											:index="equipment.index"
 											:logist="logist"
@@ -172,7 +187,13 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<ManPower :form="this.form" :layout="this.form.layout" :logist="this.logist" v-if="this.form" @changed="changedValues" />
+					<ManPower 
+					:form="this.form" 
+					:layout="this.form.layout" 
+					:logist="this.logist" 
+					v-if="this.form" 
+					@changed="changedValues" 
+				/>
 				</div>
 			</div>
 			<div class="row">
@@ -295,7 +316,11 @@
 				</button>
 			</div>
 		</FloatCard>
-		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
+		<Alert 
+		:title="this.alert.title" 
+		:message="this.alert.message"
+		@close="alert = {}" 
+		/>
 	</div>
 </template>
 
@@ -318,6 +343,7 @@
 	import Filters from '../Equipments/Filters'
 	import Engines from '../Equipments/Engines'
 	import Lids from '../Equipments/Lids'
+	import Sands from '../Equipments/Sands'
 	import Blankets from '../Equipments/Blankets'
 	import Profiles from '../Equipments/Profiles'
 	import Vinyls from '../Equipments/Vinyls'
@@ -345,6 +371,7 @@
 			Filters,
 			Engines,
 			Lids,
+			Sands,
 			Blankets,
 			Profiles,
 			Vinyls,
@@ -479,7 +506,7 @@
 			},
 			changedClient() {},
 			changeEquipment(equipment) {
-				if (equipment && equipment.engine && equipment.lid) {
+				if (equipment && equipment.engine && equipment.lid && equipment.sand) {
 					const index = this.form.equipments[equipment.index].index
 					for (const i in this.form.equipments) {
 						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
@@ -490,6 +517,10 @@
 						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
 							this.form.equipments[i].id = equipment.lid.id
 							this.form.equipments[i].equipment_id = equipment.lid.equipment_id
+						}
+						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'sands') {
+							this.form.equipments[i].id = equipment.sand.id
+							this.form.equipments[i].equipment_id = equipment.sand.equipment_id
 						}
 					}
 				}
@@ -621,6 +652,10 @@
 					this.form.equipments[parseInt(index) + 2] = {
 						type: 'lids',
 						index: parseInt(index) + 2,
+					}
+					this.form.equipments[parseInt(index) + 3] = {
+						type: 'sands',
+						index: parseInt(index) + 3,
 					}
 				}
 				this.showAddEquipment = false
