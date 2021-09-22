@@ -4,8 +4,8 @@ export default {
 	
 	// Seta as rotas do Controller ( back-end - controllers/equipaments/sands.js)
 
-	getFiltersByDimension(data, callback) {
-		axios.post('/filters-by-dimension', data)
+	getFiltersByDimension(dimension, callback) {
+		axios.post('/filters-by-dimension', dimension)
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -15,8 +15,8 @@ export default {
 		})
 	},
 
-	getEnginesByDimension(data, callback) {
-		axios.post('/engines-by-dimension', data)
+	getEnginesByFilters(callback) {
+		axios.post('/engines-by-filters')
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -26,8 +26,8 @@ export default {
 		})
 	},
 
-	getLidsByFilters(data, callback) {
-		axios.post('/lids-by-filters', data)
+	getLidsByFilters(callback) {
+		axios.post('/lids-by-filters')
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -38,8 +38,8 @@ export default {
 	},
 
 	
-	getSandsByFilters(data, callback) {
-		axios.post('/sands-by-filters', data)
+	getSandsByFilters(callback) {
+		axios.post('/sands-by-filters')
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -49,8 +49,8 @@ export default {
 		})
 	},
 
-	getBlanketsByDimension(data, callback) {
-		axios.post('/blankets-by-dimension', data)
+	getBlanketsByLogist(callback) {
+		axios.post('/blankets-by-logist')
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -60,8 +60,8 @@ export default {
 		})
 	},
 
-	getProfilesByDimension(data, callback) {
-		axios.post('/profiles-by-dimension', data)
+	getProfilesByLogist(callback) {
+		axios.post('/profiles-by-logist')
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)
@@ -71,8 +71,8 @@ export default {
 		})
 	},
 
-	getVinylsByDimension(data, callback) {
-		axios.post('/vinyls-by-dimension', data)
+	getVinylsByLogist(callback) {
+		axios.post('/vinyls-by-logist')
 		.then(response => {
 			if (response && response.data) {
 				callback(response.data)

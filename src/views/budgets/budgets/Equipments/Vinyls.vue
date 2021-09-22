@@ -90,7 +90,7 @@
 		},
 		methods: {
 			load() {
-				Equipments.getVinylsByDimension(this.dimension, (result) => {
+				Equipments.getVinylsByLogist((result) => {
 					this.vinyls = {}
 					for (const i in result.data) {
 						this.vinyls[result.data[i].equipment_id] = result.data[i]

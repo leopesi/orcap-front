@@ -90,7 +90,7 @@
 		},
 		methods: {
 			load() {
-				Equipments.getBlanketsByDimension(this.dimension, (result) => {
+				Equipments.getBlanketsByLogist((result) => {
 					this.blankets = {}
 					for (const i in result.data) {
 						this.blankets[result.data[i].equipment_id] = result.data[i]

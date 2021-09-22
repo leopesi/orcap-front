@@ -11,7 +11,7 @@ export default {
 		man_power_profit_margin: 'Margem de Lucro da Mão de Obra',
 		cash_price: 'Preço à vista',
 		forward_price: 'Preço à prazo',
-		size: 'Tamanho',
+		meter: 'Metro Linear',
 		choose: 'Escolha',
 	},
 }

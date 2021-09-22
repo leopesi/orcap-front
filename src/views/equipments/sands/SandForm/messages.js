@@ -6,6 +6,7 @@ export default {
 		provider: 'Fornecedor',
 		brand: 'Marca',
 		cost: 'Custo',
+		sand_kg: 'Quantidade de Areia (Kg)',
 		profit_margin: 'Margem de Lucro',
 		man_power_cost: 'Custo da Mão de Obra',
 		man_power_profit_margin: 'Margem de Lucro da Mão de Obra',

@@ -90,7 +90,7 @@
 		},
 		methods: {
 			load() {
-				Equipments.getProfilesByDimension(this.dimension, (result) => {
+				Equipments.getProfilesByLogist((result) => {
 					this.profiles = {}
 					for (const i in result.data) {
 						this.profiles[result.data[i].equipment_id] = result.data[i]

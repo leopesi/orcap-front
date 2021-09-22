@@ -74,6 +74,14 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="sand_kg">{{ $t('sand_kg') }}</label>
+						<input class="form-control" id="sand_kg" v-model="form.sand_kg" type="number" />
+					</div>
+				</div>
+			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>

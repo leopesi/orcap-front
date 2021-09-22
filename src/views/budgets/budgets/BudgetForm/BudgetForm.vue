@@ -109,7 +109,6 @@
 										<Engines
 											:index="equipment.index"
 											:form="form"
-											:dimension="form.dimension"
 											:tax="form.installment_tax"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"

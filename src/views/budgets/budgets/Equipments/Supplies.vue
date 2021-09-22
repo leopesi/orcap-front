@@ -62,16 +62,14 @@
 
 <script>
 	import Methods from '../../../../helpers/methods'
-	import Equipments from '../../../../controllers/budgets/equipments'
 	import messages from '../BudgetForm/messages'
 
 	export default {
-		name: 'Blankets',
+		name: 'Supplies',
 		props: { index: Number, form: Object, tax: Number },
 		i18n: { messages },
 		data() {
 			return {
-				blankets: [],
 				forward_price: 0,
 				show: false,
 				discountPercent: 0,
@@ -81,17 +79,6 @@
 			this.load()
 		},
 		methods: {
-			load() {
-				Equipments.getBlanketsByDimension(this.dimension, (result) => {
-					this.blankets = {}
-					for (const i in result.data) {
-						this.blankets[result.data[i].equipment_id] = result.data[i]
-					}
-					this.change()
-					this.setData()
-					this.show = true
-				})
-			},
 			change() {
 				this.setData()
 				this.$emit('changed')

@@ -90,7 +90,7 @@
 		},
 		methods: {
 			load() {
-				Equipments.getLidsByFilters(this.dimension, (result) => {
+				Equipments.getLidsByFilters((result) => {
 					this.lids = {}
 					for (const i in result.data) {
 						this.lids[result.data[i].equipment_id] = result.data[i]

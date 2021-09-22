@@ -90,7 +90,7 @@
 		},
 		methods: {
 			load() {
-				Equipments.getSandsByFilters(this.dimension, (result) => {
+				Equipments.getSandsByFilters((result) => {
 					this.sands = {}
 					for (const i in result.data) {
 						this.sands[result.data[i].equipment_id] = result.data[i]

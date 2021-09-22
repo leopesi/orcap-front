@@ -74,6 +74,14 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="meter">{{ $t('meter') }}</label>
+						<input class="form-control" id="meter" v-model="form.meter" type="number" />
+					</div>
+				</div>
+			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
@@ -124,6 +132,7 @@
 							forward_price: profile.data.equipments ? profile.data.equipments.forward_price : '',
 							man_power_cost: profile.data.equipments ? profile.data.equipments.man_power_cost : '',
 							man_power_profit_margin: profile.data.equipments ? profile.data.equipments.man_power_profit_margin : '',
+							meter: profile.data.meter
 						}
 					})
 				}

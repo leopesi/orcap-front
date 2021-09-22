@@ -75,7 +75,7 @@
 
 	export default {
 		name: 'Engines',
-		props: { index: Number, form: Object, dimension: Object, tax: Number },
+		props: { index: Number, form: Object, tax: Number },
 		i18n: { messages },
 		data() {
 			return {
@@ -90,7 +90,7 @@
 		},
 		methods: {
 			load() {
-				Equipments.getEnginesByDimension(this.dimension, (result) => {
+				Equipments.getEnginesByFilters((result) => {
 					this.engines = {}
 					for (const i in result.data) {
 						if (result.data[i]) {

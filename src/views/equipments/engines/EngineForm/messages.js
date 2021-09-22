@@ -11,7 +11,6 @@ export default {
 		man_power_profit_margin: 'Margem de Lucro da Mão de Obra',
 		cash_price: 'Preço à vista',
 		forward_price: 'Preço à prazo',
-		max_capacity: 'Capacidade Máxima',
 		choose: 'Escolha',
 	},
 }

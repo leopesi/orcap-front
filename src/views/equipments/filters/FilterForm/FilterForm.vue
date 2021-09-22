@@ -86,6 +86,12 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="sand_kg">{{ $t('sand_kg') }}</label>
+						<input class="form-control" id="sand_kg" v-model="form.sand_kg" type="number" />
+					</div>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
@@ -176,6 +182,7 @@
 							engine_id: filter.data.engine_id,
 							lid_id: filter.data.lid_id,
 							sand_id: filter.data.sand_id,
+							sand_kg: filter.data.sand_kg,
 							cost: filter.data.equipments ? filter.data.equipments.cost : '',
 							profit_margin: filter.data.equipments ? filter.data.equipments.profit_margin : '',
 							cash_price: filter.data.equipments ? filter.data.equipments.cash_price : '',

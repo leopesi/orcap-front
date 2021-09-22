@@ -7,6 +7,8 @@ export default {
 		brand: 'Marca',
 		engine: 'Motor',
 		lid: 'Tampa da casa de máquinas',
+		sand: 'Areia de Filtro',
+		sand_kg: 'Quantidade de Areia (Kg)',
 		cost: 'Custo',
 		profit_margin: 'Margem de Lucro',
 		man_power_cost: 'Custo da Mão de Obra',

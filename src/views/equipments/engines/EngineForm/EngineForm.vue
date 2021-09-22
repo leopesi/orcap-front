@@ -74,14 +74,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="max_capacity">{{ $t('max_capacity') }}</label>
-						<input class="form-control" id="max_capacity" v-model="form.max_capacity" type="number" />
-					</div>
-				</div>
-			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
@@ -132,7 +124,6 @@
 							forward_price: engine.data.equipments ? engine.data.equipments.forward_price : '',
 							man_power_cost: engine.data.equipments ? engine.data.equipments.man_power_cost : '',
 							man_power_profit_margin: engine.data.equipments ? engine.data.equipments.man_power_profit_margin : '',
-							max_capacity: engine.data.max_capacity,
 						}
 					})
 				}
