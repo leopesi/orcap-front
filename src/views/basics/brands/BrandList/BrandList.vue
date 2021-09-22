@@ -28,7 +28,7 @@ export default {
   components: { List },
   data() {
     return {
-      cols: ['name', { providers: ['name'] }],
+      cols: ['name'],
       filters:  { name: ''} ,
       itens: [],
       messages,
@@ -48,7 +48,8 @@ export default {
 						item.name
 							.toString()
 							.toLowerCase()
-							.indexOf(this.filters.name.toString().toLowerCase()) !== -1  
+							.indexOf(this.filters.name.toString().toLowerCase()) !== -1  &&
+              item.logist_id == localStorage.logistID
 					) {
 						return item
 					}

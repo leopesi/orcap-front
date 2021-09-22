@@ -7,6 +7,7 @@ export default {
 			if (response && response.data && response.data.token) {
 				localStorage.token = response.data.token
 				localStorage.logist_token = response.data.logist_token
+				localStorage.logistID = response.data.logist_id
 				localStorage.userType = response.data.type
 				localStorage.userName = response.data.name
 				axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token

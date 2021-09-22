@@ -18,21 +18,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="provider">{{ $t('provider') }}</label>
-						<div class="input-group mb-3">
-							<select class="form-control custom-select" id="provider" v-model="form.provider_id">
-								<option selected>{{ $t('choose') }}</option>
-								<option :value="provider.id" v-for="(provider, i) in this.providers" :key="i">
-									{{ provider.name }}
-								</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
 		</Form>
 		<Alert :title="this.alert.title" :message="this.alert.message" :pageback="this.alert.pageback" @close="alert = {}" />
 	</div>
@@ -41,7 +26,6 @@
 <script>
 	import Form from '../../../components/Form/Form'
 	import Alert from '../../../components/Alert/Alert'
-	import Providers from '../../../../controllers/basics/providers'
 	import Brands from '../../../../controllers/basics/brands'
 
 	import MessageError from '../../../../helpers/messages-errors'
@@ -59,7 +43,6 @@
 					id: null,
 					name: '',
 				},
-				providers: [],
 				alert: {},
 			}
 		},
@@ -73,14 +56,9 @@
 						this.form = {
 							id: this.id && this.id != 0 ? this.id : null,
 							name: brand.data.name,
-							provider_id: brand.data.providers.id,
-							m2_size: brand.data.m2_size,
 						}
 					})
 				}
-				Providers.list((providers) => {
-					this.providers = providers.data
-				})
 			},
 			save() {
 				if (this.id && this.id != 0) {
