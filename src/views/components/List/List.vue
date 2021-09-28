@@ -54,8 +54,10 @@
 								</div>
 							</div>
 						</td>
-						<td @click="buttonEdit(item.id)">{{ $t('edit') }}</td>
-						<td @click="buttonAlert(item.id)">{{ $t('delete') }}</td>
+						<td v-if="!item.disabled" @click="buttonEdit(item.id)">{{ $t('edit') }}</td>
+						<td v-else></td>
+						<td v-if="!item.disabled" @click="buttonAlert(item.id)">{{ $t('delete') }}</td>
+						<td v-else></td>
 					</tr>
 				</tbody>
 			</table>
