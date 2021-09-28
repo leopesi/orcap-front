@@ -21,6 +21,7 @@
 									{{ sand.equipments.name }}
 								</span>
 								<span v-if="sand && sand.brands"> / {{ sand.brands.name }} </span>
+								<span v-if="sand && sand.providers"> / {{ sand.providers.name }} </span>
 							</option>
 						</select>
 					</div>

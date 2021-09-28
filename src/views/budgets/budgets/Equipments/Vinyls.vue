@@ -21,6 +21,7 @@
 									{{ vinyl.equipments.name }}
 								</span>
 								<span v-if="vinyl && vinyl.brands"> / {{ vinyl.brands.name }} </span>
+								<span v-if="vinyl && vinyl.providers"> / {{ vinyl.providers.name }} </span>
 							</option>
 						</select>
 					</div>
@@ -75,7 +76,7 @@
 
 	export default {
 		name: 'Vinyls',
-		props: { index: Number, logist: Object, form: Object, m2_total: Number, tax: Number },
+		props: { index: Number, logist: Object, form: Object, m2_total: Number, tax: Number, thickness: String },
 		i18n: { messages },
 		data() {
 			return {
@@ -88,6 +89,11 @@
 		mounted() {
 			this.load()
 		},
+		watch: {
+			thickness() {
+				console.log(this.thickness)
+			},
+		},
 		methods: {
 			load() {
 				Equipments.getVinylsByLogist((result) => {
@@ -97,7 +103,7 @@
 					}
 					if (!this.form.equipments[this.index].equipment_id) {
 						for (const i in this.vinyls) {
-							if (this.vinyls[i].equipments.brand_id == this.logist.brand_vinyl_id){
+							if (this.vinyls[i].equipments.brand_id == this.logist.brand_vinyl_id) {
 								this.form.equipments[this.index].equipment_id = this.vinyls[i].equipment_id
 							}
 						}

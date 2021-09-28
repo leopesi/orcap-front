@@ -14,7 +14,11 @@
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="name">{{ $t('name') }}</label>
-						<input class="form-control" id="name" v-model="form.name" type="text" />
+						<select class="form-control custom-select" id="name" v-model="form.name">
+							<option value="0,6">0,6</option>
+							<option value="0,7">0,7</option>
+							<option value="0,8">0,8</option>
+						</select>
 					</div>
 				</div>
 			</div>

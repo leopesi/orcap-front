@@ -133,6 +133,7 @@
 							forward_price: sand.data.equipments ? sand.data.equipments.forward_price : '',
 							man_power_cost: sand.data.equipments ? sand.data.equipments.man_power_cost : '',
 							man_power_profit_margin: sand.data.equipments ? sand.data.equipments.man_power_profit_margin : '',
+							sand_kg: sand.data.sand_kg
 						}
 					})
 				}

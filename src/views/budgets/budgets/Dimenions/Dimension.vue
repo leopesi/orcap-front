@@ -81,7 +81,11 @@
 					<div class="col-sm-2">
 						<div class="form-group">
 							<label for="thickness">{{ $t('thickness') }} *</label>
-							<input class="form-control" id="thickness" v-model="form.thickness" type="number" step="0.01" />
+							<select class="form-control custom-select" id="thickness" v-model="form.thickness">
+								<option value="0,6">0,6</option>
+								<option value="0,7">0,7</option>
+								<option value="0,8">0,8</option>
+							</select>
 						</div>
 					</div>
 					<div class="col-sm-2">

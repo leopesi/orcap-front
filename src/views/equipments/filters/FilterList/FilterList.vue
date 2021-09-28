@@ -1,62 +1,72 @@
 <template>
-  <div class="home">
-    <List
-      :cols="this.cols"
-      :itens="this.itens"
-      @new="create"
-      @edit="edit"
-      @delete="del"
-      :messages="this.messages"
-    >
-      <div slot="title">
-        {{ $t('title') }}
-      </div>
-    </List>
-  </div>
+	<div class="home">
+		<List :cols="this.cols" :filters="this.filters" :itens="this.filteredItens" @new="create" @edit="edit" @delete="del" :messages="this.messages">
+			<div slot="title">
+				{{ $t('title') }}
+			</div>
+		</List>
+	</div>
 </template>
 
 <script>
-import Methods from '../../../../helpers/methods'
-import List from '../../../components/List/List'
-import Filters from '../../../../controllers/equipments/filters'
+	import Methods from '../../../../helpers/methods'
+	import List from '../../../components/List/List'
+	import Filters from '../../../../controllers/equipments/filters'
 
-import messages from './messages'
-export default {
-  name: 'FilterList',
-  i18n: { messages },
-  components: { List },
-  data() {
-    return {
-      cols: [
-        { equipments: ['name'] },
-        { providers: ['name'] },
-        { brands: ['name'] },
-      ],
-      itens: [],
-      messages,
-    }
-  },
-  mounted() {
-    this.load()
-  },
-  methods: {
-    load() {
-      Filters.list((result) => {
-        this.itens = result.data
-      })
-    },
-    create() {
-      Methods.openPage(this, 'filters/0')
-    },
-    edit(id) {
-      Methods.openPage(this, 'filters/' + id)
-    },
+	import messages from './messages'
+	export default {
+		name: 'FilterList',
+		i18n: { messages },
+		components: { List },
+		data() {
+			return {
+				cols: [{ equipments: ['name'] }, { providers: ['name'] }, { brands: ['name'] }],
+				itens: [],
+				filters: { equipments: { name: '' } },
+				messages,
+			}
+		},
+		mounted() {
+			this.load()
+		},
+		computed: {
+			filteredItens() {
+				return this.itens.filter((item) => {
+					if (!this.filters.equipments) this.filters.equipments = {}
+          if (!this.filters.equipments.name) this.filters.equipments.name = ''
 
-    del(id) {
-      Filters.delete(id, () => {
-        this.load()
-      })
-    },
-  },
-}
+					if (!item.equipments) item.equipments = {}
+          if (!item.equipments.name) item.equipments.name = ''
+
+					if (
+						item.equipments.name
+							.toString()
+							.toLowerCase()
+							.indexOf(this.filters.equipments.name.toString().toLowerCase()) !== -1
+					) {
+						return item
+					}
+				})
+			},
+		},
+		methods: {
+			load() {
+				Filters.list((result) => {
+					this.itens = result.data
+				})
+			},
+			create() {
+				Methods.openPage(this, 'filters/0')
+			},
+			edit(id) {
+				Methods.openPage(this, 'filters/' + id)
+			},
+
+			del(id) {
+				Filters.delete(id, () => {
+					this.load()
+				})
+			},
+		},
+	}
 </script>

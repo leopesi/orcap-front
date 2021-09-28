@@ -21,6 +21,7 @@
 									{{ blanket.equipments.name }}
 								</span>
 								<span v-if="blanket && blanket.brands"> / {{ blanket.brands.name }} </span>
+								<span v-if="blanket && blanket.providers"> / {{ blanket.providers.name }} </span>
 							</option>
 						</select>
 					</div>

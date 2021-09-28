@@ -21,6 +21,7 @@
 									{{ engine.equipments.name }}
 								</span>
 								<span v-if="engine && engine.brands"> / {{ engine.brands.name }} </span>
+								<span v-if="engine && engine.providers"> / {{ engine.providers.name }} </span>
 							</option>
 						</select>
 					</div>

@@ -21,6 +21,7 @@
 									{{ lid.equipments.name }}
 								</span>
 								<span v-if="lid && lid.brands"> / {{ lid.brands.name }} </span>
+								<span v-if="lid && lid.providers"> / {{ lid.providers.name }} </span>
 							</option>
 						</select>
 					</div>

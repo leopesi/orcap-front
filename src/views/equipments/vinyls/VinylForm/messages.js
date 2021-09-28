@@ -2,7 +2,7 @@ export default {
 	'pt-br': {
 		title: 'Cadastro de Vinil',
 		id: 'ID',
-		name: 'Modelo',
+		name: 'Espessura',
 		provider: 'Fornecedor',
 		brand: 'Marca',
 		cost: 'Custo',
@@ -11,8 +11,6 @@ export default {
 		man_power_profit_margin: 'Margem de Lucro da Mão de Obra',
 		cash_price: 'Preço à vista',
 		forward_price: 'Preço à prazo',
-		m2_size: 'Tamanho m2',
-		thickness: 'Espessura',
 		choose: 'Escolha',
 	},
 }

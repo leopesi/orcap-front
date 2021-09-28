@@ -21,6 +21,7 @@
 									{{ filter.equipments.name }}
 								</span>
 								<span v-if="filter && filter.brands"> / {{ filter.brands.name }} </span>
+								<span v-if="filter && filter.providers"> / {{ filter.providers.name }} </span>
 							</option>
 						</select>
 					</div>
@@ -124,11 +125,16 @@
 							id: this.filters[id].lids.id,
 							equipment_id: this.filters[id].lids.equipment_id,
 						},
+						sand: {
+							id: this.filters[id].sands.id,
+							equipment_id: this.filters[id].sands.equipment_id,
+						},
 						equipment_id: this.filters[id].equipment_id,
 						discount: this.discountValue,
 						price: this.price,
 						final_price: this.final_price,
 					}
+					console.log(data)
 					this.$emit('changed', data)
 				}
 			},

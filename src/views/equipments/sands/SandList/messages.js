@@ -3,7 +3,8 @@ export default {
 	'pt-br': {
 		title: 'Lista de Areias',
 		id: 'ID',
-		equipments: 'Modelo',
+		name: 'Areia',
+		equipments: 'Quantidade',
 		providers: 'Fornecedor',
 		brands: 'Marca'
 	}

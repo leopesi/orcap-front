@@ -31,7 +31,6 @@
 		},
 		computed: {
 			filteredItens() {
-        console.log(localStorage.logistID)
 				return this.itens.filter((item) => {
 					if (!this.filters.name) this.filters.name = ''
 
@@ -42,9 +41,8 @@
 							.toString()
 							.toLowerCase()
 							.indexOf(this.filters.name.toString().toLowerCase()) !== -1 &&
-						(item.logist_id == localStorage.logistID || !item.logist_id)
+						(item.logist_id == localStorage.logistID)
 					) {
-            console.log( item.logist_id)
 						return item
 					}
 				})

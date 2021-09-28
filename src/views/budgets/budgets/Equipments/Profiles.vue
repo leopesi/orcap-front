@@ -21,6 +21,7 @@
 									{{ profile.equipments.name }}
 								</span>
 								<span v-if="profile && profile.brands"> / {{ profile.brands.name }} </span>
+								<span v-if="profile && profile.providers"> / {{ profile.providers.name }} </span>
 							</option>
 						</select>
 					</div>
