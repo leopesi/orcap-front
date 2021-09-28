@@ -133,8 +133,8 @@
 						discount: this.discountValue,
 						price: this.price,
 						final_price: this.final_price,
+						sand_kg: this.filters[id].sand_kg
 					}
-					console.log(data)
 					this.$emit('changed', data)
 				}
 			},

@@ -76,7 +76,7 @@
 
 	export default {
 		name: 'Sands',
-		props: { index: Number, form: Object, tax: Number },
+		props: { index: Number, form: Object, tax: Number, sand_kg: Number },
 		i18n: { messages },
 		data() {
 			return {

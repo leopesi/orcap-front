@@ -114,21 +114,15 @@
 											@delete="deleteEquipment(equipment.index)"
 											v-if="equipment.type == 'engines'"
 										/>
-										<Lids 
+										<Lids :index="equipment.index" :form="form" :tax="form.installment_tax" @changed="changeEquipment" @delete="deleteEquipment(equipment.index)" v-if="equipment.type == 'lids'" />
+										<Sands
 											:index="equipment.index"
-											:form="form" 
-											:tax="form.installment_tax" 
-											@changed="changeEquipment" 
-											@delete="deleteEquipment(equipment.index)" 
-											v-if="equipment.type == 'lids'" 
-										/>
-										<Sands 
-											:index="equipment.index"
-											:form="form" 
-											:tax="form.installment_tax" 
-											@changed="changeEquipment" 
-											@delete="deleteEquipment(equipment.index)" 
-											v-if="equipment.type == 'sands'" 
+											:form="form"
+											:tax="form.installment_tax"
+											:sand_kg="totalSandFilter"
+											@changed="changeEquipment"
+											@delete="deleteEquipment(equipment.index)"
+											v-if="equipment.type == 'sands'"
 										/>
 										<Blankets
 											:index="equipment.index"
@@ -187,13 +181,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 pt-4">
-					<ManPower 
-					:form="this.form" 
-					:layout="this.form.layout" 
-					:logist="this.logist" 
-					v-if="this.form" 
-					@changed="changedValues" 
-				/>
+					<ManPower :form="this.form" :layout="this.form.layout" :logist="this.logist" v-if="this.form" @changed="changedValues" />
 				</div>
 			</div>
 			<div class="row">
@@ -316,11 +304,7 @@
 				</button>
 			</div>
 		</FloatCard>
-		<Alert 
-		:title="this.alert.title" 
-		:message="this.alert.message"
-		@close="alert = {}" 
-		/>
+		<Alert :title="this.alert.title" :message="this.alert.message" @close="alert = {}" />
 	</div>
 </template>
 
@@ -408,6 +392,7 @@
 				layouts: Layouts,
 				layout: '',
 				alert: {},
+				totalSandFilter: 0,
 				newEquipment: 'filter',
 				showEquipments: false,
 				showAddEquipment: false,
@@ -508,19 +493,37 @@
 			changeEquipment(equipment) {
 				if (equipment && equipment.engine && equipment.lid && equipment.sand) {
 					const index = this.form.equipments[equipment.index].index
+					if (this.form.equipments[equipment.index].type == 'filters') {
+						this.form.equipments[equipment.index].sand_kg = equipment.sand_kg
+					}
+					this.totalSandFilter = 0
 					for (const i in this.form.equipments) {
 						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
 							this.form.equipments[i].id = equipment.engine.id
 							this.form.equipments[i].equipment_id = equipment.engine.equipment_id
-							this.form.equipments[i]
-						}
-						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
+							const engine = this.form.equipments[i]
+							this.form.equipments[i] = null
+							setTimeout(() => {
+								this.form.equipments[i] = engine
+							}, 100)
+						} else if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
 							this.form.equipments[i].id = equipment.lid.id
 							this.form.equipments[i].equipment_id = equipment.lid.equipment_id
-						}
-						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'sands') {
+							const lid = this.form.equipments[i]
+							this.form.equipments[i] = null
+							setTimeout(() => {
+								this.form.equipments[i] = lid
+							}, 100)
+						} else if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'sands') {
 							this.form.equipments[i].id = equipment.sand.id
 							this.form.equipments[i].equipment_id = equipment.sand.equipment_id
+							const sand = this.form.equipments[i]
+							this.form.equipments[i] = null
+							setTimeout(() => {
+								this.form.equipments[i] = sand
+							}, 100)
+						} else if (this.form.equipments[i] && this.form.equipments[i].type == 'filters') {
+							this.totalSandFilter += this.form.equipments[i].sand_kg ? parseInt(this.form.equipments[i].sand_kg) : 0
 						}
 					}
 				}

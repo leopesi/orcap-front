@@ -16,7 +16,7 @@
 					<div class="form-group">
 						<select class="form-control custom-select" v-model="form.equipments[index].equipment_id" @change="change">
 							<option selected>{{ $t('choose') }}</option>
-							<option :value="vinyl.equipment_id" v-for="(vinyl, i) in this.vinyls" :key="i">
+							<option :value="vinyl.equipment_id" v-for="(vinyl, i) in this.filteredItens" :key="i">
 								<span v-if="vinyl && vinyl.equipments">
 									{{ vinyl.equipments.name }}
 								</span>
@@ -91,27 +91,41 @@
 		},
 		watch: {
 			thickness() {
-				console.log(this.thickness)
+				this.reloadList()
+				const keys = Object.keys(this.filteredItens)
+				if (this.filteredItens[keys[0]]) {
+					this.form.equipments[this.index].equipment_id = this.filteredItens[keys[0]].equipment_id
+				}
 			},
 		},
 		methods: {
 			load() {
 				Equipments.getVinylsByLogist((result) => {
-					this.vinyls = {}
-					for (const i in result.data) {
-						this.vinyls[result.data[i].equipment_id] = result.data[i]
+					this.vinyls = result.data
+					this.reloadList()
+				})
+			},
+			reloadList() {
+				this.filteredItens = {}
+				for (const i in this.vinyls) {
+					if (this.thickness) {
+						if (this.vinyls && this.vinyls[i].equipments && this.thickness == this.vinyls[i].equipments.name) {
+							this.filteredItens[this.vinyls[i].equipment_id] = this.vinyls[i]
+						}
+					} else {
+						this.filteredItens[this.vinyls[i].equipment_id] = this.vinyls[i]
 					}
-					if (!this.form.equipments[this.index].equipment_id) {
-						for (const i in this.vinyls) {
-							if (this.vinyls[i].equipments.brand_id == this.logist.brand_vinyl_id) {
-								this.form.equipments[this.index].equipment_id = this.vinyls[i].equipment_id
-							}
+				}
+				if (!this.form.equipments[this.index].equipment_id) {
+					for (const i in this.vinyls) {
+						if (this.vinyls[i].equipments.brand_id == this.logist.brand_vinyl_id) {
+							this.form.equipments[this.index].equipment_id = this.vinyls[i].equipment_id
 						}
 					}
-					this.change()
-					this.setData()
-					this.show = true
-				})
+				}
+				this.change()
+				this.setData()
+				this.show = true
 			},
 			change() {
 				this.setData()
@@ -126,15 +140,15 @@
 			},
 			setData() {
 				const id = this.form.equipments[this.index].equipment_id
-				if (this.vinyls[id] && this.vinyls[id].equipments) {
-					const profit_margin = Methods.fixNumber(this.vinyls[id].equipments.profit_margin)
-					const cost = Methods.fixNumber(this.vinyls[id].equipments.cost)
+				if (this.filteredItens[id] && this.filteredItens[id].equipments) {
+					const profit_margin = Methods.fixNumber(this.filteredItens[id].equipments.profit_margin)
+					const cost = Methods.fixNumber(this.filteredItens[id].equipments.cost)
 					const price = cost + (cost * profit_margin) / 100
 					const discount = Methods.fixNumber(this.form.equipments[this.index].discount)
 					const price_with_discount = price
 
-					const man_power_profit_margin = Methods.fixNumber(this.vinyls[id].equipments.man_power_profit_margin)
-					const man_power_cost = Methods.fixNumber(this.vinyls[id].equipments.man_power_cost)
+					const man_power_profit_margin = Methods.fixNumber(this.filteredItens[id].equipments.man_power_profit_margin)
+					const man_power_cost = Methods.fixNumber(this.filteredItens[id].equipments.man_power_cost)
 					const man_power_price = man_power_cost + (man_power_cost * man_power_profit_margin) / 100
 
 					this.form.equipments[this.index].cost = cost

@@ -98,7 +98,7 @@
 					}
 					if (!this.form.equipments[this.index].equipment_id) {
 						for (const i in this.profiles) {
-							if (this.profiles[i].equipments.brand_id == this.logist.brand_profile_id){
+							if (this.profiles[i].equipments.brand_id == this.logist.brand_profile_id) {
 								this.form.equipments[this.index].equipment_id = this.profiles[i].equipment_id
 							}
 						}
@@ -135,7 +135,10 @@
 					this.form.equipments[this.index].cost = cost
 					this.form.equipments[this.index].profit_margin = profit_margin
 					this.form.equipments[this.index].price = price_with_discount
-					this.form.equipments[this.index].final_price = price_with_discount * this.perimeter + man_power_price - discount
+					// this.form.equipments[this.index].final_price = price_with_discount * this.perimeter + man_power_price - discount
+					let qtdProfiles = this.perimeter / this.profiles[id].meter
+					if (qtdProfiles.toString().indexOf('.') !== -1) qtdProfiles = parseInt(qtdProfiles) + 1
+					this.form.equipments[this.index].final_price = qtdProfiles * price_with_discount + man_power_price - discount
 					this.form.equipments[this.index].man_power = man_power_price
 
 					this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
