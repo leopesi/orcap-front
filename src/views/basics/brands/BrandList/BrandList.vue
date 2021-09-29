@@ -41,7 +41,7 @@
 							.toString()
 							.toLowerCase()
 							.indexOf(this.filters.name.toString().toLowerCase()) !== -1 &&
-						(item.logist_id == localStorage.logistID)
+						(item.logist_id == localStorage.logistID || item.logist_id == undefined)
 					) {
 						return item
 					}

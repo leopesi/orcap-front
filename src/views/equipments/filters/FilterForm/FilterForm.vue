@@ -55,6 +55,7 @@
 								<option selected>{{ $t('choose') }}</option>
 								<option :value="engine.id" v-for="(engine, i) in this.engines" :key="i">
 									<span v-if="engine.equipments && engine.brands"> {{ engine.equipments.name }} / {{ engine.brands.name }} </span>
+									<span v-else> {{ engine.equipments.name }} </span>
 								</option>
 							</select>
 						</div>
@@ -68,6 +69,7 @@
 								<option selected>{{ $t('choose') }}</option>
 								<option :value="lid.id" v-for="(lid, i) in this.lids" :key="i">
 									<span v-if="lid.equipments && lid.brands"> {{ lid.equipments.name }} / {{ lid.brands.name }} </span>
+									<span v-else> {{ lid.equipments.name }} </span>
 								</option>
 							</select>
 						</div>
@@ -81,6 +83,7 @@
 								<option selected>{{ $t('choose') }}</option>
 								<option :value="sand.id" v-for="(sand, i) in this.sands" :key="i">
 									<span v-if="sand.equipments && sand.brands"> {{ sand.equipments.name }} / {{ sand.brands.name }} </span>
+									<span v-else> {{ sand.equipments.name }} </span>
 								</option>
 							</select>
 						</div>
