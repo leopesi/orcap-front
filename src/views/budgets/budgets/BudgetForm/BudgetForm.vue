@@ -491,7 +491,7 @@
 			},
 			changedClient() {},
 			changeEquipment(equipment) {
-				if (equipment && equipment.engine && equipment.lid && equipment.sand) {
+				if (equipment && (equipment.engine || equipment.lid || equipment.sand)) {
 					const index = this.form.equipments[equipment.index].index
 					if (this.form.equipments[equipment.index].type == 'filters') {
 						this.form.equipments[equipment.index].sand_kg = equipment.sand_kg
@@ -647,25 +647,14 @@
 				const index = parseInt(lastIndex) + 1
 				const type = this.newEquipment
 				this.form.equipments[index] = { type, index }
-				if (type == 'filters') {
-					this.form.equipments[parseInt(index) + 1] = {
-						type: 'engines',
-						index: parseInt(index) + 1,
-					}
-					this.form.equipments[parseInt(index) + 2] = {
-						type: 'lids',
-						index: parseInt(index) + 2,
-					}
-					this.form.equipments[parseInt(index) + 3] = {
-						type: 'sands',
-						index: parseInt(index) + 3,
-					}
-				}
 				this.showAddEquipment = false
+				this.form = Object.assign({}, this.form)
+				this.changedValues()
 			},
 			deleteEquipment(index) {
 				delete this.form.equipments[index]
 				this.form = Object.assign({}, this.form)
+				this.changedValues()
 			},
 		},
 	}

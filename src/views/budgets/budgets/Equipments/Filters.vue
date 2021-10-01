@@ -98,7 +98,7 @@
 					}
 					if (!this.form.equipments[this.index].equipment_id) {
 						for (const i in this.filters) {
-							if (this.filters[i].equipments.brand_id == this.logist.brand_filter_id){
+							if (this.filters[i].equipments.brand_id == this.logist.brand_filter_id) {
 								this.form.equipments[this.index].equipment_id = this.filters[i].equipment_id
 							}
 						}
@@ -117,24 +117,32 @@
 						id: this.value,
 						type: 'filters',
 						index: this.index, //índice da lista de equipamentos no orçamento
-						engine: {
-							id: this.filters[id].engines.id,
-							equipment_id: this.filters[id].engines.equipment_id,
-						},
-						lid: {
-							id: this.filters[id].lids.id,
-							equipment_id: this.filters[id].lids.equipment_id,
-						},
-						sand: {
-							id: this.filters[id].sands.id,
-							equipment_id: this.filters[id].sands.equipment_id,
-						},
 						equipment_id: this.filters[id].equipment_id,
 						discount: this.discountValue,
 						price: this.price,
 						final_price: this.final_price,
-						sand_kg: this.filters[id].sand_kg
+						sand_kg: this.filters[id].sand_kg,
 					}
+
+					if (this.filters[id].engines) {
+						data.engine = {
+							id: this.filters[id].engines.id,
+							equipment_id: this.filters[id].engines.equipment_id,
+						}
+					}
+					if (this.filters[id].lids) {
+						data.lid = {
+							id: this.filters[id].lids.id,
+							equipment_id: this.filters[id].lids.equipment_id,
+						}
+					}
+					if (this.filters[id].sands) {
+						data.sand = {
+							id: this.filters[id].sands.id,
+							equipment_id: this.filters[id].sands.equipment_id,
+						}
+					}
+
 					this.$emit('changed', data)
 				}
 			},

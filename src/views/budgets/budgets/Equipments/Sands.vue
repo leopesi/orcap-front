@@ -131,6 +131,18 @@
 					this.form.equipments[this.index].final_price = price_with_discount + man_power_price - discount
 					this.form.equipments[this.index].man_power = man_power_price
 
+					let totalKg = 0
+					for (const i in this.form.equipments) {
+						const equipment = this.form.equipments[i]
+						if (equipment && equipment.type == 'filters') {
+							totalKg += parseFloat(equipment.sand_kg)
+						}
+					}
+
+					let qtdBag = totalKg / parseFloat(this.sands[id].sand_kg)
+					if (qtdBag.toString().indexOf('.') !== -1) qtdBag = parseInt(qtdBag) + 1
+					this.form.equipments[this.index].final_price = qtdBag * this.form.equipments[this.index].final_price
+
 					this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
 					this.show = false
 					setTimeout(() => {
