@@ -34,11 +34,6 @@ export default {
 			return undefined
 		} else {
 			const newdate = this.fixSequelizeDate(date)
-				// .split('T')[0]
-				// .split('-')
-				// .reverse()
-				// .join('/')
-			console.log(newdate)
 			return newdate
 		}
 	},

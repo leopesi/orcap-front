@@ -44,7 +44,6 @@
 		},
 		watch: {
 			layout() {
-				console.log('ALTERADO LAYOUT')
 				this.changeLayout()
 			},
 		},
