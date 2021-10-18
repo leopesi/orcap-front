@@ -101,7 +101,7 @@
 											:logist="logist"
 											:form="form"
 											:dimension="form.dimension"
-											:tax="form.installment_tax"
+											:tax="parseFloat(form.installment_tax)"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
 											v-if="equipment.type == 'filters'"
@@ -109,16 +109,16 @@
 										<Engines
 											:index="equipment.index"
 											:form="form"
-											:tax="form.installment_tax"
+											:tax="parseFloat(form.installment_tax)"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
 											v-if="equipment.type == 'engines'"
 										/>
-										<Lids :index="equipment.index" :form="form" :tax="form.installment_tax" @changed="changeEquipment" @delete="deleteEquipment(equipment.index)" v-if="equipment.type == 'lids'" />
+										<Lids :index="equipment.index" :form="form" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" @delete="deleteEquipment(equipment.index)" v-if="equipment.type == 'lids'" />
 										<Sands
 											:index="equipment.index"
 											:form="form"
-											:tax="form.installment_tax"
+											:tax="parseFloat(form.installment_tax)"
 											:sand_kg="totalSandFilter"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
@@ -129,7 +129,7 @@
 											:logist="logist"
 											:form="form"
 											:m2_facial="isNaN(form.m2_facial) ? 0 : parseFloat(form.m2_facial)"
-											:tax="form.installment_tax"
+											:tax="parseFloat(form.installment_tax)"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
 											v-if="equipment.type == 'blankets'"
@@ -139,7 +139,7 @@
 											:logist="logist"
 											:form="form"
 											:perimeter="isNaN(form.perimeter) ? 0 : parseFloat(form.perimeter)"
-											:tax="form.installment_tax"
+											:tax="parseFloat(form.installment_tax)"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
 											v-if="equipment.type == 'profiles'"
@@ -150,7 +150,7 @@
 											:form="form"
 											:thickness="form.thickness"
 											:m2_total="isNaN(form.m2_total) ? 0 : parseFloat(form.m2_total)"
-											:tax="form.installment_tax"
+											:tax="parseFloat(form.installment_tax)"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
 											v-if="equipment.type == 'vinyls'"
@@ -159,7 +159,7 @@
 											:index="equipment.index"
 											:form="form"
 											:m2_total="isNaN(form.m2_total) ? 0 : parseFloat(form.m2_total)"
-											:tax="form.installment_tax"
+											:tax="parseFloat(form.installment_tax)"
 											@changed="changeEquipment"
 											@delete="deleteEquipment(equipment.index)"
 											v-if="equipment.type == 'supplies'"
@@ -377,7 +377,6 @@
 					client_id: null,
 					logist_id: null,
 					seller_id: null,
-					format_id: null,
 					status: null,
 					layout: null,
 					date: null,
@@ -587,7 +586,7 @@
 						this.form.forward_price_total = Methods.fixNumber(this.form.cash_price_total).toFixed(2)
 					} else if (this.form.installment_number > 0) {
 						if (this.form.payment == 'debit_card') {
-							this.form.installment_tax = this.logist[this.form.payment]
+							this.form.installment_tax = parseFloat(this.logist[this.form.payment])
 							this.form.forward_price = (Methods.fixNumber(this.form.cash_price) + (Methods.fixNumber(this.form.cash_price) * Methods.fixNumber(this.form.installment_tax)) / 100).toFixed(2)
 							this.form.forward_price_total = (Methods.fixNumber(this.form.cash_price_total) + (Methods.fixNumber(this.form.cash_price_total) * Methods.fixNumber(this.form.installment_tax)) / 100).toFixed(
 								2

@@ -238,6 +238,7 @@
 					this.form.beach_medium_depth = format.beach_medium_depth
 					this.form.beach = true
 				}
+				this.form.format_id = format.id
 				this.calculate()
 				this.showFormats = false
 				setTimeout(() => {

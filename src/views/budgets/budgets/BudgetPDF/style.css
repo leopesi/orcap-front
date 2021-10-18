@@ -1,3 +1,10 @@
+
+.pdf-page {
+    border: 1px solid #eee!important;
+    background-color: #fff;
+    padding: 32px;
+}
+
 .title-pdf-blue {
     background-color: #a6cecd;
     padding: 8px 32px;

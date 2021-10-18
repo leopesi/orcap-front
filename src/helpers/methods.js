@@ -33,13 +33,13 @@ export default {
 		if (!date) {
 			return undefined
 		} else {
-			return date
-				.split('.')
-				.reverse()
-				.slice(1)
-				.join('.')
-				.split(' ')[0]
-				.split('T')[0]
+			const newdate = this.fixSequelizeDate(date)
+				// .split('T')[0]
+				// .split('-')
+				// .reverse()
+				// .join('/')
+			console.log(newdate)
+			return newdate
 		}
 	},
 
