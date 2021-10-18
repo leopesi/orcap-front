@@ -44,11 +44,21 @@
 		},
 		watch: {
 			layout() {
+				console.log('ALTERADO LAYOUT')
 				this.changeLayout()
 			},
 		},
 		methods: {
 			changeLayout() {
+				this.form.construction_labor = null
+				this.form.excavation_labor = null
+				this.form.earth_removal_labor = null
+				this.form.short_wall_labor = null
+				this.form.subfloor_labor = null
+				this.form.material_placement_labor = null
+				this.form.reserve = null
+				this.form.art = null
+				this.form.job_monitoring_fee = null
 				this.manpowers = Layouts[this.layout] ? Layouts[this.layout].manpowers : []
 				for (const i in this.manpowers) {
 					if (this.manpowers[i] != 'art') {

@@ -483,7 +483,6 @@
 			},
 			save() {
 				if (this.id && this.id != 0) {
-					console.log(this.form.deadline_days)
 					Budgets.updateBudget(this.form, (result) => {
 						this.alert = MessageError.getMessage(this, result, 'title', 'budgets')
 					})
@@ -513,7 +512,6 @@
 					this.totalSandFilter = 0
 					for (const i in this.form.equipments) {
 						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines' && equipment.engine) {
-							this.form.equipments[i].id = equipment.engine.id
 							this.form.equipments[i].equipment_id = equipment.engine.equipment_id
 							const engine = this.form.equipments[i]
 							this.form.equipments[i] = null
@@ -521,7 +519,6 @@
 								this.form.equipments[i] = engine
 							}, 100)
 						} else if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids' && equipment.lid) {
-							this.form.equipments[i].id = equipment.lid.id
 							this.form.equipments[i].equipment_id = equipment.lid.equipment_id
 							const lid = this.form.equipments[i]
 							this.form.equipments[i] = null
@@ -529,7 +526,6 @@
 								this.form.equipments[i] = lid
 							}, 100)
 						} else if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'sands' && equipment.sand) {
-							this.form.equipments[i].id = equipment.sand.id
 							this.form.equipments[i].equipment_id = equipment.sand.equipment_id
 							const sand = this.form.equipments[i]
 							this.form.equipments[i] = null
@@ -627,6 +623,7 @@
 				}
 			},
 			loadEquipments(equipments) {
+				this.form.equipments = {}
 				for (const i in equipments) {
 					const equipment = equipments[i]
 					this.form.equipments[equipment.index] = equipment
@@ -636,9 +633,7 @@
 			},
 			changeLayout() {
 				this.layout = Layouts[this.form.layout]
-				if (!this.form.equipments || typeof this.form.equipments !== 'object') {
-					this.form.equipments = {}
-				}
+				this.form.equipments = {}
 				for (const i in this.layout.equipments) {
 					const type = this.layout.equipments[i]
 					let finded = false

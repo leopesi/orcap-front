@@ -1,5 +1,5 @@
 <template>
-	<div class="card" v-if="this.show">
+	<div class="card" v-if="this.show && this.form.equipments[this.index]">
 		<div class="card-header">
 			<div class="row">
 				<div class="col-sm-11">
@@ -110,40 +110,42 @@
 			},
 			change() {
 				this.setData()
-				const id = this.form.equipments[this.index].equipment_id
-				if (this.filters[id]) {
-					this.setData()
-					const data = {
-						id: this.value,
-						type: 'filters',
-						index: this.index, //índice da lista de equipamentos no orçamento
-						equipment_id: this.filters[id].equipment_id,
-						discount: this.discountValue,
-						price: this.price,
-						final_price: this.final_price,
-						sand_kg: this.filters[id].sand_kg,
-					}
+				if (this.form.equipments[this.index] && this.form.equipments[this.index].equipment_id) {
+					const id = this.form.equipments[this.index].equipment_id
+					if (this.filters[id]) {
+						this.setData()
+						const data = {
+							id: this.value,
+							type: 'filters',
+							index: this.index, //índice da lista de equipamentos no orçamento
+							equipment_id: this.filters[id].equipment_id,
+							discount: this.discountValue,
+							price: this.price,
+							final_price: this.final_price,
+							sand_kg: this.filters[id].sand_kg,
+						}
 
-					if (this.filters[id].engines) {
-						data.engine = {
-							id: this.filters[id].engines.id,
-							equipment_id: this.filters[id].engines.equipment_id,
+						if (this.filters[id].engines) {
+							data.engine = {
+								id: this.filters[id].engines.id,
+								equipment_id: this.filters[id].engines.equipment_id,
+							}
 						}
-					}
-					if (this.filters[id].lids) {
-						data.lid = {
-							id: this.filters[id].lids.id,
-							equipment_id: this.filters[id].lids.equipment_id,
+						if (this.filters[id].lids) {
+							data.lid = {
+								id: this.filters[id].lids.id,
+								equipment_id: this.filters[id].lids.equipment_id,
+							}
 						}
-					}
-					if (this.filters[id].sands) {
-						data.sand = {
-							id: this.filters[id].sands.id,
-							equipment_id: this.filters[id].sands.equipment_id,
+						if (this.filters[id].sands) {
+							data.sand = {
+								id: this.filters[id].sands.id,
+								equipment_id: this.filters[id].sands.equipment_id,
+							}
 						}
-					}
 
-					this.$emit('changed', data)
+						this.$emit('changed', data)
+					}
 				}
 			},
 			changePercent() {
@@ -154,29 +156,31 @@
 				this.change()
 			},
 			setData() {
-				const id = this.form.equipments[this.index].equipment_id
-				if (this.filters[id] && this.filters[id].equipments) {
-					const profit_margin = Methods.fixNumber(this.filters[id].equipments.profit_margin)
-					const cost = Methods.fixNumber(this.filters[id].equipments.cost)
-					const price = cost + (cost * profit_margin) / 100
-					const discount = Methods.fixNumber(this.form.equipments[this.index].discount)
-					const price_with_discount = price
+				if (this.form.equipments[this.index] && this.form.equipments[this.index].equipment_id) {
+					const id = this.form.equipments[this.index].equipment_id
+					if (this.filters[id] && this.filters[id].equipments) {
+						const profit_margin = Methods.fixNumber(this.filters[id].equipments.profit_margin)
+						const cost = Methods.fixNumber(this.filters[id].equipments.cost)
+						const price = cost + (cost * profit_margin) / 100
+						const discount = Methods.fixNumber(this.form.equipments[this.index].discount)
+						const price_with_discount = price
 
-					const man_power_profit_margin = Methods.fixNumber(this.filters[id].equipments.man_power_profit_margin)
-					const man_power_cost = Methods.fixNumber(this.filters[id].equipments.man_power_cost)
-					const man_power_price = man_power_cost + (man_power_cost * man_power_profit_margin) / 100
+						const man_power_profit_margin = Methods.fixNumber(this.filters[id].equipments.man_power_profit_margin)
+						const man_power_cost = Methods.fixNumber(this.filters[id].equipments.man_power_cost)
+						const man_power_price = man_power_cost + (man_power_cost * man_power_profit_margin) / 100
 
-					this.form.equipments[this.index].cost = cost
-					this.form.equipments[this.index].profit_margin = profit_margin
-					this.form.equipments[this.index].price = price_with_discount
-					this.form.equipments[this.index].final_price = price_with_discount + man_power_price - discount
-					this.form.equipments[this.index].man_power = man_power_price
+						this.form.equipments[this.index].cost = cost
+						this.form.equipments[this.index].profit_margin = profit_margin
+						this.form.equipments[this.index].price = price_with_discount
+						this.form.equipments[this.index].final_price = price_with_discount + man_power_price - discount
+						this.form.equipments[this.index].man_power = man_power_price
 
-					this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
-					this.show = false
-					setTimeout(() => {
-						this.show = true
-					})
+						this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
+						this.show = false
+						setTimeout(() => {
+							this.show = true
+						})
+					}
 				}
 			},
 		},

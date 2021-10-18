@@ -1,5 +1,5 @@
 <template>
-	<div class="card" v-if="this.show">
+	<div class="card" v-if="this.show && this.form.equipments[this.index]">
 		<div class="card-header">
 			<div class="row">
 				<div class="col-sm-11">
@@ -113,7 +113,7 @@
 				this.change()
 			},
 			setData() {
-				if (this.form.equipments[this.index]) {
+				if (this.form.equipments[this.index] && this.form.equipments[this.index].equipment_id) {
 					const id = this.form.equipments[this.index].equipment_id
 					if (this.sands[id] && this.sands[id].equipments) {
 						const profit_margin = Methods.fixNumber(this.sands[id].equipments.profit_margin)
