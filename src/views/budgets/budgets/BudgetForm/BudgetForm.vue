@@ -114,7 +114,14 @@
 											@delete="deleteEquipment(equipment.index)"
 											v-if="equipment.type == 'engines'"
 										/>
-										<Lids :index="equipment.index" :form="form" :tax="parseFloat(form.installment_tax)" @changed="changeEquipment" @delete="deleteEquipment(equipment.index)" v-if="equipment.type == 'lids'" />
+										<Lids
+											:index="equipment.index"
+											:form="form"
+											:tax="parseFloat(form.installment_tax)"
+											@changed="changeEquipment"
+											@delete="deleteEquipment(equipment.index)"
+											v-if="equipment.type == 'lids'"
+										/>
 										<Sands
 											:index="equipment.index"
 											:form="form"
@@ -288,6 +295,9 @@
 					</div>
 				</div>
 			</div>
+			<button type="button" class="btn btn-primary small" @click="showPDF" v-if="this.id">
+				{{ $t('see_pdf') }}
+			</button>
 		</Form>
 
 		<FloatCard :title="$t('add_equipment')" :show="this.showAddEquipment" @close="showAddEquipment = false">
@@ -665,6 +675,10 @@
 				delete this.form.equipments[index]
 				this.form = Object.assign({}, this.form)
 				this.changedValues()
+			},
+			showPDF() {
+				const url = window.location.toString().split('#')[0]
+				window.open(url + '/#/budget-pdf/' + this.id)
 			},
 		},
 	}

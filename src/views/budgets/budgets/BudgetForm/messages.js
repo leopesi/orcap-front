@@ -112,5 +112,6 @@ export default {
 		complement: 'Complemento',
 		city: 'Cidade',
 		state: 'Estado',
+		see_pdf: 'Vizualizar PDF'
 	},
 }

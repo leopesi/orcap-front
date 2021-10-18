@@ -3,12 +3,15 @@
     border: 1px solid #eee!important;
     background-color: #fff;
     padding: 32px;
+    max-width: 1024px;
 }
 
 .title-pdf-blue {
     background-color: #a6cecd;
     padding: 8px 32px;
     margin: 12px;
+    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
     color: #ffffff;
     font-weight: 600;
     font-size: 22px;
