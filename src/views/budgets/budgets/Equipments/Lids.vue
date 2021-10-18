@@ -113,29 +113,31 @@
 				this.change()
 			},
 			setData() {
-				const id = this.form.equipments[this.index].equipment_id
-				if (this.lids[id] && this.lids[id].equipments) {
-					const profit_margin = Methods.fixNumber(this.lids[id].equipments.profit_margin)
-					const cost = Methods.fixNumber(this.lids[id].equipments.cost)
-					const price = cost + (cost * profit_margin) / 100
-					const discount = Methods.fixNumber(this.form.equipments[this.index].discount)
-					const price_with_discount = price
+				if (this.form.equipments[this.index]) {
+					const id = this.form.equipments[this.index].equipment_id
+					if (this.lids[id] && this.lids[id].equipments) {
+						const profit_margin = Methods.fixNumber(this.lids[id].equipments.profit_margin)
+						const cost = Methods.fixNumber(this.lids[id].equipments.cost)
+						const price = cost + (cost * profit_margin) / 100
+						const discount = Methods.fixNumber(this.form.equipments[this.index].discount)
+						const price_with_discount = price
 
-					const man_power_profit_margin = Methods.fixNumber(this.lids[id].equipments.man_power_profit_margin)
-					const man_power_cost = Methods.fixNumber(this.lids[id].equipments.man_power_cost)
-					const man_power_price = man_power_cost + (man_power_cost * man_power_profit_margin) / 100
+						const man_power_profit_margin = Methods.fixNumber(this.lids[id].equipments.man_power_profit_margin)
+						const man_power_cost = Methods.fixNumber(this.lids[id].equipments.man_power_cost)
+						const man_power_price = man_power_cost + (man_power_cost * man_power_profit_margin) / 100
 
-					this.form.equipments[this.index].cost = cost
-					this.form.equipments[this.index].profit_margin = profit_margin
-					this.form.equipments[this.index].price = price_with_discount
-					this.form.equipments[this.index].final_price = price_with_discount + man_power_price - discount
-					this.form.equipments[this.index].man_power = man_power_price
+						this.form.equipments[this.index].cost = cost
+						this.form.equipments[this.index].profit_margin = profit_margin
+						this.form.equipments[this.index].price = price_with_discount
+						this.form.equipments[this.index].final_price = price_with_discount + man_power_price - discount
+						this.form.equipments[this.index].man_power = man_power_price
 
-					this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
-					this.show = false
-					setTimeout(() => {
-						this.show = true
-					})
+						this.forward_price = (this.form.equipments[this.index].final_price + (this.form.equipments[this.index].final_price * this.tax) / 100).toFixed(2)
+						this.show = false
+						setTimeout(() => {
+							this.show = true
+						})
+					}
 				}
 			},
 		},

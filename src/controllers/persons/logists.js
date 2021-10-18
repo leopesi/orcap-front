@@ -24,4 +24,9 @@ export default {
   update(data, callback) {
     Cruds.update('/logists/', data, (result) => callback(result))
   },
+
+  profile(data, callback) {
+    Cruds.update('/profile/', data, (result) => callback(result))
+  },
+  
 }

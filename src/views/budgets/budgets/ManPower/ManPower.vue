@@ -38,7 +38,9 @@
 			}
 		},
 		mounted() {
-			this.changeLayout()
+			setTimeout(() => {
+				this.changeLayout(), 100
+			})
 		},
 		watch: {
 			layout() {

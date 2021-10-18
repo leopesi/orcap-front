@@ -275,6 +275,14 @@
 										<input class="form-control" id="forward_price_total" type="text" :value="this.form.forward_price_total" disabled />
 									</div>
 								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label for="deadline_days">
+											{{ $t('deadline_days') }}
+										</label>
+										<input class="form-control" id="deadline_days" type="text" v-model="form.deadline_days" />
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -442,6 +450,7 @@
 					this.form.down_payment = 0
 					this.form.art = 0
 					this.form.discount = 0
+					this.form.deadline_days = 30
 					this.form.beach = false
 
 					this.form.m2_total = 0
@@ -474,18 +483,23 @@
 			},
 			save() {
 				if (this.id && this.id != 0) {
+					console.log(this.form.deadline_days)
 					Budgets.updateBudget(this.form, (result) => {
 						this.alert = MessageError.getMessage(this, result, 'title', 'budgets')
 					})
 				} else {
 					if (this.form) delete this.form.id
 					Budgets.insertBudget(this.form, (result) => {
-						this.form.id = result.data.id
-						window.location.hash = '/budget/' + result.data.id
-						this.form.expiration_date = Methods.fixSequelizeDate(result.data.expiration_date)
-						this.form.updatedAt = Methods.fixSequelizeDate(result.data.updatedAt)
-						this.form.createdAt = Methods.fixSequelizeDate(result.data.createdAt)
-						this.alert = MessageError.getMessage(this, result, 'title')
+						if (result && result.data) {
+							this.form.id = result.data.id
+							window.location.hash = '/budget/' + result.data.id
+							this.form.expiration_date = Methods.fixSequelizeDate(result.data.expiration_date)
+							this.form.updatedAt = Methods.fixSequelizeDate(result.data.updatedAt)
+							this.form.createdAt = Methods.fixSequelizeDate(result.data.createdAt)
+							this.alert = MessageError.getMessage(this, result, 'title')
+						} else {
+							this.alert = MessageError.getMessage(this, { status: 'Error' }, 'title')
+						}
 					})
 				}
 			},
@@ -498,7 +512,7 @@
 					}
 					this.totalSandFilter = 0
 					for (const i in this.form.equipments) {
-						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines') {
+						if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'engines' && equipment.engine) {
 							this.form.equipments[i].id = equipment.engine.id
 							this.form.equipments[i].equipment_id = equipment.engine.equipment_id
 							const engine = this.form.equipments[i]
@@ -506,7 +520,7 @@
 							setTimeout(() => {
 								this.form.equipments[i] = engine
 							}, 100)
-						} else if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids') {
+						} else if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'lids' && equipment.lid) {
 							this.form.equipments[i].id = equipment.lid.id
 							this.form.equipments[i].equipment_id = equipment.lid.equipment_id
 							const lid = this.form.equipments[i]
@@ -514,7 +528,7 @@
 							setTimeout(() => {
 								this.form.equipments[i] = lid
 							}, 100)
-						} else if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'sands') {
+						} else if (this.form.equipments[i].index > index && this.form.equipments[i].type == 'sands' && equipment.sand) {
 							this.form.equipments[i].id = equipment.sand.id
 							this.form.equipments[i].equipment_id = equipment.sand.equipment_id
 							const sand = this.form.equipments[i]
@@ -535,7 +549,9 @@
 				this.form.cash_price = 0
 				this.form.forward_price = 0
 				for (const i in this.form.equipments) {
-					this.form.cash_price += Methods.fixNumber(this.form.equipments[i].final_price)
+					if (this.form.equipments[i]) {
+						this.form.cash_price += Methods.fixNumber(this.form.equipments[i].final_price)
+					}
 				}
 
 				const construction_labor = Methods.fixNumber(this.form.construction_labor) * (this.form.m2_total > 0 ? this.form.m2_total : 1)

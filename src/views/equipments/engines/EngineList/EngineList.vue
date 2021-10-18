@@ -31,22 +31,26 @@
 		},
 		computed: {
 			filteredItens() {
-				return this.itens.filter((item) => {
-					if (!this.filters.equipments) this.filters.equipments = {}
-					if (!this.filters.equipments.name) this.filters.equipments.name = ''
+				if (this.itens) {
+					return this.itens.filter((item) => {
+						if (!this.filters.equipments) this.filters.equipments = {}
+						if (!this.filters.equipments.name) this.filters.equipments.name = ''
 
-					if (!item.equipments) item.equipments = {}
-					if (!item.equipments.name) item.equipments.name = ''
+						if (!item.equipments) item.equipments = {}
+						if (!item.equipments.name) item.equipments.name = ''
 
-					if (
-						item.equipments.name
-							.toString()
-							.toLowerCase()
-							.indexOf(this.filters.equipments.name.toString().toLowerCase()) !== -1
-					) {
-						return item
-					}
-				})
+						if (
+							item.equipments.name
+								.toString()
+								.toLowerCase()
+								.indexOf(this.filters.equipments.name.toString().toLowerCase()) !== -1
+						) {
+							return item
+						}
+					})
+				} else {
+					return []
+				}
 			},
 		},
 		methods: {

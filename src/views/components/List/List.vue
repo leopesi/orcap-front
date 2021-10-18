@@ -108,13 +108,17 @@
 		},
 		computed: {
 			filteredItens() {
-				return this.itens.filter((item, i) => {
-					if (i >= this.page * this.limit && i < this.page * this.limit + this.limit) return item
-				})
+				if (this.itens) {
+					return this.itens.filter((item, i) => {
+						if (i >= this.page * this.limit && i < this.page * this.limit + this.limit) return item
+					})
+				} else {
+					return []
+				}
 			},
 			numberItens() {
 				let pages = parseInt(this.itens.length / this.limit) + 1
-				if (this.itens.length % this.limit == 0) pages --
+				if (this.itens.length % this.limit == 0) pages--
 				return pages
 			},
 		},

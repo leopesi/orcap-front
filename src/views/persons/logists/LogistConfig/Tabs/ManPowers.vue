@@ -92,7 +92,7 @@
         </div>
 
         <!-- M.O Colocação de Materiais -->
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <div class="form-group">
             <label for="material_placement_labor">
               {{ $t('material_placement_labor') }}
@@ -107,7 +107,7 @@
         </div>
 
         <!-- Taxa de acompanhamento de obra -->
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <div class="form-group">
             <label for="job_monitoring_fee">
               {{ $t('job_monitoring_fee') }}

@@ -62,14 +62,6 @@
 
 			<!-- ****************** ROW ****************** -->
 			<div class="row" v-if="!this.form.id">
-				<!-- CPF/CNPJ -->
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="document">{{ $t('document') }}</label>
-						<input class="form-control" id="document" v-model="form.document" type="text" />
-					</div>
-				</div>
-
 				<!-- NOME -->
 				<div class="col-sm-9">
 					<div class="form-group">

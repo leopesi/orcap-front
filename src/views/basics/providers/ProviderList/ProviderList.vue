@@ -31,20 +31,24 @@
 		},
 		computed: {
 			filteredItens() {
-				return this.itens.filter((item) => {
-					if (!this.filters.name) this.filters.name = ''
-					if (!item.name) item.name = ''
-					if (item.logist_id == undefined) item.disabled = true
-					if (
-						item.name
-							.toString()
-							.toLowerCase()
-							.indexOf(this.filters.name.toString().toLowerCase()) !== -1 &&
-						(item.logist_id == localStorage.logistID || item.logist_id == undefined)
-					) {
-						return item
-					}
-				})
+				if (this.itens) {
+					return this.itens.filter((item) => {
+						if (!this.filters.name) this.filters.name = ''
+						if (!item.name) item.name = ''
+						if (item.logist_id == undefined) item.disabled = true
+						if (
+							item.name
+								.toString()
+								.toLowerCase()
+								.indexOf(this.filters.name.toString().toLowerCase()) !== -1 &&
+							(item.logist_id == localStorage.logistID || item.logist_id == undefined)
+						) {
+							return item
+						}
+					})
+				} else {
+					return []
+				}
 			},
 		},
 		methods: {

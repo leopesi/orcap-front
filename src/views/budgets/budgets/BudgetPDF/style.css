@@ -1,0 +1,10 @@
+.title-pdf-blue {
+    background-color: #a6cecd;
+    padding: 8px 32px;
+    margin: 12px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 22px;
+    border-radius: 20px;
+    text-shadow: 1px 1px 1px #00000066;
+}

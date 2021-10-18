@@ -1,14 +1,20 @@
-
 export default {
 	'pt-br': {
-		title: 'Cadastro de Lojistas',
-		profile: 'Meus Dados',
+		title: 'Cadastro de Lojista',
 		id: 'Id',
+		document: 'CPF/CNPJ',
 		name: 'Nome',
-		document: 'CNPJ',
+		city: 'Cidade',
+		state: 'Estado',
+		neighborhood: 'Bairro',
+		street: 'Endereço',
+		number: 'Número',
+		zipcode: 'Cep',
 		phone: 'Telefone',
+		fax: 'Fax',
+		website: 'Site da loja',
 		mail: 'Email',
 		password: 'Senha',
-		repeat_password: 'Repita a Senha'
-	}
+		repassword: 'Repetir Senha',
+	},
 }

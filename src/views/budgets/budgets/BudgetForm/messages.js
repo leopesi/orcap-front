@@ -99,6 +99,7 @@ export default {
 		art: 'A.R.T.',
 		job_monitoring_fee: 'Taxa de acompanhamento de obra',
 
+		deadline_days: 'Prazo de Entrega (dias)',
 		total: 'Total',
 		totals: 'Totais',
 
