@@ -201,7 +201,6 @@
 						this.budget = Object.assign({}, result.data)
 						if (result.data) {
 							this.budget.expiration_date = this.createDateString(this.budget.expiration_date)
-							console.log(this.budget.expiration_date)
 							this.budget.updatedAt = Methods.fixSequelizeDate(this.budget.updatedAt)
 							this.budget.createdAt = Methods.fixSequelizeDate(this.budget.createdAt)
 						}
@@ -213,7 +212,6 @@
 						const beach_perimeter = beach_length + beach_width * 2
 						const sidewalk_width = Methods.fixNumber(this.budget.sidewalk_width)
 						this.budget.sidewalk_area = (perimeter + beach_perimeter) * sidewalk_width + sidewalk_width * sidewalk_width * 4
-						console.log(this.budget.sidewalk_width)
 					})
 				}
 			},
