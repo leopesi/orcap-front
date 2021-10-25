@@ -93,6 +93,8 @@ export default {
 		excavation_labor: 'Escavação',
 		earth_removal_labor: 'Remoção de Terra',
 		short_wall_labor: 'Mureta',
+		short_wall_labor_m2: 'Tamanho da Mureta m2',
+		total_short_wall: 'Valor Total Mureta R$',
 		subfloor_labor: 'Contrapiso',
 		material_placement_labor: 'Colocação de Materiais',
 		reserve: 'Reserva',
@@ -112,6 +114,15 @@ export default {
 		complement: 'Complemento',
 		city: 'Cidade',
 		state: 'Estado',
-		see_pdf: 'Vizualizar PDF'
+		see_pdf: 'Vizualizar PDF',
+		finish_budget: 'Finalizar PDF',
+
+		in_cash: 'À vista',
+		debit_card: 'Cartão de débito',
+		// cash_credit_card: 'Cartão de crédito à vista',
+		installment_credit_card: 'Cartão de crédito',
+		by_logist: 'À prazo pela Loja',
+		by_financial: 'À prazo pela Financeira',
+		by_financial_down_payment: 'Com entrada pela Financeira',
 	},
 }

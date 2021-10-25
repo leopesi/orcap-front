@@ -40,25 +40,30 @@
 					<div v-if="this.budget.layout == 'logist_manpower'">
 						Atento à sua solicitação, apresentamos orçamento para construção de piscina de alvenaria, revestida com vinil {{ this.budget.thickness }} mm de espessura,
 						<span v-if="this.budget.steps">para uma piscina com {{ this.budget.number_steps }} patamares, </span>
-						medindo ({{ this.budget.length }}) metros de comprimento por ({{ this.budget.width }}) metros de largura, por ({{ this.budget.medium_depth }}) metros de profundidade média
+						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade
+						média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros² faciais
+						<!-- medindo ({{ this.budget.length }}) metros de comprimento por ({{ this.budget.width }}) metros de largura, por ({{ this.budget.medium_depth }}) metros de profundidade média -->
 						<span v-if="this.budget.beach">e prainha externa medindo ({{ this.budget.beach_length }}) x ({{ this.budget.beach_width }}) x ({{ this.budget.beach_medium_depth }}).</span>
 					</div>
 					<div v-else-if="this.budget.layout == 'client_manpower'">
 						Atento à sua solicitação, apresentamos orçamento para construção, sem mão de obra, de piscina de alvenaria, revestida com vinil {{ this.budget.thickness }} mm de espessura,
 						<span v-if="this.budget.steps">para uma piscina com {{ this.budget.number_steps }} patamares, </span>
-						medindo ({{ this.budget.length }}) metros de comprimento por ({{ this.budget.width }}) metros de largura, por ({{ this.budget.medium_depth }}) metros de profundidade média
+						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade
+						média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros² faciais
 						<span v-if="this.budget.beach">e prainha externa medindo ({{ this.budget.beach_length }}) x ({{ this.budget.beach_width }}) x ({{ this.budget.beach_medium_depth }}).</span>
 					</div>
 					<div v-else-if="this.budget.layout == 'vinyl_change'">
 						Atento à sua solicitação, apresentamos orçamento para substituição do bolsão de vinil com espessura de {{ this.budget.thickness }} mm,
 						<span v-if="this.budget.steps">para uma piscina com {{ this.budget.number_steps }} patamares, </span>
-						que mede ({{ this.budget.length }}) metros de comprimento por ({{ this.budget.width }}) metros de largura, por ({{ this.budget.medium_depth }}) metros de profundidade média
+						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade
+						média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros² faciais
 						<span v-if="this.budget.beach">e prainha externa medindo ({{ this.budget.beach_length }}) x ({{ this.budget.beach_width }}) x ({{ this.budget.beach_medium_depth }}).</span>
 					</div>
 					<div v-else-if="this.budget.layout == 'vinyl_install'">
 						Atento à sua solicitação, apresentamos orçamento para adaptação e instalação de bolsão de vinil com espessura {{ this.budget.thickness }} mm em piscina de azulejo para uma piscina,
 						<span v-if="this.budget.steps">com {{ this.budget.number_steps }} patamares, </span>
-						que mede ({{ this.budget.length }}) metros de comprimento por ({{ this.budget.width }}) metros de largura, por ({{ this.budget.medium_depth }}) metros de profundidade média
+						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade
+						média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros² faciais
 						<span v-if="this.budget.beach">e prainha externa medindo ({{ this.budget.beach_length }}) x ({{ this.budget.beach_width }}) x ({{ this.budget.beach_medium_depth }}).</span>
 					</div>
 					<div v-if="this.budget.format_id" class="pt-4 text-center">
@@ -74,18 +79,17 @@
 			<div class="row pt-4">
 				<div class="col-12 text-left">
 					<ul>
-						<div v-if="this.budget.layout == 'vinyl_change' || this.budget.layout == 'vinyl_install'">
-							<li>Fornecimento e instalação de bolsão de vinil com perfil de sustentação e isomanta no fundo;</li>
-						</div>
 						<span v-for="(item, i) in this.budget.equipments" :key="i">
 							<li v-if="item.type == 'filters'">
-								Fornecimento e instalação de 1 filtro ({{ item.equipment.name }}){{ item.equipment.brands ? ', marca: (' + item.equipment.brands.name + ')' : '' }}
-								<!-- , com (quant.) ; -->
+								Fornecimento e instalação de bolsão de vinil
+								{{ item.equipment.brands ? ' da marca ' + item.equipment.brands.name + '' : '' }}
+								com perfil de sustentação e isomanta no fundo;
 							</li>
-							<li v-if="item.type == 'sands'">Fornecimento de sacos de areia para filtro ({{ item.equipment.name }}){{ item.equipment.brands ? ', marca: (' + item.equipment.brands.name + ')' : '' }}</li>
-							<li v-if="item.type == 'engines'">Fornecimento e instalação de 1 motobomba ({{ item.equipment.name }}){{ item.equipment.brands ? ', marca: (' + item.equipment.brands.name + ')' : '' }}</li>
+							<li v-if="item.type == 'filters'">Fornecimento e instalação de 1 filtro {{ item.equipment.name }} {{ item.equipment.brands ? 'da marca ' + item.equipment.brands.name : '' }}</li>
+							<li v-if="item.type == 'sands'">Fornecimento de sacos de areia para filtro {{ item.equipment.name }} {{ item.equipment.brands ? 'da marca ' + item.equipment.brands.name : '' }}</li>
+							<li v-if="item.type == 'engines'">Fornecimento e instalação de 1 motobomba {{ item.equipment.name }} {{ item.equipment.brands ? 'da marca ' + item.equipment.brands.name : '' }}</li>
 							<li v-if="item.type == 'lids'">
-								Fornecimento e instalação de 1 tampa da casa de máquinas, ({{ item.equipment.name }}){{ item.equipment.brands ? ', marca: (' + item.equipment.brands.name + ')' : '' }}
+								Fornecimento e instalação de 1 tampa da casa de máquinas {{ item.equipment.name }} {{ item.equipment.brands ? 'da marca ' + item.equipment.brands.name : '' }}
 							</li>
 						</span>
 						<div v-if="this.budget.layout == 'logist_manpower' || this.budget.layout == 'client_manpower'">
@@ -94,8 +98,8 @@
 							<li v-if="this.budget['earth_removal_labor']">Mão de obra de remoção da terra escavada até a caçamba;</li>
 							<li v-if="this.budget['subfloor_labor']">Mão de obra de construção de {{ this.budget.sidewalk_area }} metros de contrapiso rústico ao redor da piscina;</li>
 							<li v-if="this.budget['construction_labor']">Mão de obra de construção da alvenaria da piscina e da casa de máquinas;</li>
-							<li v-if="this.budget['material_placement_labor']">Mão de obra de instalação da hidráulica e da elétrica entre a piscina e a casa de máquinas;</li>
-							<li v-if="this.budget['short_wall_labor']">Mão de obra de construção de 00 (Verificar) metros de mureta;</li>
+							<li v-if="this.budget['construction_labor']">Mão de obra de instalação da hidráulica e da elétrica entre a piscina e a casa de máquinas;</li>
+							<li v-if="this.budget['short_wall_labor']">Mão de obra de construção de {{ this.budget.short_wall_labor_m2 }} metros de mureta;</li>
 							<li v-if="this.budget['material_placement_labor']">Mão de obra de colocação de materiais;</li>
 						</div>
 					</ul>
@@ -136,6 +140,9 @@
 			</div>
 			<div class="row">
 				<div class="col-12 text-left">
+					<div class="h5 py-2 px-2">
+						{{ $t(this.budget.payment) }}
+					</div>
 					<ul v-if="this.budget.payment == 'in_cash' || this.budget.payment == 'debit_card'">
 						<li>Valor: R$ {{ this.budget.cash_price }}</li>
 						<li>Desconto: R$ {{ this.budget.discount }}</li>
@@ -179,11 +186,13 @@
 <script>
 	import Methods from '../../../../helpers/methods'
 	import Budgets from '../../../../controllers/budgets/budgets'
+	import messages from '../BudgetForm/messages'
 
 	import './style.css'
 
 	export default {
 		props: { budget_id: String },
+		i18n: { messages },
 		data() {
 			return {
 				budget: null,

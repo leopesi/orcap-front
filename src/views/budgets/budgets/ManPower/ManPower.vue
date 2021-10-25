@@ -6,7 +6,7 @@
 		<div class="card-body" v-if="this.show">
 			<div class="row">
 				<div class="col-sm-2" v-for="(field, i) in this.manpowers" :key="i">
-					<div class="form-group" v-if="field != 'art'">
+					<div class="form-group" v-if="field!='short_wall_labor_m2'">
 						<label :for="field">{{ $t(field) }}</label>
 						<input class="form-control" :id="field" type="text" v-model="form[field]" disabled />
 					</div>
@@ -56,7 +56,6 @@
 				this.form.subfloor_labor = null
 				this.form.material_placement_labor = null
 				this.form.reserve = null
-				this.form.art = null
 				this.form.job_monitoring_fee = null
 				this.manpowers = Layouts[this.layout] ? Layouts[this.layout].manpowers : []
 				for (const i in this.manpowers) {

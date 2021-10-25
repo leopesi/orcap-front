@@ -2,7 +2,7 @@ export default {
 	logist_manpower: {
 		name: 'Construção de piscina com mão de obra da loja',
 		equipments: ['filters', 'engines', 'lids', 'sands', 'blankets', 'profiles', 'vinyls'],
-		manpowers: ['construction_labor', 'excavation_labor', 'earth_removal_labor', 'short_wall_labor', 'subfloor_labor', 'material_placement_labor', 'reserve'],
+		manpowers: ['construction_labor', 'excavation_labor', 'earth_removal_labor', 'short_wall_labor', 'short_wall_labor_m2', 'total_short_wall', 'subfloor_labor', 'material_placement_labor', 'reserve'],
 	},
 	client_manpower: {
 		name: 'Construção de piscina com mão de obra do cliente',

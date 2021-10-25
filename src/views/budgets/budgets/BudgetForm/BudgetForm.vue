@@ -298,6 +298,9 @@
 			<button type="button" class="btn btn-primary small" @click="showPDF" v-if="this.id">
 				{{ $t('see_pdf') }}
 			</button>
+			<button type="button" class="btn btn-primary small ml-2" @click="finishBudget" v-if="this.id">
+				{{ $t('finish_budget') }}
+			</button>
 		</Form>
 
 		<FloatCard :title="$t('add_equipment')" :show="this.showAddEquipment" @close="showAddEquipment = false">
@@ -443,6 +446,7 @@
 							this.form.expiration_date = Methods.fixSequelizeOnlyDate(this.form.expiration_date)
 							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
 							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
+							this.form.art = result.data.art
 							const equipments = Object.assign({}, result.data.equipments)
 							this.loadEquipments(equipments)
 							this.changeTax()
@@ -563,6 +567,9 @@
 				const excavation_labor = Methods.fixNumber(this.form.excavation_labor) * (this.form.m3_total > 0 ? this.form.m3_total : 1)
 				const earth_removal_labor = Methods.fixNumber(this.form.earth_removal_labor) * (this.form.m3_total > 0 ? this.form.m3_total : 1) * 1.2
 				const short_wall_labor = Methods.fixNumber(this.form.short_wall_labor)
+				const short_wall_labor_m2 = Methods.fixNumber(this.form.short_wall_labor_m2)
+				const total_short_wall = short_wall_labor * short_wall_labor_m2
+				this.form.total_short_wall = total_short_wall
 				let subfloor_labor = 0
 				if (this.form.perimeter > 0 && this.form.sidewalk_width > 0) {
 					subfloor_labor = Methods.fixNumber(this.form.subfloor_labor) * (this.form.perimeter * this.form.sidewalk_width + this.form.sidewalk_width * this.form.sidewalk_width) * 4
@@ -576,11 +583,12 @@
 				this.form.cash_price += construction_labor
 				this.form.cash_price += excavation_labor
 				this.form.cash_price += earth_removal_labor
-				this.form.cash_price += short_wall_labor
+				this.form.cash_price += total_short_wall
 				this.form.cash_price += subfloor_labor
 				this.form.cash_price += material_placement_labor
 				this.form.cash_price += reserve
 				this.form.cash_price += job_monitoring_fee
+
 				this.form.cash_price_total = this.form.cash_price - Methods.fixNumber(this.form.discount) + this.form.cash_price * (Methods.fixNumber(this.form.art) / 100)
 
 				this.form.cash_price = this.form.cash_price.toFixed(2)
@@ -679,6 +687,9 @@
 			showPDF() {
 				const url = window.location.toString().split('#')[0]
 				window.open(url + '/#/budget-pdf/' + this.id)
+			},
+			finishBudget() {
+				alert('finish')
 			},
 		},
 	}
