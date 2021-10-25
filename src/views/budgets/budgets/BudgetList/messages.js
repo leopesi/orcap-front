@@ -11,6 +11,9 @@ export default {
 		payments: 'Formas de pagamento',
 		status_budgets: 'Status',
 		types_budgets: 'Tipo',
+		see: 'Visualizar',
+		edit: 'Editar',
+		delete: 'Deletar',
 		
 	}
 }

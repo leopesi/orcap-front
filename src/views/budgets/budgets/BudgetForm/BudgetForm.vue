@@ -41,9 +41,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-3">
 					<div class="form-group">
 						<label for="layout">{{ $t('layout') }}</label>
 						<div class="input-group">
@@ -51,19 +49,6 @@
 								<!-- <option selected>{{ $t('choose') }}</option> -->
 								<option :value="i" v-for="(layout, i) in this.layouts" :key="i">
 									{{ layout.name }}
-								</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="form-group">
-						<label for="status">{{ $t('status') }}</label>
-						<div class="input-group">
-							<select class="form-control custom-select" id="status" v-model="form.status">
-								<!-- <option selected>{{ $t('choose') }}</option> -->
-								<option :value="i" v-for="(s, i) in this.status" :key="i">
-									{{ s }}
 								</option>
 							</select>
 						</div>
@@ -441,15 +426,19 @@
 				this.form.equipments = null
 				if (this.id) {
 					Budgets.getBudget(this.id, (result) => {
-						this.form = Object.assign({}, result.data)
-						if (result.data) {
-							this.form.expiration_date = Methods.fixSequelizeOnlyDate(this.form.expiration_date)
-							this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
-							this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
-							this.form.art = result.data.art
-							const equipments = Object.assign({}, result.data.equipments)
-							this.loadEquipments(equipments)
-							this.changeTax()
+						if (result.data.status == 'finished') {
+							this.$router.push('/budget-pdf/' + this.id)
+						} else {
+							this.form = Object.assign({}, result.data)
+							if (result.data) {
+								this.form.expiration_date = Methods.fixSequelizeOnlyDate(this.form.expiration_date)
+								this.form.updatedAt = Methods.fixSequelizeDate(this.form.updatedAt)
+								this.form.createdAt = Methods.fixSequelizeDate(this.form.createdAt)
+								this.form.art = result.data.art
+								const equipments = Object.assign({}, result.data.equipments)
+								this.loadEquipments(equipments)
+								this.changeTax()
+							}
 						}
 					})
 				} else {
@@ -689,7 +678,11 @@
 				window.open(url + '/#/budget-pdf/' + this.id)
 			},
 			finishBudget() {
-				alert('finish')
+				if (this.id && this.id != 0) {
+					Budgets.finishBudget(this.form, (result) => {
+						this.alert = MessageError.getMessage(this, result, 'title', 'budgets')
+					})
+				}
 			},
 		},
 	}

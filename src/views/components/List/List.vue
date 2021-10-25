@@ -27,7 +27,7 @@
 					</div>
 				</div>
 			</Card>
-			<table slot="table" class="table table-striped" cellpadding="0" cellspacing="0">
+			<table slot="table" class="table table-striped" cellpadding="0" cellspacing="0" v-if="this.cols">
 				<thead class="thead-dark">
 					<tr>
 						<th v-for="(col, i) in this.columns" :key="i">
@@ -61,6 +61,7 @@
 					</tr>
 				</tbody>
 			</table>
+			<slot name="table" v-else />
 			<div class="row border-top pt-2 mx-2">
 				<div class="col-sm-6 mx-0 px-0">
 					<div class="btn" v-for="i in numberItens" :key="i" @click="page = i - 1">

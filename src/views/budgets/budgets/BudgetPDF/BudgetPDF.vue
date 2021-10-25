@@ -1,6 +1,6 @@
 <template>
 	<div v-if="this.budget">
-		<div class="pdf-page">
+		<div class="pdf-page" id="pdf-page">
 			<div class="row" v-if="this.budget.logists">
 				<div class="col-6">
 					<div>{{ this.budget.logists.street }}, {{ this.budget.logists.number }}, {{ this.budget.logists.neighborhood }}</div>
@@ -40,30 +40,30 @@
 					<div v-if="this.budget.layout == 'logist_manpower'">
 						Atento à sua solicitação, apresentamos orçamento para construção de piscina de alvenaria, revestida com vinil {{ this.budget.thickness }} mm de espessura,
 						<span v-if="this.budget.steps">para uma piscina com {{ this.budget.number_steps }} patamares, </span>
-						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade
-						média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros² faciais
+						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros²
+						faciais
 						<!-- medindo ({{ this.budget.length }}) metros de comprimento por ({{ this.budget.width }}) metros de largura, por ({{ this.budget.medium_depth }}) metros de profundidade média -->
 						<span v-if="this.budget.beach">e prainha externa medindo ({{ this.budget.beach_length }}) x ({{ this.budget.beach_width }}) x ({{ this.budget.beach_medium_depth }}).</span>
 					</div>
 					<div v-else-if="this.budget.layout == 'client_manpower'">
 						Atento à sua solicitação, apresentamos orçamento para construção, sem mão de obra, de piscina de alvenaria, revestida com vinil {{ this.budget.thickness }} mm de espessura,
 						<span v-if="this.budget.steps">para uma piscina com {{ this.budget.number_steps }} patamares, </span>
-						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade
-						média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros² faciais
+						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros²
+						faciais
 						<span v-if="this.budget.beach">e prainha externa medindo ({{ this.budget.beach_length }}) x ({{ this.budget.beach_width }}) x ({{ this.budget.beach_medium_depth }}).</span>
 					</div>
 					<div v-else-if="this.budget.layout == 'vinyl_change'">
 						Atento à sua solicitação, apresentamos orçamento para substituição do bolsão de vinil com espessura de {{ this.budget.thickness }} mm,
 						<span v-if="this.budget.steps">para uma piscina com {{ this.budget.number_steps }} patamares, </span>
-						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade
-						média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros² faciais
+						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros²
+						faciais
 						<span v-if="this.budget.beach">e prainha externa medindo ({{ this.budget.beach_length }}) x ({{ this.budget.beach_width }}) x ({{ this.budget.beach_medium_depth }}).</span>
 					</div>
 					<div v-else-if="this.budget.layout == 'vinyl_install'">
 						Atento à sua solicitação, apresentamos orçamento para adaptação e instalação de bolsão de vinil com espessura {{ this.budget.thickness }} mm em piscina de azulejo para uma piscina,
 						<span v-if="this.budget.steps">com {{ this.budget.number_steps }} patamares, </span>
-						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade
-						média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros² faciais
+						{{ this.budget.perimeter }} metros de perímetro, {{ this.budget.medium_depth }} metros de profundidade média, {{ this.budget.m2_wall }} metros² de paredes e {{ this.budget.m2_facial }} metros²
+						faciais
 						<span v-if="this.budget.beach">e prainha externa medindo ({{ this.budget.beach_length }}) x ({{ this.budget.beach_width }}) x ({{ this.budget.beach_medium_depth }}).</span>
 					</div>
 					<div v-if="this.budget.format_id" class="pt-4 text-center">
@@ -133,6 +133,18 @@
 					</ul>
 				</div>
 			</div>
+			<div class="pagebreak"></div>
+
+			<div class="row printable py-5" v-if="this.budget.logists">
+				<div class="col-6">
+					<div>{{ this.budget.logists.street }}, {{ this.budget.logists.number }}, {{ this.budget.logists.neighborhood }}</div>
+					<div>{{ this.budget.logists.city }} / {{ this.budget.logists.state }} CEP: {{ this.budget.logists.zipcode }}</div>
+					<div>Fone: {{ this.budget.logists.city }} Fax: {{ this.budget.logists.fax }}</div>
+					<div>{{ this.budget.logists.website }}</div>
+					<div>{{ this.budget.logists.logists_sessions.sessions.mail }}</div>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="col-12 text-left title-pdf-blue">
 					<div>Formas de pagamento</div>
@@ -178,6 +190,16 @@
 				<div class="col-12 text-left" v-if="this.budget.sellers">
 					{{ this.budget.sellers.name }}
 				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 pt-4">
+				<button type="button" class="btn btn-primary small" @click="duplicate">
+					{{ $t('duplicate_budget') }}
+				</button>
+				<button type="button" class="btn btn-primary small ml-2" @click="print">
+					{{ $t('print_budget') }}
+				</button>
 			</div>
 		</div>
 	</div>
@@ -229,6 +251,20 @@
 				const days = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado']
 				const months = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
 				return days[myDate.getDay()] + ', ' + myDate.getDate() + ' de ' + months[myDate.getMonth()] + ' de ' + myDate.getFullYear()
+			},
+			print() {
+				window.print()
+			},
+			duplicate() {
+				if (this.budget_id && this.budget_id != 0) {
+					Budgets.duplicateBudget(this.budget, (result) => {
+						if (result.status == 'BUDGETS_INSERT_SUCCESS') {
+							this.$router.push('/budget/' + result.data.id)
+						} else {
+							alert('error')
+						}
+					})
+				}
 			},
 		},
 	}

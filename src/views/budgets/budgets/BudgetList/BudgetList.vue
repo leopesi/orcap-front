@@ -1,8 +1,29 @@
 <template>
 	<div class="home">
-		<List :cols="this.cols" :filters="this.filters" :itens="this.filteredItens" @edit="edit" @new="create" :messages="this.messages" @delete="del">
+		<List :filters="this.filters" :itens="this.filteredItens" @edit="edit" @new="create" :messages="this.messages" @delete="del">
 			<div slot="title">
 				{{ $t('title') }}
+			</div>
+			<div slot="table">
+				<table slot="table" class="table table-striped" cellpadding="0" cellspacing="0">
+					<thead class="thead-dark">
+						<tr>
+							<th>{{ $t('clients') }}</th>
+							<th>{{ $t('sellers') }}</th>
+							<th>{{ $t('edit') }} / {{ $t('see') }}</th>
+							<th>{{ $t('delete') }}</th>
+						</tr>
+					</thead>
+					<tbody class="thead-dark">
+						<tr v-for="(item, i) in this.filteredItens" :key="i">
+							<td>{{ item.clients ? item.clients.name : '' }}</td>
+							<td>{{ item.sellers ? item.sellers.name : '' }}</td>
+							<td v-if="item.status == 'finished'" @click="see(item.id)">{{ $t('see') }}</td>
+							<td v-else @click="edit(item.id)">{{ $t('edit') }}</td>
+							<td @click="del(item.id)">{{ $t('delete') }}</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</List>
 	</div>
@@ -73,6 +94,9 @@
 			},
 			create() {
 				Methods.openPage(this, 'budget')
+			},
+			see(id) {
+				Methods.openPage(this, 'budget-pdf/' + id)
 			},
 			edit(id) {
 				Methods.openPage(this, 'budget/' + id)

@@ -115,7 +115,9 @@ export default {
 		city: 'Cidade',
 		state: 'Estado',
 		see_pdf: 'Vizualizar PDF',
-		finish_budget: 'Finalizar PDF',
+		finish_budget: 'Finalizar Orçamento',
+		duplicate_budget: 'Duplicar Orçamento',
+		print_budget: 'Imprimir Orçamento',
 
 		in_cash: 'À vista',
 		debit_card: 'Cartão de débito',
