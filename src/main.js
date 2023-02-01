@@ -16,7 +16,7 @@ const i18n = new VueI18n({
 	locale: 'pt-br',
 })
 
-axios.defaults.baseURL = 'http://localhost:3333'
+axios.defaults.baseURL = 'https://orcap-back.up.railway.app/'
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token
 axios.defaults.headers['logisttoken'] = localStorage.logist_token
 
